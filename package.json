@@ -1,0 +1,32 @@
+{
+  "name": "mondrian",
+  "version": "0.0.0",
+  "description": "Mondrian is a smart and easy-to-learn vector graphics web app.",
+  "main": "",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "coffee server.coffee",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/artursapek/mondrian.git"
+  },
+  "author": "artursapek",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/artursapek/mondrian/issues"
+  },
+  "homepage": "https://github.com/artursapek/mondrian",
+  "dependencies": {
+    "connect": "~2.12.0"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.6.3",
+    "connect": "~2.12.0",
+    "cake": "~0.1.1",
+    "js-yaml": "~3.0.1"
+  }
+}
