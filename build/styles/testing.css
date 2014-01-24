@@ -1,0 +1,101 @@
+#logo {
+  width: 36px;
+  height: 35px;
+  background-color: rgba(30, 30, 30, 0.92);
+  border-bottom: 1px solid #0d0d0d;
+  position: absolute;
+  top: 10px;
+  left: 20px;
+}
+#logo > div {
+  position: absolute;
+  top: 4px;
+}
+#logo > div.red {
+  background-color: #e03f4a;
+}
+#logo > div.yellow {
+  background-color: #f1cf2e;
+}
+#logo > div.blue {
+  background-color: #3fb2e0;
+}
+#logo #left-bar,
+#logo #right-bar {
+  width: 8px;
+  height: 28px;
+}
+#logo #middle-bar {
+  width: 8px;
+  height: 10px;
+  left: 16px;
+}
+#logo #left-bar {
+  left: 4px;
+}
+#logo #right-bar {
+  right: 0px;
+}
+.ellipsis-overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -moz-text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;
+}
+.maven-pro {
+  font-family: Maven Pro, 'Maven Pro';
+}
+a {
+  color: #3fb2e0;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+#content {
+  width: 820px;
+  margin: 30px auto;
+  font-family: "Maven Pro";
+  position: relative;
+}
+#logo {
+  top: -4px;
+  left: -60px;
+}
+p#thanks {
+  line-height: 1.4;
+}
+#fields input {
+  margin: 10px 0px;
+  width: 305px;
+  border: 2px solid rgba(234, 234, 234, 0.92);
+  padding: 8px;
+  font-family: "Maven Pro";
+  font-size: 16px;
+  outline: none;
+}
+#fields input.short-together {
+  width: 150px;
+}
+#fields button {
+  width: 150px;
+  text-align: center;
+  background: #3fb2e0;
+  border: none;
+  border-bottom: 1px solid rgba(63, 142, 185, 0.92);
+  color: white;
+  font-family: "Maven Pro";
+  font-size: 16px;
+  outline: none;
+  padding: 8px;
+  margin-top: 10px;
+}
+#fields button:hover {
+  background: #55bbe4;
+  border-bottom: 1px solid rgba(79, 154, 195, 0.92);
+}
+#fields button:active {
+  background: #29a9dc;
+  border-bottom: 1px solid rgba(57, 127, 166, 0.92);
+}

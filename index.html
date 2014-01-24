@@ -1,0 +1,534 @@
+<html>
+<head>
+
+  <title>Mondrian</title>
+  <meta content="Easy to use vector graphics program that works in your browser. No installation required. Try it for free." name="description">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <link rel="stylesheet" href="build/styles.css" type="text/css" media="screen" charset="utf-8">
+  <link rel="shortcut icon" href="/build/img/favicon.gif" />
+
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-39613096-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
+
+  <script src="build/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="build/md5.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="build/jquery.tinysort.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="build/build.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body class="dragging" id="ui-tests">
+
+  <div id="canvas">
+    <div id="bg"></div>
+    <div id="layer-main">
+      <svg id="main" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:mondrian="http://mondrian.io/xml"></svg>
+    </div>
+    <div id="temp-paste-area">
+      <svg id="tmp-paste" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+
+    <div id="typography"></div>
+
+    <svg id="annotations" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>
+    <svg id="grid" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>
+    <svg id="hover-targets" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div id="ui">
+      <div id="trfm-outline" class="transform outline"></div>
+      <div id="trfm-tl" class="transform handle corner tl"></div>
+      <div id="trfm-tr" class="transform handle corner tr"></div>
+      <div id="trfm-br" class="transform handle corner br"></div>
+      <div id="trfm-bl" class="transform handle corner bl"></div>
+      <div id="trfm-tc" class="transform handle side top"></div>
+      <div id="trfm-bc" class="transform handle side bottom"></div>
+      <div id="trfm-lc" class="transform handle side left"></div>
+      <div id="trfm-rc" class="transform handle side right"></div>
+      <div id="trfm-c" class="transform center"></div>
+      <div id="r-nd-o"></div>
+
+      <div id="text-underline"></div>
+    </div>
+  </div>
+
+  <!-- Top-left corner logo -->
+  <a href="/contributing">
+    <div id="logo">
+      <div id="left-bar" class="red"></div>
+      <div id="middle-bar" class="yellow"></div>
+      <div id="right-bar" class="blue"></div>
+    </div>
+  </a>
+
+  <div id="dialog-title">Test</div>
+
+  <div id="new-file-dialog">
+  </div>
+
+  <!-- File service browsing -->
+  <div id="current-service" quarantine>
+    <div class="service-logo"></div>
+    <div class="menu-group">
+      <div id="service-search" class="menu blue with-input">
+        <input type="text" class="white small" id="service-search-input" placeholder="Search" quarantine>
+      </div>
+    </div>
+  </div>
+
+  <div id="service-file-gallery" quarantine>
+    <div class="loading">Connecting to <span servicename>Dropbox</span>...</div>
+    <div id="service-file-gallery-thumbnails"></div>
+    <div id="service-file-gallery-dialog">
+      <div id="service-file-gallery-message"></div>
+      <button class="red" id="cancel-open-file">Cancel</button>
+    </div>
+  </div>
+
+  <div id="service-file-browser" quarantine>
+    <div class="loading">Connecting to <span servicename>Dropbox</span>...</div>
+
+    <div id="current-file-saving-status">
+      <div id="current-file-saving-thumbnail">
+        <img src="" style="margin: 20px;">
+      </div>
+
+      <div id="current-file-saving-name">
+        Save as
+        <div class="grey-input-container">
+          <input id="current-file-saving-name-input" value="untitled" class="white" />
+          <label class="white" for="current-file-saving-name-input">.svg</label>
+        </div>
+      </div>
+
+      <div id="current-file-saving-path">
+        into
+        <div class="service-logo-small">
+          <div class="dropbox"></div>
+        </div>
+        <div id="current-file-saving-directory-path">/</div>
+      </div>
+
+      <button class="dark-blue" id="confirm-save-file">Save</button>
+      <button class="red" id="cancel-save-file">Cancel</button>
+
+    </div>
+
+    <div id="browser-directory">
+      <div class="scrollbar-screen-directory-col" index="0">
+        <div class="directory-col" id="service-options">
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- Side application tool palette -->
+  <div id="tool-palette">
+    <div class="tool-button blue" id="cursor-btn"></div>
+    <div class="tool-button red" id="pen-btn"></div>
+    <div class="tool-button blue" id="crayon-btn"></div>
+    <div class="tool-button yellow" id="ellipse-btn"></div>
+    <div class="tool-button blue" id="rectangle-btn"></div>
+    <div class="tool-button yellow" id="line-btn"></div>
+    <div class="tool-button red" id="type-btn"></div>
+    <div class="tool-button yellow" id="rotate-btn"></div>
+    <div class="tool-button red" id="eyedropper-btn"></div>
+    <div class="tool-button blue" id="zoom-btn"></div>
+  </div>
+
+  <div id="current-swatches">
+    <div id="fill-color"></div>
+    <div id="stroke-color"></div>
+  </div>
+
+  <div id="current-swatches-ut" class="utility-window transparent"></div>
+
+  <div id="color-picker-ut" class="utility-window">
+    <div id="pool-window" >
+      <div id="pool-scrollbar-hide">
+        <div id="pool-container">
+          <div id="pool-canvas-div">
+            <canvas id="color-pool" width="260" height="3060"></canvas>
+          </div>
+          <div class="indicator" id="color-marker1"></div>
+          <div class="indicator" id="color-marker2"></div>
+        </div>
+      </div>
+      <div id="saturation-slider" class="slider slider-container">
+        <div id="saturation-slider-track" class="slider track"></div>
+        <div id="no-saturation" class="slider left-icon"></div>
+        <div id="full-saturation" class="slider right-icon"></div>
+        <div id="saturation-slider-knob" class="slider knob"></div>
+      </div>
+      <div id="transparent-permanent-swatch"></div>
+      <div id="color-inputs" quarantine>
+        <label for="color-r" class="white left">r:</label>
+        <input type="text" class="white small" id="color-r" value="255" />
+        <label for="color-g" class="white left">g:</label>
+        <input type="text" class="white small" id="color-g" value="255" />
+        <label for="color-b" class="white left">b:</label>
+        <input type="text" class="white small" id="color-b" value="255" />
+
+        <label for="color-hex" class="white left">#:</label>
+        <input type="text" class="white small" id="color-hex" value="FF00D7" />
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Top application menu bar -->
+
+  <div id="menu-bar">
+    <div class="menu-group">
+
+      <div class="menu red" id="file-menu">
+        File
+        <div class="menu-dropdown with-shortcuts" id="file-menu-dropdown">
+
+          <div class="menu-item shortcut" id="filename-item">
+            <span buttontext class="deemph">Editing </span>
+
+            <div buttontext class="service-logo-small" id="service-logo-for-filename" quarantine>
+              <div class=""></div>
+            </div>
+
+            <span buttontext class="deemph" id="service-path-for-filename"></span>
+
+            <span buttontext id="file-name-with-extension"></span>
+          </div>
+
+          <div class="separator"><div class="separator-line"></div></div>
+
+          <div class="menu-item red shortcut" id="new-item">New...
+              <div class="shortcut">N</div>
+          </div>
+
+          <div class="separator"><div class="separator-line"></div></div>
+
+          <div class="menu-item red" id="save-item">
+              <span buttontext>Save</span>
+              <div class="shortcut"><span class="modifier">⌘</span>S</div>
+          </div>
+
+          <div class="menu-item red shortcut" id="save-as-item">Save as...
+              <div class="shortcut"><span class="modifier">⇧⌘</span>S</div>
+          </div>
+
+          <div class="separator"><div class="separator-line"></div></div>
+
+          <div class="menu-item red shortcut" id="open-item">Open...
+              <div class="shortcut"><span class="modifier">⌘</span>O</div>
+          </div>
+
+          <div class="menu-item red" id="open-from-hd-item">Open from hard drive...
+            <input type="file" id="hd-file-loader" size="200" />
+          </div>
+
+          <div class="menu-item red" id="open-from-url-item">
+            <span buttontext>Open from URL...</span>
+            <input type="text" class="white small" placeholder="URL" id="open-from-url-input" quarantine />
+          </div>
+
+          <div class="separator" visiblewith="connect-to-dropbox-item"><div class="separator-line"></div></div>
+          
+          <a href="" id="connect-to-dropbox-link" target="_blank" quarantine>
+            <div class="menu-item red" id="connect-to-dropbox-item">Connect to Dropbox...</div>
+          </a>
+
+          <div class="separator"><div class="separator-line"></div></div>
+
+          <a href="" id="download-png-link" download="file.png" target="_blank" quarantine>
+            <div class="menu-item red" id="download-as-PNG-item">Download as PNG</div>
+          </a>
+
+          <a href="" id="download-svg-link" download="file.svg" target="_blank" quarantine>
+            <div class="menu-item red bottom" id="download-as-SVG-item">Download as SVG</div>
+          </a>
+
+
+        </div>
+
+      </div>
+     
+      <div class="menu yellow" id="edit-menu">
+        Edit
+        <div class="menu-dropdown with-shortcuts" id="edit-menu-dropdown">
+
+          <div class="menu-item yellow shortcut" id="undo-item">Undo
+              <div class="shortcut"><span class="modifier">⌘</span>Z</div>
+          </div>
+
+          <div class="menu-item yellow shortcut" id="redo-item">Redo
+              <div class="shortcut"><span class="modifier">⇧⌘</span>Z</div>
+          </div>
+
+          <div class="menu-item yellow shortcut" id="visual-history">Visual History
+              <div class="shortcut">0</div>
+          </div>
+
+          <div class="separator"><div class="separator-line"></div></div>
+
+          <div class="menu-item yellow shortcut" id="cut-item">Cut
+              <div class="shortcut"><span class="modifier">⌘</span>X</div>
+          </div>
+
+          <div class="menu-item yellow shortcut" id="copy-item">Copy
+              <div class="shortcut"><span class="modifier">⌘</span>C</div>
+          </div>
+
+          <div class="menu-item yellow shortcut" id="paste-item">Paste
+              <div class="shortcut"><span class="modifier">⌘</span>V</div>
+          </div>
+
+          <div class="menu-item yellow shortcut" id="delete-item">Delete
+              <div class="shortcut"><span class="modifier">⌫</span></div>
+          </div>
+
+          <div class="menu-item yellow shortcut bottom" id="select-all-item">Select all
+              <div class="shortcut"><span class="modifier">⌘</span>A</div>
+          </div>
+
+        </div>
+      </div>
+
+
+
+      <div class="menu blue" id="geometry-menu">
+        Geometry
+        <div class="menu-dropdown with-shortcuts" id="geometry-menu-dropdown">
+
+          <!--<div class="menu-item blue" id="scale-item">Scale...</div>
+
+          <div class="menu-item blue" id="rotate-item">Rotate...</div>
+
+          <div class="separator"><div class="separator-line"></div></div>-->
+
+          <div class="menu-item blue" id="send-to-back-item">Send to back
+            <div class="shortcut"><span class="modifier">⇧</span>[</div>
+          </div>
+          <div class="menu-item blue" id="move-back-item">Move back
+            <div class="shortcut">[</div>
+          </div>
+          <div class="menu-item blue" id="move-forward-item">Move forward
+            <div class="shortcut">]</div>
+          </div>
+          <div class="menu-item blue bottom" id="bring-to-front-item">Bring to front
+            <div class="shortcut"><span class="modifier">⇧</span>]</div>
+          </div>
+        </div>
+      </div>
+
+     <div class="menu blue" id="view-menu">
+        View
+        <div class="menu-dropdown with-shortcuts" id="view-menu-dropdown">
+
+          <!--<div class="menu-item blue" id="scale-item">Scale...</div>
+
+          <div class="menu-item blue" id="rotate-item">Rotate...</div>
+
+          <div class="separator"><div class="separator-line"></div></div>-->
+
+          <div class="menu-item blue" id="zoom-in-item">Zoom in
+            <div class="shortcut">+</div>
+          </div>
+
+          <div class="menu-item blue" id="zoom-out-item">Zoom out
+            <div class="shortcut">-</div>
+          </div>
+
+          <div class="menu-item blue" id="zoom-100-item">Actual size
+            <div class="shortcut">1</div>
+          </div>
+
+          <div class="separator"><div class="separator-line"></div></div>
+
+          <div class="menu-item blue" id="show-grid-item">Toggle dot grid
+            <div class="shortcut">"</div>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+    <div class="menu-group">
+      <div class="menu red" id="share-menu">
+        Share
+        <div class="menu-dropdown" id="share-menu-dropdown">
+          <div class="menu-item red" id="share-permalink-item">Link to this file...</div>
+        </div>
+      </div>
+      <div class="menu red" id="embed-menu">
+        Embed
+        <div class="menu-dropdown menu-modal" id="embed-menu-dropdown">
+          <div quarantine>
+            Width:
+            <input type="text" class="white small" id="embed-width" value="500" />
+            <label for="embed-width" class="white">px</label>
+          </div>
+          <textarea type="text" class="white" id="embed-code" quarantine></textarea>
+        </div>
+      </div>
+
+    </div>
+    <div class="menu-group">
+
+    </div>
+  </div>
+  <div id="login-bar">
+
+    <div class="menu-group" id="login-mg">
+      <div class="menu blue" id="login-menu">
+        Sign in
+        <div class="menu-dropdown menu-modal right-align" id="login-menu-dropdown" quarantine>
+          <input type="text" class="white" placeholder="Email" id="login-email-input" quarantine/>
+          <input type="password" class="white" placeholder="Password" id="login-passwd-input" quarantine h/>
+          <button id="submit-login" class="dark-blue">Sign in</button>
+          <div class="error-display">
+            <div class="msg"></div>
+            <div class="lifespan"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-group" id="register-mg">
+      <div class="menu dark-blue" id="register-menu">
+        <span buttontext>
+          <emph buttontext>Sign up</emph>
+        </span>
+
+        <div class="menu-dropdown menu-modal right-align" id="register-menu-dropdown" quarantine>
+
+          <p>
+            You can get more out of Mondrian if you make an account.
+            Save all your undos, connect to your Dropbox, and more.
+          </p>
+
+          <input id="register-name" type="text" class="white" placeholder="Name" />
+          <input id="register-email" type="text" class="white" placeholder="Email" />
+          <input id="register-passwd" type="password" class="white" placeholder="Password" />
+          <button id="submit-registration" class="dark-blue">Create Free Account</button>
+          <div class="error-display">
+            <div class="msg"></div>
+            <div class="lifespan"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-group" id="account-mg">
+      <div class="menu blue" id="account-menu">
+        <span id="logged-in-email" buttontext><!-- email goes here --></span>
+
+        <div class="menu-dropdown right-align" id="account-menu-dropdown" mode="normal">
+          <div class="menu-item blue bottom" id="logout-item">Logout</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Utility windows -->
+  <div id="utilities" class="no-select">
+
+    <div class="utilities-col" id="ut-col-left">
+
+      <div class="utility-window" id="transform-ut" quarantine>
+        <div inputholder id="element-origin">
+          <span class="awkward">x: </span>
+          <input type="text" class="white small" id="origin-x-val" value="12.0291" />
+          <label for="origin-x-val" class="white">px</label>
+          <span class="awkward">, y:</span>
+          <input type="text" class="white small" id="origin-y-val" value="483.201" />
+          <label for="origin-y-val" class="white">px</label>
+        </div>
+
+        <div id="preview-pane">
+          <canvas id="preview-canvas" width="105" height="105"></canvas>
+          <div id="origin-icon"></div>
+          <div id="width-bracket"></div>
+          <div id="height-bracket"></div>
+          <div id="subtle-blue-outline"></div>
+          <div inputholder id="element-height">
+            <div>
+              <input type="text" class="white small" id="height-val" value="12.0291" />
+              <label for="height-val" class="white">px</label>
+            </div>
+          </div>
+          <div inputholder id="element-width">
+            <input type="text" class="white small" id="width-val" value="12.0291" />
+            <label for="width-val" class="white">px</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="utility-window" id="typography-ut">
+        Typeface
+
+        <div inputholder id="font-size">
+          Size
+          <input type="text" class="white small" id="font-size-val" h quarantine value="24" />
+          <label for="font-size-val" class="white">px</label>
+        </div>
+
+        <div class="dropdown" id="font-faces-dropdown">
+          <div class="dropdown-chosen"></div>
+          <div class="dropdown-list" id="font-choices"></div>
+        </div>
+
+      </div>
+
+      <div class="utility-window" id="stroke-width-ut" quarantine>
+        <div id="stroke-width-preview"></div>
+        <div id="no-stroke-width-hint">(no stroke)</div>
+        <div inputholder id="stroke-width">
+          <input type="text" class="white small" id="stroke-width-val" h />
+          <label for="stroke-width-val" class="white">px</label>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="utilities-col" id="ut-col-right">
+      <div class="utility-window" id="archive-ut" h >
+        <div id="archive-thumbs-screen" quarantine>
+          <div id="archive-thumbs" quarantine></div>
+        </div>
+        <div id="archive-controls">
+
+          <div id="archive-slider-label">
+            Thumbnail frequency
+          </div>
+          <div id="archive-steps-slider" class="slider slider-container">
+            <div id="archive-steps-slider-track" class="slider track"></div>
+            <div id="archive-steps-slider-knob" class="slider knob"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Client-level UI -->
+  <div id="tool-cursor-placeholder"></div>
+  <div id="drag-selection"></div>
+
+  <!-- Client-side PNG generation -->
+  <canvas id="png-download-sandbox"></canvas>
+
+  <!-- Off-site text width measurement -->
+  <div id="text-sandbox"></div>
+</body>
+</html>

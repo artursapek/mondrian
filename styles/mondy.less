@@ -1,0 +1,88 @@
+
+@logo-red: #e03f4a;
+@logo-yellow: #f1cf2e;
+@logo-blue: #3fb2e0;
+@logo-blue-border: rgba(63, 142, 185, 0.92);
+@logo-red-border: rgba(185, 40, 50, 0.92);
+@logo-black: rgba(30, 30, 30, 0.92);  
+@logo-border: rgb(13, 13, 13);
+
+@mondy-blue-light: rgba(158, 217, 240, 0.92);
+@mondy-red-light: rgba(250, 176, 179, 0.92);
+@mondy-yellow-light: rgba(250, 232, 149, 0.92);
+
+@mondy-border-blue-light: rgba(135, 196, 226, 0.92);
+@mondy-border-red-light: rgba(228, 146, 148, 0.92);
+@mondy-border-yellow-light: rgba(240, 217, 88, 0.92);
+
+@mondy-blue-active: rgba(154, 213, 236, 1);
+@mondy-red-active: rgba(246, 172, 175, 1);
+@mondy-yellow-active: rgba(246, 228, 145, 1);
+
+@medium-grey: rgba(234, 234, 234, 0.92);
+
+
+#logo {
+  width: 36px;
+  height: 35px;
+  background-color: @logo-black;
+  border-bottom: 1px solid @logo-border;
+  position: absolute;
+  top: 10px;
+  left: 20px;
+
+  > div {
+    position: absolute;
+    top: 4px;
+
+    &.red {
+      background-color: @logo-red;
+    }
+
+    &.yellow {
+      background-color: @logo-yellow;
+    }
+
+    &.blue {
+      background-color: @logo-blue;
+    }
+  }
+
+  #left-bar, #right-bar {
+    width: 8px;
+    height: 28px;
+  }
+
+  #middle-bar {
+    width: 8px;
+    height: 10px;
+    left: 16px;
+  }
+
+  #left-bar {
+    left: 4px;
+  }
+
+  #right-bar {
+    right: 0px;
+  }
+}
+
+.ellipsis-overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -moz-text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;
+}
+
+.maven-pro {
+  font-family: Maven Pro, 'Maven Pro';
+}
+
+.transition(@attr, @time, @easing: ease-in-out) {
+  -moz-transition:@attr @time @easing;
+  -webkit-transition:@attr @time @easing;
+  -o-transition:@attr @time @easing;
+  transition:@attr @time @easing;
+}

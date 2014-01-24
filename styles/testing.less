@@ -1,0 +1,67 @@
+@import "styles/mondy.less";
+
+a {
+  color: @logo-blue;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+
+#content {
+  width: 820px;
+  margin: 30px auto;
+  font-family: "Maven Pro";
+  position: relative;
+}
+
+#logo {
+  top: -4px;
+  left: -60px;
+}
+
+
+p#thanks {
+  line-height: 1.4;
+}
+
+#fields {
+  input {
+    margin: 10px 0px;
+    width: 305px;
+    border: 2px solid @medium-grey;
+    padding: 8px;
+    font-family: "Maven Pro";
+    font-size: 16px;
+    outline: none;
+
+    &.short-together {
+      width: 150px;
+    }
+  }
+
+  button {
+    width: 150px;
+    text-align: center;
+    background: @logo-blue;
+    border: none;
+    border-bottom: 1px solid @logo-blue-border;
+    color: white;
+    font-family: "Maven Pro";
+    font-size: 16px;
+    outline: none;
+    padding: 8px;
+    margin-top: 10px;
+
+    &:hover {
+      background: lighten(@logo-blue, 5%);
+      border-bottom: 1px solid lighten(@logo-blue-border, 5%);
+    }
+    &:active {
+      background: darken(@logo-blue, 5%);
+      border-bottom: 1px solid darken(@logo-blue-border, 5%);
+    }
+  }
+}

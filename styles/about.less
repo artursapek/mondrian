@@ -1,0 +1,261 @@
+@import "styles/mondy.less";
+
+body {
+  font-family: "Maven Pro";
+  background: rgb(247, 247, 247);
+}
+
+#page {
+  width: 950px;
+}
+
+#content {
+  padding-top: 100px;
+  float: left;
+  margin-bottom: 10px;
+}
+
+a.cta {
+  display: inline-block;
+  margin-top: 12px;
+  background: @logo-blue;
+  border-bottom: 3px solid @logo-blue-border;
+  color: white;
+  font-family: "Maven Pro";
+  font-weight: 300;
+  padding: 10px;
+  font-size: 30px;
+  text-decoration: none;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    position: relative;
+    top: 2px;
+    border-bottom: none;
+  }
+}
+
+#cta-bottom {
+  float: left;
+  width: 100%;
+  text-align: center;
+}
+
+
+#hero {
+  width: 100%;
+  height: 570px;
+  text-align: center;
+  margin-bottom: 10px;
+
+  h1 {
+    margin-top: 20px;
+    margin-bottom: 6px;
+  }
+
+  p {
+    margin-top: 5px;
+  }
+
+}
+
+h1 {
+  font-weight: normal;
+  font-size: 26px;
+  font-family: "Maven Pro";
+}
+
+.feature {
+  width: 950px;
+  position: relative;
+  float: left;
+  font-family: "Maven Pro";
+  min-height: 400px;
+
+  p {
+    margin: 0;
+    line-height: 1.5;
+  }
+
+
+  div {
+    display: inline-block;
+    width: 450px;
+    padding: 50px 0px;
+    font-size: 16px;
+    text-align: left;
+
+    &:first-child {
+      float: left;
+      &.icon {
+        text-align: left;
+      }
+    }
+
+    &:last-child {
+      float: right;
+    }
+
+    &.icon {
+      width: 500px;
+      text-align: right;
+    }
+
+    &.desc {
+      width: 450px;
+      position: absolute;
+      top: 25%;
+    }
+  }
+}
+
+
+#pricing {
+  float: left;
+  width: 100%;
+  text-align: center;
+
+  h1 {
+    text-align: left;
+  }
+
+  .tier {
+    text-align: left;
+    height: 300px;
+    padding: 15px;
+    width: 273px;
+    float: left;
+    display: inline-block;
+
+
+    &.middle {
+      margin: 0 17px;
+    }
+
+    .price {
+      margin-top: 8px;
+
+      &.free, &.custom {
+        color: rgba(0,0,0,0.4);
+      }
+
+      &.money {
+        color: #75C56D;
+      }
+    }
+
+    .details {
+      background: rgba(255,255,255,0.6);
+      border: 1px solid rgba(0,0,0,0.1);
+      &.main {
+        background: rgba(255,255,255,1);
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      button {
+        border: none;
+        color: white;
+        font-size: 18px;
+        font-family: Maven Pro;
+        padding: 10px;
+        cursor: pointer;
+        display: block;
+        margin: 10px auto;
+
+        &.main {
+          background: @logo-blue;
+          border-bottom: 1px solid @logo-blue-border;
+
+          &:hover {
+            background: lighten(@logo-blue, 10%);
+            border-bottom: 1px solid lighten(@logo-blue-border, 10%);
+          }
+        }
+
+        &.secondary{
+          @desat-blue: #72a6b9;
+          @desat-blue-border: #698ea1;
+          background: @desat-blue;
+          border-bottom: 1px solid @desat-blue-border;
+
+          &:hover {
+            background: lighten(@desat-blue, 7%);
+            border-bottom: 1px solid lighten(@desat-blue-border, 7%);
+          }
+          
+        }
+      }
+    }
+
+    h2 {
+      font-weight: 300;
+      margin-top: 0;
+    }
+  }
+
+  p {
+    margin: 15px;
+  }
+
+  ul {
+    margin: 15px;
+    padding: 0;
+
+    li {
+      padding-left: 10px;
+      border-left: 2px solid rgba(0,0,0,0.25);
+      margin: 7px 0;
+      list-style: none;
+
+      emph {
+        border-bottom: 2px dotted #75C56D;
+      }
+    }
+  }
+
+
+
+
+
+}
+
+
+
+
+video, img {
+  background: white;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+#footer {
+  margin: 100px 0 50px 0;
+  float: left;
+  font-family: "Maven Pro";
+  color: rgba(0,0,0,0.85);
+
+  ul {
+    li {
+      display: inline-block;
+      margin: 0 25px;
+
+      &.dark {
+        font-weight: 500;
+      }
+
+      a {
+        color: @logo-blue-border;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

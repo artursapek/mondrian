@@ -1,0 +1,86 @@
+%html
+  %head
+
+    %title
+      Mondrian - About
+
+    %link{ :rel => "stylesheet", :href => "/build/styles.css", :type => "text/css", :media => "screen", :charset => "utf-8" }
+    %link{ :rel => "stylesheet", :href => "/build/styles/page.css", :type => "text/css", :media => "screen", :charset => "utf-8" }
+    %link{ :rel => "stylesheet", :href => "/build/styles/contributing.css", :type => "text/css", :media => "screen", :charset => "utf-8" }
+
+    %link{ :rel => "shortcut icon", :href => "build/img/favicon.gif" }
+    %script{ :src => "/build/jquery-1.7.2.min.js", :type => "text/javascript", :charset => "utf-8" }
+
+    :javascript
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-39613096-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+
+  %body
+
+    #hero
+      %a{ href: '/' }
+        %img{ src: "/build/img/screenshot.png" }
+
+    #page
+
+      #content
+        %h3
+          Mondrian
+        %p
+          Mondrian is a free vector graphics web app like Adobe Illustrator or Inkscape, available at
+          = succeed '.' do
+            %a{ href: '/' }
+              %button.dark-blue> mondrian.io
+          %br
+          Today I'm open-sourcing it.
+
+        %p
+          %h3
+            Why?
+          I want to make something simpler, smarter, and more accessible than what's available.
+          I think a lot of people want software like this, and I think there are developers who want to work on it.
+
+          %br
+          %br
+
+          I've spent the last year building Mondrian in private. It's at a pretty solid level of usability. 
+          It has been the most fun and interesting thing I have ever worked on, but I'm getting frustrated
+          with the slow rate of progress I can muster by myself on weekends.
+
+        %p
+          %h3
+            Come Help Build It
+          I'm calling those who love math, geometry, art, and the web. A group of us could
+          make Mondrian really amazing. Email me directly or just
+          fork the repo and open a pull request at
+          = succeed '.' do
+            %a{ href: 'http://github.com/artursapek/mondrian' }
+              %button.dark-red> github/artursapek/mondrian
+
+          I'd love to meet you if you live in New York and are interested in getting involved.
+          Please get in touch.
+
+          %br
+          %br
+          %br
+
+          Artur Sapek
+          %br
+          %a{ href: 'mailto:me@artur.co' }
+            %button.dark-blue> me@artur.co
+          %br
+          %br
+          New York City
+          %br
+          January 24, 2014
+
+    %script{ :src => "dance.js", :type => "text/javascript", :charset => "utf-8" }
