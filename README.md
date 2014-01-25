@@ -49,7 +49,7 @@ at [mondrian.io](http://mondrian.io) or run it locally:
 ```
 git clone git@github.com:artursapek/mondrian.git
 cd mondrian
-./server
+coffee server.coffee --nodejs
 ```
 
 Then, open `localhost:3000` in your web browser.
