@@ -95,7 +95,11 @@ compileCoffee = (src, outputFile = 'build/build.js', callback = ->) ->
 task 'build', 'Build project', ->
   barLength = 30
 
-  lastCompileTime = fs.readFileSync '.compiletime', 'utf8'
+  if fs.existsSync '.compiletime'
+    lastCompileTime = fs.readFileSync '.compiletime', 'utf8'
+  else
+    lastCompileTime = 20000 # Generous default
+
   lastCompileTime = parseInt lastCompileTime, 10
 
   filePaths (paths) ->
