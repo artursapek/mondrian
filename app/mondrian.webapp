@@ -1,0 +1,17 @@
+{
+  "name": "Mondrian",
+  "description": "Mondrian is a free, open-source vector graphics web app like Adobe Illustrator or Inkscape.",
+  "launch_path": "/",
+  "appcache_path": "/app/mondrian.appcache",
+  "icons": {
+    "16":  "/build/img/logo/16.16.png",
+    "36":  "/build/img/logo/36.36.png",
+    "60":  "/build/img/logo/60.60.png",
+    "128": "/build/img/logo/128.128.png"
+  },
+  "developer": {
+    "name": "Artur Sapek",
+    "url": "http://artur.co/"
+  },
+  "default_locale": "en"
+}
