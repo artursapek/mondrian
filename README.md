@@ -86,7 +86,8 @@ The stylesheets are written in LESS, and compiled into CSS like so:
 
 #### Todo
 
-If you want to help, there's a lot that can be done.
+If you want to help, there's a lot that can be done. Check the issues for bugs and feature requests,
+or you could pick something off of this laundry list:
 
   - Set up a good unit test suite with Phantomjs or another headless browser
   - Add support for missing SVG elements
