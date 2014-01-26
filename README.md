@@ -64,7 +64,7 @@ as well as optimizing the performance of those that already exist. All significa
 
 `npm install`
 
-#### Building the app
+#### Building the JavaScript
 
 Run the build task to compile all of the files into the executable [`build.js`](build/build.js):
 
@@ -77,6 +77,12 @@ It features a dumb progress bar that's based off the last compile time. It's act
 Compiling 16455 lines
 [██████------------------------] 14 seconds remaining
 ```
+
+#### Building the CSS
+
+The stylesheets are written in LESS, and compiled into CSS like so:
+
+`cake styles`
 
 #### Todo
 
