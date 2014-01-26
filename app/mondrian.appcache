@@ -7,6 +7,8 @@ CACHE MANIFEST
 /build/jquery.tinysort.min.js
 /build/build.js
 /build/fonts/maven-pro.400.woff
+/build/fonts/maven-pro.500.woff
+/build/fonts/maven-pro.700.woff
 
 # All images
 /build/img/screenshot.png
