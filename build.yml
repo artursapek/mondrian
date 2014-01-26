@@ -103,6 +103,7 @@ src: !!omap
     - file-menu
     - edit-menu
     - view-menu
+    - about-menu
     - login-menu
     - register-menu
     - geometry-menu
