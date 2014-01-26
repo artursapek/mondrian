@@ -1786,7 +1786,11 @@ button {
     background-color: rgba(255, 255, 255, 1);
 
     .dropdown-item {
-      .bgimg('dropdown-arrow.png');
+      &:after {
+        content: "▼";
+        float: right;
+        font-size: 12px;
+      }
       background-position: right;
       background-repeat: no-repeat;
     }

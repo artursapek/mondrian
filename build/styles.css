@@ -1839,9 +1839,13 @@ button {
   background-color: #ffffff;
 }
 .dropdown .dropdown-chosen .dropdown-item {
-  background-image: url("img/dropdown-arrow.png");
   background-position: right;
   background-repeat: no-repeat;
+}
+.dropdown .dropdown-chosen .dropdown-item:after {
+  content: "▼";
+  float: right;
+  font-size: 12px;
 }
 .dropdown .dropdown-list {
   background: rgba(255, 255, 255, 0.92);
