@@ -345,6 +345,22 @@ div#current-service #register-menu .terms a {
   color: rgba(63, 142, 185, 0.92);
   text-decoration: underline;
 }
+div#menu-bar #about-menu ul,
+div#login-bar #about-menu ul,
+div#register-bar #about-menu ul,
+div#current-service #about-menu ul {
+  margin: 10px 0 0 0;
+  padding: 0;
+}
+div#menu-bar #about-menu ul li,
+div#login-bar #about-menu ul li,
+div#register-bar #about-menu ul li,
+div#current-service #about-menu ul li {
+  list-style-type: none;
+  font-weight: 300;
+  padding: 3px 0 5px 10px;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
 div#menu-bar .menu-group,
 div#login-bar .menu-group,
 div#register-bar .menu-group,
