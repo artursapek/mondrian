@@ -7,19 +7,16 @@ as well as optimizing the performance of those that already exist.
 
 All significant contributions will get credit under the "About" menu within the app.
 
-### Do
+### Guidelines
 
 - Follow the 15 minute rule. If you can't figure something out after 15 minutes,
 contact Artur at [me@artur.co](mailto:me@artur.co) with your confusion.
 Make sure to be clear about what you don't understand. Help me help you!
 
-
-### Don't
-
-- Track new files in the /build directory unless instructed.
+- **Do not** track new files in the `/build` directory unless instructed.
 
 
-### Todo
+### Ways to help
 
 If you want to contribute, there's a lot that can be done to help move the project forward.
 Check the issues for bugs and feature requests, or you can pick something off of this laundry list:
