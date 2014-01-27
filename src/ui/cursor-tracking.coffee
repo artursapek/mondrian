@@ -171,8 +171,8 @@ ui.cursor =
           @currentPosn = new Posn(e)
 
           # Initiate dragging, or continue it if it's been initiated.
-          if @down
-            if not @dragging # First detection of a drag
+          if @down and (@dragging or @currentPosn.distanceFrom(@lastDown) > 3)
+            unless @dragging # First detection of a drag
               ui.startDrag(@lastEvent, @lastDownTarget)
               @dragging = @draggingJustBegan = true
             else
