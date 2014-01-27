@@ -20,28 +20,25 @@ filePaths = (callback, keys) ->
 
   paths = []
 
-  exec 'js-yaml --to-json build.yml', (err, stdout, stderr) ->
-    throw err if err
-    throw stderr if stderr
-    src = JSON.parse(stdout).src
+  src = require('js-yaml').safeLoad(fs.readFileSync('build.yml', 'utf8')).src;
 
-    if keys?
-      src = src.filter (module) ->
-        keys.indexOf(Object.keys(module)[0]) > -1
+  if keys?
+    src = src.filter (module) ->
+      keys.indexOf(Object.keys(module)[0]) > -1
 
-    src.forEach (module) ->
-      key = Object.keys(module)[0]
-      fns = module[key]
+  src.forEach (module) ->
+    key = Object.keys(module)[0]
+    fns = module[key]
 
-      if typeof(fns[0]) == 'object' and fns[0]._dir != undefined
-        dir = fns[0]._dir
-        fns = fns.slice 1
-      else
-        dir = key
+    if typeof(fns[0]) == 'object' and fns[0]._dir != undefined
+      dir = fns[0]._dir
+      fns = fns.slice 1
+    else
+      dir = key
 
-      paths = paths.concat ("src/#{dir or ''}#{if dir then '/' else ''}#{fn}.coffee" for fn in fns)
+    paths = paths.concat ("src/#{dir or ''}#{if dir then '/' else ''}#{fn}.coffee" for fn in fns)
 
-    callback paths
+  callback paths
 
 validateBuildFiles = (paths) ->
   # Ensures all files referenced in build.yml actually exist
