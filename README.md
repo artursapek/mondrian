@@ -74,39 +74,10 @@ Compiling 16455 lines
 [██████------------------------] 14 seconds remaining
 ```
 
-#### Building the CSS
+The entire app is written in [Coffeescript](http://coffeescript.org/). You have
+to manually compile the app every time you make changes.
 
-The stylesheets are written in LESS, and compiled into CSS like so:
-
-`cake styles`
-
-#### Todo
-
-If you want to help, there's a lot that can be done. Check the issues for bugs and feature requests,
-or you could pick something off of this laundry list:
-
-  - Set up a good unit test suite with Phantomjs or another headless browser
-  - Add support for missing SVG elements
-    - Quadratic bezier (convert to cubic with two matching control points)
-    - Elliptical arc
-  - More file format import/export abilities (will probably require converter on backend)
-    - PDF
-    - AI
-  - Refactor the monolithic `ui/ui.coffee` into smaller files
-    - UI states
-    - Mouse event routing
-    - Tool management
-  - Clean up hacks and rushed features
-  - Pathfinder shape manipulation (union, subtraction, overlap)
-  - More tools for manipulating bezier curvers
-  - Guide lines, a more solid grid system
-  - Responsive layout for smaller screens
-
-However I'm open to Pull Requests dealing with any part of the app. It's a fun project in general.
-
-#### Source
-
-The build files are specified in an ordered map in [`build.yml`](build.yml).
+The source files are specified in an ordered map in [`build.yml`](build.yml).
 They are nested under their directory names. You can specify a different
 directory name using the `_dir:` key. `null` means no directory.
 
@@ -135,6 +106,12 @@ src/ui/selection.coffee
 src/geometry/posn.coffee
 src/geometry/line-segment.coffee
 ```
+
+#### Building the CSS
+
+The stylesheets are written in LESS, and compiled into CSS like so:
+
+`cake styles`
 
 ## Supported Browsers
 
