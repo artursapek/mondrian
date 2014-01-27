@@ -115,7 +115,7 @@ The stylesheets are written in LESS, and compiled into CSS like so:
 
 ## Supported Browsers
 
-Mondrian officially supports only the latest versions of Chrome, Firefox, and Safari.
+Mondrian officially supports only the latest desktop stable versions of Chrome, Firefox, and Safari.
 
 ## License
 
