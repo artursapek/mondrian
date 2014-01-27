@@ -7,6 +7,8 @@ setup.push ->
       height = Math.ceil(height)
       "<iframe width=\"#{@width}\" height=\"#{height}\" frameborder=\"0\" src=\"#{SETTINGS.EMBED.ENDPOINT}/files/permalinks/#{ui.file.key}/embed\"></iframe>"
 
+    onlineOnly: true
+
     refreshAfterVisible: ->
       if ui.file.constructor is PermalinkFile
         @generateCode()

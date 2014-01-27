@@ -50,6 +50,9 @@ class Menu
     # Save this neffew in ui.menu. This is how we're gonna access it from now on.
     @dropdownSetup()
 
+    if @onlineOnly
+      @bindOnlineListeners()
+
   refresh: ->
     @items().map -> @_refresh()
 
@@ -57,7 +60,6 @@ class Menu
     @items().map ->
       if @enableWhen?
         if @enableWhen() then @enable() else @disable()
-
 
   refreshAfterVisible: ->
     # Slower operations get called in here
@@ -71,6 +73,13 @@ class Menu
   disabled: false
 
   dropdownOpen: false
+
+  bindOnlineListeners: ->
+    if not navigator.onLine
+      @hide()
+
+    window.addEventListener("offline", @hide.bind @)
+    window.addEventListener("online", @show.bind @)
 
   text: (val) ->
     @$rep.find("> [buttontext]").text(val)
