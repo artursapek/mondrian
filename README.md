@@ -52,7 +52,7 @@ npm install
 coffee server.coffee --nodejs
 ```
 
-Then, open [`localhost:3000`](localhost:3000) in your web browser, and there you have it!
+Then, open [`localhost:3000`](http://localhost:3000) in your web browser, and there you have it!
 
 You can also access the latest stable build at [mondrian.io](http://mondrian.io).
 
