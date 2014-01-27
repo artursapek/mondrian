@@ -41,18 +41,20 @@ Mondrian also supports undo/redo through a *(somewhat rough and unstable)* file 
 
 There are no tests written for this system. It's a big todo.
 
-## Installing
+## Building the app
 
-There's nothing to install; it's a static site. You can access the latest stable build 
-at [mondrian.io](http://mondrian.io) or run it locally:
+The app works out of the box. It's a simple static site. To run it locally:
 
 ```
 git clone git@github.com:artursapek/mondrian.git
 cd mondrian
+npm install
 coffee server.coffee --nodejs
 ```
 
-Then, open `localhost:3000` in your web browser.
+Then, open [`localhost:3000`](localhost:3000) in your web browser, and there you have it!
+
+You can also access the latest stable build at [mondrian.io](http://mondrian.io).
 
 #### Installing Dependencies
 
