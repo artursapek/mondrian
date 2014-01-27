@@ -3,6 +3,8 @@ setup.push ->
   ui.menu.menus.register = new Menu
     itemid: "register-menu"
 
+    onlineOnly: true
+
     refreshAfterVisible: ->
       $("#register-name").focus()
 

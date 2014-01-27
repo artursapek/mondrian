@@ -129,11 +129,12 @@ class Menu
     if @dropdownOpen then @closeDropdown() else @openDropdown()
 
   show: ->
-    @rep?.style.display = "block"
+    return @ if @onlineOnly and !navigator.onLine
+    @$rep?.removeClass "hidden"
     @
 
   hide: ->
-    @rep?.style.display = "none"
+    @$rep?.addClass "hidden"
     @
 
   dropdownSetup: ->

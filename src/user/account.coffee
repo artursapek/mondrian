@@ -28,8 +28,6 @@ ui.account =
 
   valueOf: -> @email or "anon"
 
-
-
   uiAnonymous: ->
     # Hide and disable things not available to anonymous users.
     services.dropbox.tease().disable()
