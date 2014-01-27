@@ -365,8 +365,21 @@ div#menu-bar .menu-group,
 div#login-bar .menu-group,
 div#register-bar .menu-group,
 div#current-service .menu-group {
-  margin: 0px 0px 0px 15px;
-  display: inline-block;
+  margin: 0px;
+  float: left;
+}
+div#menu-bar .menu-group > .menu:first-child,
+div#login-bar .menu-group > .menu:first-child,
+div#register-bar .menu-group > .menu:first-child,
+div#current-service .menu-group > .menu:first-child {
+  margin-left: 15px;
+}
+div#menu-bar .menu-group > .menu.hidden,
+div#login-bar .menu-group > .menu.hidden,
+div#register-bar .menu-group > .menu.hidden,
+div#current-service .menu-group > .menu.hidden {
+  display: none;
+  margin: 0;
 }
 div#menu-bar .menu-group > .menu,
 div#login-bar .menu-group > .menu,
@@ -580,16 +593,6 @@ div#menu-bar .menu-group#filename-menu,
 div#login-bar .menu-group#filename-menu,
 div#register-bar .menu-group#filename-menu,
 div#current-service .menu-group#filename-menu {
-  display: none;
-}
-div#menu-bar #register-menu,
-div#login-bar #register-menu,
-div#register-bar #register-menu,
-div#current-service #register-menu,
-div#menu-bar #login-menu,
-div#login-bar #login-menu,
-div#register-bar #login-menu,
-div#current-service #login-menu {
   display: none;
 }
 div#menu-bar #embed-menu-dropdown,

@@ -298,8 +298,19 @@ div#menu-bar, div#login-bar, div#register-bar, div#current-service {
   }
 
   .menu-group {
-    margin: 0px 0px 0px 15px;
-    display: inline-block;
+    margin: 0px;
+    float: left;
+
+    > .menu {
+      &:first-child {
+        margin-left: 15px;
+      }
+      &.hidden {
+        display: none;
+        margin: 0;
+      }
+    }
+
 
     > .menu, > .menu-item {
       margin-left: 1px;
@@ -439,10 +450,6 @@ div#menu-bar, div#login-bar, div#register-bar, div#current-service {
     &#logout-mg, &#account-mg, &#filename-menu{
       display: none;
     }
-  }
-
-  #register-menu, #login-menu {
-    display: none;
   }
 
   #embed-menu-dropdown {
