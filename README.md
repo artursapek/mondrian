@@ -117,9 +117,13 @@ The stylesheets are written in LESS, and compiled into CSS like so:
 
 Mondrian officially supports only the latest desktop stable versions of Chrome, Firefox, and Safari.
 
+## Contributing
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) if you wish to submit a Pull Request.
+
 ## License
 
-All of the Mondrian code is available under the MIT License.
+All of the Mondrian code and documentation is available under the [MIT License](LICENSE).
 
 ## Contact
 
