@@ -50,19 +50,19 @@
   font-family: 'Maven Pro';
   font-style: normal;
   font-weight: 400;
-  src: local('Maven Pro Light'), local('Maven-Pro-Light'), url(http://mondrian.io/build/fonts/maven-pro.400.woff) format('woff');
+  src: local('Maven Pro Light'), local('Maven-Pro-Light'), url(/build/fonts/maven-pro.400.woff) format('woff');
 }
 @font-face {
   font-family: 'Maven Pro';
   font-style: normal;
   font-weight: 500;
-  src: local('Maven Pro Medium'), local('Maven-Pro-Medium'), url(http://mondrian.io/build/fonts/maven-pro.500.woff) format('woff');
+  src: local('Maven Pro Medium'), local('Maven-Pro-Medium'), url(/build/fonts/maven-pro.500.woff) format('woff');
 }
 @font-face {
   font-family: 'Maven Pro';
   font-style: normal;
   font-weight: 700;
-  src: local('Maven Pro Dark'), local('Maven-Pro-Dark'), url(http://mondrian.io/build/fonts/maven-pro.700.woff) format('woff');
+  src: local('Maven Pro Dark'), local('Maven-Pro-Dark'), url(/build/fonts/maven-pro.700.woff) format('woff');
 }
 .utility-window-colors {
   background-color: rgba(234, 234, 234, 0.92);
@@ -365,8 +365,21 @@ div#menu-bar .menu-group,
 div#login-bar .menu-group,
 div#register-bar .menu-group,
 div#current-service .menu-group {
-  margin: 0px 0px 0px 15px;
-  display: inline-block;
+  margin: 0px;
+  float: left;
+}
+div#menu-bar .menu-group > .menu:first-child,
+div#login-bar .menu-group > .menu:first-child,
+div#register-bar .menu-group > .menu:first-child,
+div#current-service .menu-group > .menu:first-child {
+  margin-left: 15px;
+}
+div#menu-bar .menu-group > .menu.hidden,
+div#login-bar .menu-group > .menu.hidden,
+div#register-bar .menu-group > .menu.hidden,
+div#current-service .menu-group > .menu.hidden {
+  display: none;
+  margin: 0;
 }
 div#menu-bar .menu-group > .menu,
 div#login-bar .menu-group > .menu,
@@ -580,16 +593,6 @@ div#menu-bar .menu-group#filename-menu,
 div#login-bar .menu-group#filename-menu,
 div#register-bar .menu-group#filename-menu,
 div#current-service .menu-group#filename-menu {
-  display: none;
-}
-div#menu-bar #register-menu,
-div#login-bar #register-menu,
-div#register-bar #register-menu,
-div#current-service #register-menu,
-div#menu-bar #login-menu,
-div#login-bar #login-menu,
-div#register-bar #login-menu,
-div#current-service #login-menu {
   display: none;
 }
 div#menu-bar #embed-menu-dropdown,
@@ -1210,7 +1213,7 @@ svg#hover-targets * {
   cursor: url('img/cursors/cursor.png') 1 1, default !important;
 }
 .swatch[empty] {
-  background-image: url("img/empty-color.png");
+  background-image: url("img/swatches/empty-color.png");
 }
 .swatch-duo {
   display: inline-block;
@@ -1222,13 +1225,13 @@ svg#hover-targets * {
   border-bottom: none!important;
 }
 .swatch-duo .swatch:first-child[empty] {
-  background-image: url("img/empty-color-half-top.png");
+  background-image: url("img/swatches/empty-color-half-top.png");
 }
 .swatch-duo .swatch:last-child {
   border-top: none!important;
 }
 .swatch-duo .swatch:last-child[empty] {
-  background-image: url("img/empty-color-half-bottom.png");
+  background-image: url("img/swatches/empty-color-half-bottom.png");
 }
 #current-swatches {
   position: absolute;
@@ -1358,7 +1361,7 @@ svg#hover-targets * {
   height: 19px;
   border: 1px solid rgba(207, 207, 207, 0.92);
   background-color: rgba(255, 255, 255, 0.5);
-  background-image: url('img/empty-color-line.png');
+  background-image: url("img/swatches/empty-color-line.png");
   background-position: center;
   background-repeat: no-repeat;
   box-sizing: border-box;
@@ -1411,15 +1414,15 @@ svg#hover-targets * {
   margin-top: -10px;
   margin-left: -10px;
   z-index: 41;
-  background-image: url("img/corner-handle.png");
+  background-image: url("img/transformer/corner-handle.png");
 }
 .transform.handle.corner:hover {
-  background-image: url("img/corner-handle-hover.png");
+  background-image: url("img/transformer/corner-handle-hover.png");
 }
 .transform.handle.point {
   width: 6px;
   height: 6px;
-  background-image: url("img/point-handle.png");
+  background-image: url("img/transformer/point-handle.png");
   margin-left: -5px;
   margin-top: -3px;
   padding: 1px;
@@ -1431,22 +1434,22 @@ svg#hover-targets * {
 }
 .transform.handle.point:hover,
 .transform.handle.point[hover] {
-  background-image: url("img/point-handle-hover.png");
+  background-image: url("img/transformer/point-handle-hover.png");
 }
 .transform.handle.point:active,
 .transform.handle.point[selected] {
-  background-image: url("img/point-handle-select.png");
+  background-image: url("img/transformer/point-handle-select.png");
 }
 .transform.handle.point[action] {
   width: 11px;
   height: 11px;
   margin-left: -7px;
   margin-top: -6px;
-  background-image: url("img/point-handle-action.png");
+  background-image: url("img/transformer/point-handle-action.png");
 }
 .transform.handle.point[action]:active,
 .transform.handle.point[action][active] {
-  background-image: url("img/point-handle-action-active.png");
+  background-image: url("img/transformer/point-handle-action-active.png");
 }
 .transform.handle.side {
   width: 6px;
@@ -1456,13 +1459,13 @@ svg#hover-targets * {
   left: -10000px;
   top: -10000px;
   z-index: 41;
-  background-image: url("img/side-handle.png");
+  background-image: url("img/transformer/side-handle.png");
 }
 .transform.handle.side:hover {
-  background-image: url("img/side-handle-hover.png");
+  background-image: url("img/transformer/side-handle-hover.png");
 }
 .transform.handle.side:active {
-  background-image: url("img/side-handle-select.png");
+  background-image: url("img/transformer/side-handle-select.png");
 }
 .transform.center {
   width: 5px;
@@ -1472,7 +1475,7 @@ svg#hover-targets * {
   top: -10000px;
   margin-top: -4px;
   margin-left: -4px;
-  background-image: url("img/transformer-center.png");
+  background-image: url("img/transformer/transformer-center.png");
 }
 #text-underline {
   position: absolute;
@@ -1486,7 +1489,7 @@ svg#hover-targets * {
   position: absolute;
   width: 11px;
   height: 11px;
-  background-image: url("img/rotate-nondefault-origin.png");
+  background-image: url("img/transformer/rotate-nondefault-origin.png");
 }
 #utilities {
   position: absolute;
@@ -1551,7 +1554,7 @@ svg#hover-targets * {
 #utilities .utility-window#transform-ut #preview-pane #origin-icon {
   width: 7px;
   height: 7px;
-  background-image: url("img/transform.origin.png");
+  background-image: url("img/transformer/transform.origin.png");
   position: absolute;
   top: 40px;
   left: 20px;
@@ -1839,9 +1842,13 @@ button {
   background-color: #ffffff;
 }
 .dropdown .dropdown-chosen .dropdown-item {
-  background-image: url("img/dropdown-arrow.png");
   background-position: right;
   background-repeat: no-repeat;
+}
+.dropdown .dropdown-chosen .dropdown-item:after {
+  content: "▼";
+  float: right;
+  font-size: 12px;
 }
 .dropdown .dropdown-list {
   background: rgba(255, 255, 255, 0.92);

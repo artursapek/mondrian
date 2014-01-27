@@ -1,6 +1,4 @@
 .compiletime
 .DS_Store
-build/build.js
 build/build.coffee
-build/build.min.js
 node_modules/*

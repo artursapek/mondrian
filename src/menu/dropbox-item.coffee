@@ -3,6 +3,8 @@ setup.push ->
   ui.menu.items.dropboxConnect = new MenuItem
     itemid: "connect-to-dropbox-item"
 
+    enableWhen: -> navigator.onLine
+
     refresh: () ->
       if ui.account.session_token
         @enable()

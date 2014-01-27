@@ -3,6 +3,8 @@ setup.push ->
   ui.menu.menus.login = new Menu
     itemid: "login-menu"
 
+    onlineOnly: true
+
     refreshAfterVisible: ->
       $("#login-email-input").focus()
 

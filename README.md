@@ -35,36 +35,32 @@ Mondrian offers all the tools needed to create, modify, and export simple SVG fi
 
 Mondrian also supports undo/redo through a *(somewhat rough and unstable)* file history API that
 
-  - Stores operations, not states
-  - Is tiny and JSON-serializable, so it can be persisted to a server and loaded back up in another session
-  - Can visually reconstruct a file's entire history step-by-step
+  - stores operations, not states
+  - is tiny and JSON-serializable, so it can be persisted to a server and loaded back up in another session
+  - can visually reconstruct a file's entire history step-by-step
 
 There are no tests written for this system. It's a big todo.
 
-## Installing
+## Building the app
 
-There's nothing to install; it's a static site. You can access the latest stable build 
-at [mondrian.io](http://mondrian.io) or run it locally:
+The app works out of the box. It's a simple static site. To run it locally:
 
 ```
 git clone git@github.com:artursapek/mondrian.git
 cd mondrian
+npm install
 coffee server.coffee --nodejs
 ```
 
-Then, open `localhost:3000` in your web browser.
+Then, open [`localhost:3000`](http://localhost:3000) in your web browser, and there you have it!
 
-## Contributing
-
-Editors like Inkscape and Adobe Illustrator tower over Mondrian in their features and abilities. While a big goal in Mondrian is to avoid feature creep
-and keep it visually bare, it's definitely still missing a lot. Contributors are encouraged to develop new tools and utilities they feel are missing
-as well as optimizing the performance of those that already exist. All significant contributions will get credit in the meta window within the app.
+You can also access the latest stable build at [mondrian.io](http://mondrian.io).
 
 #### Installing Dependencies
 
 `npm install`
 
-#### Building the app
+#### Building the JavaScript
 
 Run the build task to compile all of the files into the executable [`build.js`](build/build.js):
 
@@ -78,32 +74,10 @@ Compiling 16455 lines
 [██████------------------------] 14 seconds remaining
 ```
 
-#### Todo
+The entire app is written in [Coffeescript](http://coffeescript.org/). You have
+to manually compile the app every time you make changes.
 
-If you want to help, there's a lot that can be done.
-
-  - Set up a good unit test suite with Phantomjs or another headless browser
-  - Add support for missing SVG elements
-    - Quadratic bezier (convert to cubic with two matching control points)
-    - Elliptical arc
-  - More file format import/export abilities (will probably require converter on backend)
-    - PDF
-    - AI
-  - Refactor the monolithic `ui/ui.coffee` into smaller files
-    - UI states
-    - Mouse event routing
-    - Tool management
-  - Clean up hacks and rushed features
-  - Pathfinder shape manipulation (union, subtraction, overlap)
-  - More tools for manipulating bezier curvers
-  - Guide lines, a more solid grid system
-  - Responsive layout for smaller screens
-
-However I'm open to Pull Requests dealing with any part of the app. It's a fun project in general.
-
-#### Source
-
-The build files are specified in an ordered map in [`build.yml`](build.yml).
+The source files are specified in an ordered map in [`build.yml`](build.yml).
 They are nested under their directory names. You can specify a different
 directory name using the `_dir:` key. `null` means no directory.
 
@@ -132,6 +106,12 @@ src/ui/selection.coffee
 src/geometry/posn.coffee
 src/geometry/line-segment.coffee
 ```
+
+#### Building the CSS
+
+The stylesheets are written in LESS, and compiled into CSS like so:
+
+`cake styles`
 
 ## Supported Browsers
 

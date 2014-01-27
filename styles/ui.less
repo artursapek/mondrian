@@ -298,8 +298,19 @@ div#menu-bar, div#login-bar, div#register-bar, div#current-service {
   }
 
   .menu-group {
-    margin: 0px 0px 0px 15px;
-    display: inline-block;
+    margin: 0px;
+    float: left;
+
+    > .menu {
+      &:first-child {
+        margin-left: 15px;
+      }
+      &.hidden {
+        display: none;
+        margin: 0;
+      }
+    }
+
 
     > .menu, > .menu-item {
       margin-left: 1px;
@@ -439,10 +450,6 @@ div#menu-bar, div#login-bar, div#register-bar, div#current-service {
     &#logout-mg, &#account-mg, &#filename-menu{
       display: none;
     }
-  }
-
-  #register-menu, #login-menu {
-    display: none;
   }
 
   #embed-menu-dropdown {
@@ -1057,7 +1064,7 @@ svg#hover-targets {
   cursor: url('img/cursors/cursor.png') 1 1, default!important;
 
   &[empty]{
-    .bgimg("empty-color.png");
+    .bgimg("swatches/empty-color.png");
   }
 }
 
@@ -1070,13 +1077,13 @@ svg#hover-targets {
     &:first-child {
       border-bottom: none!important;
       &[empty] {
-        .bgimg("empty-color-half-top.png");
+        .bgimg("swatches/empty-color-half-top.png");
       }
     }
     &:last-child {
       border-top: none!important;
       &[empty] {
-        .bgimg("empty-color-half-bottom.png");
+        .bgimg("swatches/empty-color-half-bottom.png");
       }
     }
   }
@@ -1225,7 +1232,7 @@ svg#hover-targets {
         height: 19px;
         border: 1px solid rgba(207, 207, 207, 0.92);
         background-color: rgba(255, 255, 255, 0.5);
-        background-image: url('img/empty-color-line.png');
+        .bgimg('swatches/empty-color-line.png');
         background-position: center;
         background-repeat: no-repeat;
         box-sizing: border-box;
@@ -1289,17 +1296,17 @@ svg#hover-targets {
       margin-top: -10px;
       margin-left: -10px;
       z-index: 41;
-      .bgimg("corner-handle.png");
+      .bgimg("transformer/corner-handle.png");
 
       &:hover {
-        .bgimg("corner-handle-hover.png");
+        .bgimg("transformer/corner-handle-hover.png");
       }
     }
 
     &.point {
       width: 6px;
       height: 6px;
-      .bgimg("point-handle.png");
+      .bgimg("transformer/point-handle.png");
       margin-left: -5px;
       margin-top: -3px;
       padding: 1px;
@@ -1311,10 +1318,10 @@ svg#hover-targets {
       }
 
       &:hover, &[hover] {
-        .bgimg("point-handle-hover.png");
+        .bgimg("transformer/point-handle-hover.png");
       }
       &:active, &[selected] {
-        .bgimg("point-handle-select.png");
+        .bgimg("transformer/point-handle-select.png");
       }
 
       &[action] {
@@ -1322,10 +1329,10 @@ svg#hover-targets {
         height: 11px;
         margin-left: -7px;
         margin-top: -6px;
-        .bgimg("point-handle-action.png");
+        .bgimg("transformer/point-handle-action.png");
 
         &:active, &[active] {
-          .bgimg("point-handle-action-active.png");
+          .bgimg("transformer/point-handle-action-active.png");
         }
       }
     }
@@ -1338,14 +1345,14 @@ svg#hover-targets {
       left: -10000px; // Start out of sight
       top: -10000px;
       z-index: 41;
-      .bgimg("side-handle.png");
+      .bgimg("transformer/side-handle.png");
 
       &:hover {
-        .bgimg("side-handle-hover.png");
+        .bgimg("transformer/side-handle-hover.png");
       }
 
       &:active {
-        .bgimg("side-handle-select.png");
+        .bgimg("transformer/side-handle-select.png");
       }
     }
   }
@@ -1358,7 +1365,7 @@ svg#hover-targets {
     top: -10000px;
     margin-top: -4px;
     margin-left: -4px;
-    .bgimg("transformer-center.png");
+    .bgimg("transformer/transformer-center.png");
   }
 }
 
@@ -1375,7 +1382,7 @@ svg#hover-targets {
   position: absolute;
   width: 11px;
   height: 11px;
-  .bgimg("rotate-nondefault-origin.png");
+  .bgimg("transformer/rotate-nondefault-origin.png");
 }
 
 #utilities {
@@ -1447,7 +1454,7 @@ svg#hover-targets {
         #origin-icon {
           width: 7px;
           height: 7px;
-          .bgimg("transform.origin.png");
+          .bgimg("transformer/transform.origin.png");
           position: absolute;
           top: 40px;
           left: 20px;
@@ -1786,7 +1793,11 @@ button {
     background-color: rgba(255, 255, 255, 1);
 
     .dropdown-item {
-      .bgimg('dropdown-arrow.png');
+      &:after {
+        content: "▼";
+        float: right;
+        font-size: 12px;
+      }
       background-position: right;
       background-repeat: no-repeat;
     }
