@@ -169,8 +169,10 @@ task 'tests', 'Run unit tests cuz', (options) ->
 
 
 task 'styles', 'Compile CSS', ->
+  startTime = new Date()
   exec 'lessc styles/ui.less > build/styles.css'
   exec 'lessc styles/embed.less > build/embed.css'
+  console.log "Compiled CSS in #{(new Date().valueOf() - startTime.valueOf()) / 1000} seconds"
 
 task 'pages', 'Build pages', ->
   exec 'lessc styles/page.less > build/styles/page.css'
