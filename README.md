@@ -35,9 +35,9 @@ Mondrian offers all the tools needed to create, modify, and export simple SVG fi
 
 Mondrian also supports undo/redo through a *(somewhat rough and unstable)* file history API that
 
-  - Stores operations, not states
-  - Is tiny and JSON-serializable, so it can be persisted to a server and loaded back up in another session
-  - Can visually reconstruct a file's entire history step-by-step
+  - stores operations, not states
+  - is tiny and JSON-serializable, so it can be persisted to a server and loaded back up in another session
+  - can visually reconstruct a file's entire history step-by-step
 
 There are no tests written for this system. It's a big todo.
 
