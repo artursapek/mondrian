@@ -115,7 +115,8 @@ The stylesheets are written in LESS, and compiled into CSS like so:
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) if you wish to submit a Pull Request.
+There's a lot to do! Read [CONTRIBUTING.md](CONTRIBUTING.md) for a list of what you can work on,
+context around the project, and guidelines.
 
 ## Supported Browsers
 
