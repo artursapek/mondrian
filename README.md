@@ -113,13 +113,13 @@ The stylesheets are written in LESS, and compiled into CSS like so:
 
 `cake styles`
 
-## Supported Browsers
-
-Mondrian officially supports only the latest desktop stable versions of Chrome, Firefox, and Safari.
-
 ## Contributing
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) if you wish to submit a Pull Request.
+
+## Supported Browsers
+
+Mondrian officially supports only the latest desktop stable versions of Chrome, Firefox, and Safari.
 
 ## License
 
