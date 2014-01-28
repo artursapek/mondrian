@@ -171,13 +171,14 @@ ui.cursor =
           @currentPosn = new Posn(e)
 
           # Initiate dragging, or continue it if it's been initiated.
-          if @down and (@dragging or @currentPosn.distanceFrom(@lastDown) > 3)
-            unless @dragging # First detection of a drag
-              ui.startDrag(@lastEvent, @lastDownTarget)
-              @dragging = @draggingJustBegan = true
-            else
+          if @down
+            if @dragging
               ui.continueDrag(e, @lastDownTarget)
               @draggingJustBegan = false
+            # Allow for slight movement without triggering drag
+            else if @currentPosn.distanceFrom(@lastDown) > SETTINGS.DRAG_THRESHOLD
+              ui.startDrag(@lastEvent, @lastDownTarget)
+              @dragging = @draggingJustBegan = true
 
     @_mouseover = (e) =>
       # Just some simple hover actions, as long as we're not dragging something.

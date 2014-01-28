@@ -308,6 +308,8 @@ Contact: me@artur.co
 
   SETTINGS.DOUBLE_CLICK_THRESHOLD = 600;
 
+  SETTINGS.DRAG_THRESHOLD = 3;
+
   CONSTANTS = {
     MATCHERS: {
       POINT: /[MLCSHV][\-\de\.\,\-\s]+/gi
@@ -10701,12 +10703,12 @@ Contact: me@artur.co
             _this.lastEvent = e;
             _this.currentPosn = new Posn(e);
             if (_this.down) {
-              if (!_this.dragging) {
-                ui.startDrag(_this.lastEvent, _this.lastDownTarget);
-                return _this.dragging = _this.draggingJustBegan = true;
-              } else {
+              if (_this.dragging) {
                 ui.continueDrag(e, _this.lastDownTarget);
                 return _this.draggingJustBegan = false;
+              } else if (_this.currentPosn.distanceFrom(_this.lastDown) > SETTINGS.DRAG_THRESHOLD) {
+                ui.startDrag(_this.lastEvent, _this.lastDownTarget);
+                return _this.dragging = _this.draggingJustBegan = true;
               }
             }
           }
