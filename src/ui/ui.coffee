@@ -243,6 +243,9 @@ window.ui =
     topUI = isOnTopUI(target)
 
     if topUI
+      # Constrain UI to left clicks only.
+      return if e.which isnt 1
+
       switch topUI
         when "menu"
           @menu.menu(target.id)?._click(e)
