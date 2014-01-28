@@ -181,6 +181,7 @@ noop =
 Tool::hover        = noop
 Tool::unhover      = noop
 Tool::click        = noop
+Tool::rightClick   = noop
 Tool::mousedown    = noop
 Tool::mouseup      = noop
 Tool::startDrag    = noop

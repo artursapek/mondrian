@@ -253,7 +253,10 @@ window.ui =
         else
           @topUI.dispatch(e, "click")
     else
-      @uistate.get('tool').dispatch(e, "click")
+      if e.which is 1
+        @uistate.get('tool').dispatch(e, "click")
+      else if e.which is 3
+        @uistate.get('tool').dispatch(e, "rightClick")
 
   doubleclick: (e, target) ->
     @uistate.get('tool').dispatch(e, "doubleclick")
