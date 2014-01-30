@@ -176,7 +176,11 @@ task 'styles', 'Compile CSS', ->
   ].map (styles) ->
     fs.readFile styles.source, 'utf-8', (e, data) ->
       lessc.render data, (e, css) ->
-        fs.writeFile styles.dest, css
+        if not e
+          fs.writeFile styles.dest, css
+        else
+          console.log lessc.formatError e, { color: true } if e
+
   console.log "Compiled CSS in #{(new Date().valueOf() - startTime.valueOf()) / 1000} seconds"
 
 task 'pages', 'Build pages', ->
@@ -186,13 +190,15 @@ task 'pages', 'Build pages', ->
   ].map (styles) ->
     fs.readFile styles.source, 'utf-8', (e, data) ->
       lessc.render data, (e, css) ->
-        fs.writeFile styles.dest, css
+        if not e
+          fs.writeFile styles.dest, css
+        else
+          console.log lessc.formatError e, { color: true } if e
 
   exec 'haml terms-of-use/index.haml > terms-of-use/index.html'
   exec 'haml xml/index.haml > xml/index.html'
   exec 'haml contributing/index.haml > contributing/index.html'
   exec 'haml signup/index.haml > signup/index.html'
-
 
   exec 'coffee --compile contributing/dance.coffee', (err) ->
     throw err if err
