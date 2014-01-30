@@ -3,6 +3,7 @@
 
 fs     = require 'fs'
 {exec} = require 'child_process'
+lessc  = require 'less'
 
 SOURCE_HEADER = '''
                 ###
@@ -170,21 +171,31 @@ task 'tests', 'Run unit tests cuz', (options) ->
 
 task 'styles', 'Compile CSS', ->
   startTime = new Date()
-  exec 'lessc styles/ui.less > build/styles.css'
-  exec 'lessc styles/embed.less > build/embed.css'
+  [ { source: 'styles/ui.less', dest: 'build/styles.css' },
+    { source: 'styles/embed.less', dest: 'build/embed.css' }
+  ].map (styles) ->
+    fs.readFile styles.source, 'utf-8', (e, data) ->
+      lessc.render data, (e, css) ->
+        fs.writeFile styles.dest, css
   console.log "Compiled CSS in #{(new Date().valueOf() - startTime.valueOf()) / 1000} seconds"
 
 task 'pages', 'Build pages', ->
-  exec 'lessc styles/page.less > build/styles/page.css'
-  exec 'lessc styles/contributing.less > build/styles/contributing.css'
-  exec 'lessc styles/testing.less > build/styles/testing.css'
+  [ { source: 'styles/page.less', dest: 'build/styles/page.css' },
+    { source: 'styles/contributing.less', dest: 'build/styles/contributing.css' },
+    { source: 'styles/testing.less', dest: 'build/styles/testing.css' }
+  ].map (styles) ->
+    fs.readFile styles.source, 'utf-8', (e, data) ->
+      lessc.render data, (e, css) ->
+        fs.writeFile styles.dest, css
+
   exec 'haml terms-of-use/index.haml > terms-of-use/index.html'
   exec 'haml xml/index.haml > xml/index.html'
   exec 'haml contributing/index.haml > contributing/index.html'
   exec 'haml signup/index.haml > signup/index.html'
+
+
   exec 'coffee --compile contributing/dance.coffee', (err) ->
     throw err if err
-
 
 task 'minify', 'Minify source code', ->
     exec 'uglifyjs build/build.js > build/build.min.js', (err, stdout, stderr) ->
