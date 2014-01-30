@@ -171,7 +171,7 @@ task 'tests', 'Run unit tests cuz', (options) ->
 
 task 'styles', 'Compile CSS', ->
   startTime = new Date()
-  [ { source: 'styles/ui.less', dest: 'build/styles.css' },
+  [ { source: 'styles/ui.less', dest: 'build/styles.css' }
     { source: 'styles/embed.less', dest: 'build/embed.css' }
   ].map (styles) ->
     fs.readFile styles.source, 'utf-8', (e, data) ->
@@ -180,8 +180,8 @@ task 'styles', 'Compile CSS', ->
   console.log "Compiled CSS in #{(new Date().valueOf() - startTime.valueOf()) / 1000} seconds"
 
 task 'pages', 'Build pages', ->
-  [ { source: 'styles/page.less', dest: 'build/styles/page.css' },
-    { source: 'styles/contributing.less', dest: 'build/styles/contributing.css' },
+  [ { source: 'styles/page.less', dest: 'build/styles/page.css' }
+    { source: 'styles/contributing.less', dest: 'build/styles/contributing.css' }
     { source: 'styles/testing.less', dest: 'build/styles/testing.css' }
   ].map (styles) ->
     fs.readFile styles.source, 'utf-8', (e, data) ->
