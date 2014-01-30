@@ -29,18 +29,7 @@ ui.hotkeys =
 
     root:
       context: ui
-      down:
-        'cmd-S': (e) ->
-          e.preventDefault() # Save
-          @file.save()
-        'cmd-N': (e) ->
-          e.preventDefault() # New
-          console.log "new"
-        'cmd-O': (e) ->
-          e.preventDefault()
-          if @file.service?
-            @file.service.open()
-
+      down: {}
       up: {}
 
     app:
@@ -109,10 +98,6 @@ ui.hotkeys =
 
         # Ignore certain browser defaults
         'cmd-D': (e) -> e.preventDefault() # Bookmark
-
-        'cmd-S': (e) ->
-          e.preventDefault() # Save
-          ui.file.save()
 
         'ctrl-L': -> ui.annotations.clear()
 

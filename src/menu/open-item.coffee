@@ -9,6 +9,8 @@ setup.push ->
     action: ->
       ui.file.service.open()
 
+    hotkey: 'cmd-O'
+
 
   # Open from hard drive...
 
