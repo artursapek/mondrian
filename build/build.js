@@ -9190,6 +9190,9 @@ Contact: me@artur.co
       }
       topUI = isOnTopUI(target);
       if (topUI) {
+        if (e.which !== 1) {
+          return;
+        }
         switch (topUI) {
           case "menu":
             return (_ref3 = this.menu.menu(target.id)) != null ? _ref3._click(e) : void 0;
@@ -9199,7 +9202,11 @@ Contact: me@artur.co
             return this.topUI.dispatch(e, "click");
         }
       } else {
-        return this.uistate.get('tool').dispatch(e, "click");
+        if (e.which === 1) {
+          return this.uistate.get('tool').dispatch(e, "click");
+        } else if (e.which === 3) {
+          return this.uistate.get('tool').dispatch(e, "rightClick");
+        }
       }
     },
     doubleclick: function(e, target) {
@@ -10753,6 +10760,8 @@ Contact: me@artur.co
         return _this._mouseup(e);
       }).mouseover(function(e) {
         return _this._mouseover(e);
+      }).on('contextmenu', function(e) {
+        return e.preventDefault();
       });
       return ui.window.on('focus', function() {
         return _this.currentPosn = new Posn(-100, -100);
@@ -14660,6 +14669,8 @@ Contact: me@artur.co
 
   Tool.prototype.click = noop;
 
+  Tool.prototype.rightClick = noop;
+
   Tool.prototype.mousedown = noop;
 
   Tool.prototype.mouseup = noop;
@@ -15812,9 +15823,20 @@ Contact: me@artur.co
     click: {
       all: function(e) {
         if (ui.hotkeys.modifiersDown.has("alt")) {
-          ui.canvas.zoomOut();
+          ui.canvas.zoom100();
         } else {
           ui.canvas.zoomIn();
+        }
+        ui.window.centerOn(new Posn(e.canvasX, e.canvasY));
+        return ui.refreshAfterZoom();
+      }
+    },
+    rightClick: {
+      all: function(e) {
+        if (ui.hotkeys.modifiersDown.has("alt")) {
+          ui.canvas.zoom100();
+        } else {
+          ui.canvas.zoomOut();
         }
         ui.window.centerOn(new Posn(e.canvasX, e.canvasY));
         return ui.refreshAfterZoom();
@@ -15831,11 +15853,21 @@ Contact: me@artur.co
       }
     },
     stopDrag: {
-      all: function() {
+      all: function(e) {
         var elem, _i, _len, _ref3, _results;
-        ui.dragSelection.end(function(r) {
-          return ui.canvas.zoomToFit(r);
-        });
+        if (ui.hotkeys.modifiersDown.has("alt")) {
+          ui.dragSelection.end(function() {
+            return ui.canvas.zoom100();
+          });
+        } else if (e.which === 1) {
+          ui.dragSelection.end(function(r) {
+            return ui.canvas.zoomToFit(r);
+          });
+        } else if (e.which === 3) {
+          ui.dragSelection.end(function() {
+            return ui.canvas.zoomOut();
+          });
+        }
         _ref3 = ui.elements;
         _results = [];
         for (_i = 0, _len = _ref3.length; _i < _len; _i++) {

@@ -207,6 +207,9 @@ ui.cursor =
         @_mouseup(e)
       .mouseover (e) =>
         @_mouseover(e)
+      .on 'contextmenu', (e) =>
+        # Handling right-clicking in @_mouse* handlers
+        e.preventDefault()
 
 
 
