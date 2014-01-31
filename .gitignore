@@ -13,6 +13,8 @@ npm-debug.log
 ###########
 .compiletime
 build/build.coffee
+build/build.js
+build/build.min.js
 
 # Sublime Text #
 ##############
