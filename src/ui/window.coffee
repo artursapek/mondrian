@@ -50,10 +50,6 @@ ui.window =
   center: ->
     new Posn(@width() / 2, @height() /2)
 
-  centerRelativeToCanvas: ->
-    new Posn((-ui.canvas.normal.x + @halfw()) / ui.canvas.zoom,
-             (-ui.canvas.normal.y + @halfh()) / ui.canvas.zoom)
-
   centerOn: (p) ->
     x = @width() / 2 - (p.x * ui.canvas.zoom)
     y = @height() / 2 - (p.y * ui.canvas.zoom)

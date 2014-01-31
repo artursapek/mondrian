@@ -9894,9 +9894,6 @@ Contact: me@artur.co
     center: function() {
       return new Posn(this.width() / 2, this.height() / 2);
     },
-    centerRelativeToCanvas: function() {
-      return new Posn((-ui.canvas.normal.x + this.halfw()) / ui.canvas.zoom, (-ui.canvas.normal.y + this.halfh()) / ui.canvas.zoom);
-    },
     centerOn: function(p) {
       var x, y;
       x = this.width() / 2 - (p.x * ui.canvas.zoom);
