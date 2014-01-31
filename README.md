@@ -41,14 +41,16 @@ Mondrian also supports undo/redo through a *(somewhat rough and unstable)* file 
 
 There are no tests written for this system. It's a big todo.
 
-## Building the app
+## Running the app
 
-The app works out of the box. It's a simple static site. To run it locally:
+The app is a simple static site. To run it locally just clone the repo, install the dependencies,
+and build the sources files.
 
 ```
 git clone git@github.com:artursapek/mondrian.git
 cd mondrian
 npm install
+cake build
 coffee server.coffee --nodejs
 ```
 
