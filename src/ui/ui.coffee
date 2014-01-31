@@ -19,10 +19,10 @@ window.ui =
   # It has many child objects with more specific functions, like hotkeys and cursor (tracking)
 
   setup: ->
-    # Default settings for a new Mondrian session.
-
     @uistate = new UIState()
-    @uistate.restore()
+
+    # Once everything is initialized, restore the state of it all
+    setTimeout (=> @uistate.restore()), 1
 
     # This means the user switched tabs and came back.
     # Now we have no idea where the cursor is,
@@ -42,6 +42,7 @@ window.ui =
 
     @fill.type = "fill"
     @stroke.type = "stroke"
+
 
     # The default UI config is the draw config obviously!
     @changeTo "draw"
@@ -95,7 +96,6 @@ window.ui =
     @canvas.zoom = zoom
     @canvas.normal = normal
     @canvas.redraw()
-    @canvas.zoom100()
     @deleteAll()
 
 
@@ -167,14 +167,13 @@ window.ui =
   # Tool switching/management
 
   switchToTool: (tool) ->
-    return if tool is @uistate.get('tool')
+    dom.body?.setAttribute 'tool', tool.cssid
 
     @uistate.get('tool')?.tearDown()
     @uistate.set 'tool', tool
 
     dom.$toolCursorPlaceholder?.hide()
     dom.$body?.off('mousemove.tool-placeholder')
-    dom.body?.setAttribute 'tool', tool.cssid
 
     tool.setup()
 

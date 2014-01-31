@@ -8992,7 +8992,9 @@ Contact: me@artur.co
     setup: function() {
       var _this = this;
       this.uistate = new UIState();
-      this.uistate.restore();
+      setTimeout((function() {
+        return _this.uistate.restore();
+      }), 1);
       ui.window.on('focus', function() {
         return dom.$toolCursorPlaceholder.hide();
       });
@@ -9043,7 +9045,6 @@ Contact: me@artur.co
       this.canvas.zoom = zoom;
       this.canvas.normal = normal;
       this.canvas.redraw();
-      this.canvas.zoom100();
       return this.deleteAll();
     },
     configurations: {
@@ -9110,21 +9111,18 @@ Contact: me@artur.co
     switchToTool: function(tool) {
       var _ref3, _ref4, _ref5, _ref6, _ref7, _ref8,
         _this = this;
-      if (tool === this.uistate.get('tool')) {
-        return;
+      if ((_ref3 = dom.body) != null) {
+        _ref3.setAttribute('tool', tool.cssid);
       }
-      if ((_ref3 = this.uistate.get('tool')) != null) {
-        _ref3.tearDown();
+      if ((_ref4 = this.uistate.get('tool')) != null) {
+        _ref4.tearDown();
       }
       this.uistate.set('tool', tool);
-      if ((_ref4 = dom.$toolCursorPlaceholder) != null) {
-        _ref4.hide();
+      if ((_ref5 = dom.$toolCursorPlaceholder) != null) {
+        _ref5.hide();
       }
-      if ((_ref5 = dom.$body) != null) {
-        _ref5.off('mousemove.tool-placeholder');
-      }
-      if ((_ref6 = dom.body) != null) {
-        _ref6.setAttribute('tool', tool.cssid);
+      if ((_ref6 = dom.$body) != null) {
+        _ref6.off('mousemove.tool-placeholder');
       }
       tool.setup();
       if (tool !== tools.paw) {
@@ -9425,20 +9423,27 @@ Contact: me@artur.co
 
 
   UIState = (function() {
-    function UIState(attributes) {
-      var _this = this;
-      this.attributes = attributes != null ? attributes : this.DEFAULTS();
+    function UIState() {}
+
+    UIState.prototype.attributes = {};
+
+    UIState.prototype.restore = function() {
+      var storedState,
+        _this = this;
+      storedState = localStorage.getItem('uistate');
+      if (storedState == null) {
+        this.attributes = this.DEFAULTS();
+        ui.canvas.zoom100();
+        this.set("normal", ui.canvas.normal);
+      } else {
+        if (storedState != null) {
+          this.importJSON(JSON.parse(storedState));
+        }
+      }
+      this.apply();
       this.on('change', function() {
         return _this.saveLocally();
       });
-    }
-
-    UIState.prototype.restore = function() {
-      var storedState;
-      storedState = localStorage.getItem('uistate');
-      if (storedState != null) {
-        this.importJSON(JSON.parse(storedState));
-      }
       return this;
     };
 
@@ -9467,8 +9472,10 @@ Contact: me@artur.co
     };
 
     UIState.prototype.apply = function() {
-      ui.fill.absorb(this.get('fill'));
-      return ui.stroke.absorb(this.get('stroke'));
+      ui.canvas.setZoom(this.get("zoom"));
+      ui.canvas.normal = this.get("normal");
+      ui.canvas.refreshPosition();
+      return ui.switchToTool(this.get("tool"));
     };
 
     UIState.prototype.toJSON = function() {
@@ -10150,7 +10157,7 @@ Contact: me@artur.co
     }
 
     Swatch.prototype.refresh = function() {
-      var elem, tiedTo, _i, _len, _ref3, _results;
+      var elem, tiedTo, _i, _len, _ref3;
       if (this.r === null) {
         this.rep.style.backgroundColor = "";
         this.rep.style.border = "";
@@ -10167,18 +10174,17 @@ Contact: me@artur.co
         tiedTo = this.tiedTo();
         if (tiedTo instanceof Array) {
           _ref3 = this.tiedTo();
-          _results = [];
           for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
             elem = _ref3[_i];
             elem.data[this.type] = this.clone();
-            _results.push(elem.commit());
+            elem.commit();
           }
-          return _results;
         } else {
           tiedTo.data[this.type] = this.clone();
-          return tiedTo.commit();
+          tiedTo.commit();
         }
       }
+      return this.trigger("change", this.toString());
     };
 
     Swatch.prototype.tiedTo = function() {
@@ -10196,7 +10202,7 @@ Contact: me@artur.co
 
   })(Color);
 
-  window.Swatch = Swatch;
+  $.extend(Swatch.prototype, mixins.events);
 
   SwatchDuo = (function() {
     function SwatchDuo(fill, stroke) {
@@ -10505,18 +10511,20 @@ Contact: me@artur.co
       return this.refreshPosition();
     },
     refreshPosition: function() {
-      var _ref3, _ref4;
+      var _ref3, _ref4, _ref5;
       if ((_ref3 = dom.canvas) != null) {
         _ref3.style.left = this.normal.x;
       }
       if ((_ref4 = dom.canvas) != null) {
         _ref4.style.top = this.normal.y;
       }
-      ui.uistate.set('normal', this.normal);
+      if ((_ref5 = ui.uistate) != null) {
+        _ref5.set('normal', this.normal);
+      }
       return this;
     },
     setZoom: function(zoom, origin) {
-      var canvasPosnAtOrigin;
+      var canvasPosnAtOrigin, _ref3;
       if (origin == null) {
         origin = ui.window.center();
       }
@@ -10526,7 +10534,8 @@ Contact: me@artur.co
       this.redraw();
       ui.transformer.redraw(true);
       this.alignWithClient(canvasPosnAtOrigin, origin);
-      return this.ensureVisibility();
+      this.ensureVisibility();
+      return (_ref3 = ui.uistate) != null ? _ref3.set('zoom', this.zoom) : void 0;
     },
     center: function() {
       return this.normal.add(new Posn((this.width * this.zoom) / 2, (this.height * this.zoom) / 2));

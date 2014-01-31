@@ -159,7 +159,7 @@ ui.canvas =
   refreshPosition: ->
     dom.canvas?.style.left = @normal.x
     dom.canvas?.style.top = @normal.y
-    ui.uistate.set 'normal', @normal
+    ui.uistate?.set 'normal', @normal
     @
 
 
@@ -197,6 +197,8 @@ ui.canvas =
 
     # Make sure the canvas is within the visible limits in any direction
     @ensureVisibility()
+
+    ui.uistate?.set 'zoom', @zoom
 
 
   center: ->

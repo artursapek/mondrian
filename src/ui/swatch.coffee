@@ -47,6 +47,8 @@ class Swatch extends Color
         tiedTo.data[@type] = @clone()
         tiedTo.commit()
 
+    @trigger "change", @toString()
+
 
   tiedTo: -> ui.selection.elements.all
 
@@ -56,4 +58,4 @@ class Swatch extends Color
     q(selector).appendChild(@rep)
     @
 
-window.Swatch = Swatch
+$.extend Swatch::, mixins.events

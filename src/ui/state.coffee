@@ -7,14 +7,27 @@
 
 
 class UIState
-  constructor: (@attributes = @DEFAULTS()) ->
-    @on 'change', =>
-      @saveLocally()
+  constructor: ->
+
+  attributes: {}
 
   restore: ->
     # Restore the previous state in localStorage if it exists
     storedState = localStorage.getItem 'uistate'
-    @importJSON(JSON.parse storedState) if storedState?
+
+    if not storedState?
+      # Default setup
+      @attributes = @DEFAULTS()
+      ui.canvas.zoom100()
+      @set("normal", ui.canvas.normal)
+
+    else
+      @importJSON(JSON.parse storedState) if storedState?
+
+    @apply() # Apply the state to the app
+
+    @on 'change', =>
+      @saveLocally()
     @
 
   set: (key, val) ->
@@ -37,8 +50,10 @@ class UIState
     localStorage.setItem('uistate', @toJSON())
 
   apply: ->
-    ui.fill.absorb @get 'fill'
-    ui.stroke.absorb @get 'stroke'
+    ui.canvas.setZoom @get("zoom")
+    ui.canvas.normal = @get("normal")
+    ui.canvas.refreshPosition()
+    ui.switchToTool(@get("tool"))
 
   toJSON: ->
     fill:        @attributes.fill.hex
