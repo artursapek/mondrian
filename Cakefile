@@ -47,6 +47,17 @@ validateBuildFiles = (paths) ->
     if not fs.existsSync path
       throw "#{path} does not exist"
 
+compileCSS = (pairs) ->
+  pairs.forEach (config) ->
+    startTime = new Date()
+    fs.readFile config.source, 'utf-8', (e, data) ->
+      lessc.render data, (e, css) ->
+        if not e
+          fs.writeFile config.dest, css
+          console.log "Compiled #{config.source} => #{config.dest} in #{(new Date().valueOf() - startTime.valueOf()) / 1000} seconds"
+        else
+          console.log lessc.formatError e, { color: true } if e
+
 fileLengths = (paths) ->
   lineLengths = paths.map (p) -> p.length
   maxPathLength = Math.max.apply(Math, lineLengths)
@@ -70,7 +81,7 @@ fileLengths = (paths) ->
 
   for len in lengths
     console.log len.join('')
-  
+
 
 concatSrcFiles = (paths) ->
   contents = ''
@@ -170,30 +181,18 @@ task 'tests', 'Run unit tests cuz', (options) ->
 
 
 task 'styles', 'Compile CSS', ->
-  startTime = new Date()
-  [ { source: 'styles/ui.less', dest: 'build/styles.css' }
+  compileCSS([
+    { source: 'styles/ui.less',    dest: 'build/styles.css' }
     { source: 'styles/embed.less', dest: 'build/embed.css' }
-  ].map (styles) ->
-    fs.readFile styles.source, 'utf-8', (e, data) ->
-      lessc.render data, (e, css) ->
-        if not e
-          fs.writeFile styles.dest, css
-        else
-          console.log lessc.formatError e, { color: true } if e
+  ])
 
-  console.log "Compiled CSS in #{(new Date().valueOf() - startTime.valueOf()) / 1000} seconds"
 
 task 'pages', 'Build pages', ->
-  [ { source: 'styles/page.less', dest: 'build/styles/page.css' }
+  compileCSS([
+    { source: 'styles/page.less', dest: 'build/styles/page.css' }
     { source: 'styles/contributing.less', dest: 'build/styles/contributing.css' }
     { source: 'styles/testing.less', dest: 'build/styles/testing.css' }
-  ].map (styles) ->
-    fs.readFile styles.source, 'utf-8', (e, data) ->
-      lessc.render data, (e, css) ->
-        if not e
-          fs.writeFile styles.dest, css
-        else
-          console.log lessc.formatError e, { color: true } if e
+  ])
 
   exec 'haml terms-of-use/index.haml > terms-of-use/index.html'
   exec 'haml xml/index.haml > xml/index.html'
