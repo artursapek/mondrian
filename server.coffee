@@ -1,7 +1,7 @@
 connect = require('connect')
 http = require('http')
 
-directory = __dirname
+directory = __dirname + "/www"
 
 connect()
   .use(connect.static(directory))
