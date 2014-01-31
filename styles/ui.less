@@ -6,7 +6,7 @@
 @import "styles/mondy.less";
 @import "styles/maven.less";
 
-.bgimg(@url){ background-image: url("/build/img/@{url}"); }
+.bgimg(@url){ background-image: url("/img/@{url}"); }
 
 // Colorz
 
@@ -17,7 +17,7 @@
 .utility-window-colors {
   background-color: @medium-grey;
   border-bottom: 1px solid rgba(220, 220, 220, 0.92);
-  cursor: url('/build/img/cursors/cursor.png') 1 1, default!important;
+  cursor: url('/img/cursors/cursor.png') 1 1, default!important;
 }
 
 .no-select {
@@ -45,22 +45,22 @@ body {
 
   &[tool="cursor"] {
     &, svg, svg * {
-      cursor: url('/build/img/cursors/cursor.png') 1 1, default!important;
+      cursor: url('/img/cursors/cursor.png') 1 1, default!important;
     }
   }
   &[tool="pen"] {
     &, svg, svg * {
-      cursor: url('/build/img/cursors/type-a.png') 5 0, default!important;
+      cursor: url('/img/cursors/type-a.png') 5 0, default!important;
     }
   }
   &[tool="crayon"] {
     &, svg, svg * {
-      cursor: url('/build/img/cursors/crayon.png') 5 0, default!important;
+      cursor: url('/img/cursors/crayon.png') 5 0, default!important;
     }
   }
   &[tool="crosshair"] {
     &, svg, svg * {
-      cursor: url('/build/img/cursors/crosshair.png') 7 7, default!important;
+      cursor: url('/img/cursors/crosshair.png') 7 7, default!important;
     }
   }
   &[tool="type"] {
@@ -70,18 +70,18 @@ body {
   }
   &[tool="zoom"] {
     &, svg, svg * {
-      cursor: url('/build/img/cursors/loupe.png') 5 5, default!important;
+      cursor: url('/img/cursors/loupe.png') 5 5, default!important;
     }
   }
   &[tool="eyedropper"] {
     &, svg, svg * {
-      cursor: url('/build/img/cursors/eyedropper.png') 1 15, default!important;
+      cursor: url('/img/cursors/eyedropper.png') 1 15, default!important;
     }
   }
   &[tool="paw"] {
     &, svg, svg * {
       // none.png over none because firefox is retarded
-      cursor: url('/build/img/cursors/none.png') 1 1, default!important;
+      cursor: url('/img/cursors/none.png') 1 1, default!important;
     }
   }
   &[tool="paw-clutch"] {
@@ -127,28 +127,28 @@ div#tool-cursor-placeholder {
   z-index: 10000;
 
   &[tool="cursor"] {
-    background-image: url('/build/img/cursors/cursor.png')!important;
+    background-image: url('/img/cursors/cursor.png')!important;
   }
   &[tool="pen"] {
-    background-image: url('/build/img/cursors/type-a.png')!important;
+    background-image: url('/img/cursors/type-a.png')!important;
   }
   &[tool="crayon"] {
-    background-image: url('/build/img/cursors/crayon.png')!important;
+    background-image: url('/img/cursors/crayon.png')!important;
   }
   &[tool="crosshair"] {
-    background-image: url('/build/img/cursors/crosshair.png')!important;
+    background-image: url('/img/cursors/crosshair.png')!important;
   }
   &[tool="zoom"] {
-    background-image: url('/build/img/cursors/loupe.png')!important;
+    background-image: url('/img/cursors/loupe.png')!important;
   }
   &[tool="eyedropper"] {
-    background-image: url('/build/img/cursors/eyedropper.png')!important;
+    background-image: url('/img/cursors/eyedropper.png')!important;
   }
   &[tool="paw"] {
-    background-image: url('/build/img/cursors/paw.png')!important;
+    background-image: url('/img/cursors/paw.png')!important;
   }
   &[tool="paw-clutch"] {
-    background-image: url('/build/img/cursors/paw-clutch.png')!important;
+    background-image: url('/img/cursors/paw-clutch.png')!important;
   }
 }
 
@@ -174,52 +174,52 @@ div#tool-palette {
     border-bottom-width: 1px;
     border-bottom-style: solid;
     border-bottom-color: rgba(220, 220, 220, 0.92);
-    cursor: url('/build/img/cursors/cursor.png') 1 1, default!important;
+    cursor: url('/img/cursors/cursor.png') 1 1, default!important;
     margin-left: 20px;
     margin-bottom: 5px;
 
     &#cursor-btn{
-      background-image: url('/build/img/cursors/cursor.png')!important;
+      background-image: url('/img/cursors/cursor.png')!important;
       background-position: 14px 10px;
     }
     &#pen-btn{
-      background-image: url('/build/img/cursors/type-a.png')!important;
+      background-image: url('/img/cursors/type-a.png')!important;
       background-position: 13px 8px;
     }
     &#crayon-btn{
-      background-image: url('/build/img/cursors/crayon.png')!important;
+      background-image: url('/img/cursors/crayon.png')!important;
       background-position: 12px 8px;
     }
     &#ellipse-btn{
-      background-image: url('/build/img/cursors/ellipse.png')!important;
+      background-image: url('/img/cursors/ellipse.png')!important;
       background-position: 10px 9px;
     }
     &#rectangle-btn{
-      background-image: url('/build/img/cursors/rectangle.png')!important;
+      background-image: url('/img/cursors/rectangle.png')!important;
       background-position: 10px 9px;
     }
     &#line-btn{
-      background-image: url('/build/img/cursors/line.png')!important;
+      background-image: url('/img/cursors/line.png')!important;
       background-position: 10px 9px;
     }
     &#rotate-btn{
-      background-image: url('/build/img/cursors/rotate.png')!important;
+      background-image: url('/img/cursors/rotate.png')!important;
       background-position: 10px 9px;
     }
     &#type-btn{
-      background-image: url('/build/img/cursors/olivetti.png')!important;
+      background-image: url('/img/cursors/olivetti.png')!important;
       background-position: 8px 9px;
     }
     &#eyedropper-btn{
-      background-image: url('/build/img/cursors/eyedropper.png')!important;
+      background-image: url('/img/cursors/eyedropper.png')!important;
       background-position: 10px 9px;
     }
     &#zoom-btn{
-      background-image: url('/build/img/cursors/loupe.png')!important;
+      background-image: url('/img/cursors/loupe.png')!important;
       background-position: 10px 9px;
     }
     &#eyedropper-btn{
-      background-image: url('/build/img/cursors/eyedropper.png')!important;
+      background-image: url('/img/cursors/eyedropper.png')!important;
       background-position: 10px 9px;
     }
   }
@@ -321,7 +321,7 @@ div#menu-bar, div#login-bar, div#register-bar, div#current-service {
       margin-left: 1px;
       display: inline-block;
       padding: 9px 10px;
-      cursor: url('/build/img/cursors/cursor.png') 1 1, default!important;
+      cursor: url('/img/cursors/cursor.png') 1 1, default!important;
       position: relative;
       border-bottom-width: 1px;
       border-bottom-style: solid;
@@ -333,7 +333,7 @@ div#menu-bar, div#login-bar, div#register-bar, div#current-service {
         text-decoration: none;
 
         &:not(.normal-link) {
-          cursor: url('/build/img/cursors/cursor.png') 1 1, default!important;
+          cursor: url('/img/cursors/cursor.png') 1 1, default!important;
         }
       }
 
@@ -574,7 +574,7 @@ div#menu-bar, div#login-bar, div#register-bar, div#current-service {
 
   .secure {
     &:before {
-      content: url("/build/img/lock.png");
+      content: url("/img/lock.png");
       display: inline-block;
       margin-right: 5px;
       position: relative;
@@ -1066,7 +1066,7 @@ svg#hover-targets {
   width: 36px;
   height: 36px;
   box-sizing: border-box;
-  cursor: url('/build/img/cursors/cursor.png') 1 1, default!important;
+  cursor: url('/img/cursors/cursor.png') 1 1, default!important;
 
   &[empty]{
     .bgimg("swatches/empty-color.png");
