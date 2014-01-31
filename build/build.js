@@ -1906,7 +1906,7 @@ Contact: me@artur.co
     Posn.prototype.unzoomed = function() {
       var _this = this;
       if (this.zoomLevel === 1.0) {
-        return;
+        return this;
       }
       this.alterValues(function(val) {
         return val /= _this.zoomLevel;

@@ -95,7 +95,7 @@ class Posn
     #
     # O/P: adjusted Posn
 
-    return if @zoomLevel is 1.0
+    return @ if @zoomLevel is 1.0
 
     @alterValues (val) => val /= @zoomLevel
     @zoomLevel = 1.0
