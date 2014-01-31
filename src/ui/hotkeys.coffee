@@ -219,7 +219,9 @@ ui.hotkeys =
 
   setup: ->
     # Map the ctrl key as cmd if the user is on windows.
-    @modifierCodes[17] = 'cmd' unless ~navigator.appVersion.indexOf("Win")
+    if ~navigator.appVersion.indexOf("Win")
+      @modifierCodes[17] = 'cmd'
+      dom.body?.setAttribute 'os', 'windows'
 
     @use "app"
 
