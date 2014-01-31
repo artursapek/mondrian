@@ -10515,39 +10515,42 @@ Contact: me@artur.co
       ui.uistate.set('normal', this.normal);
       return this;
     },
-    setZoom: function(zoom) {
-      var prevCenter;
+    setZoom: function(zoom, origin) {
+      var canvasPosnAtOrigin;
+      if (origin == null) {
+        origin = ui.window.center();
+      }
+      canvasPosnAtOrigin = lab.conversions.posn.clientToCanvasZoomed(origin);
       ui.selection.points.hide();
-      prevCenter = ui.window.centerRelativeToCanvas();
       this.zoom = zoom;
       this.redraw();
       ui.transformer.redraw(true);
-      ui.window.centerOn(prevCenter);
+      this.alignWithClient(canvasPosnAtOrigin, origin);
       return this.ensureVisibility();
     },
     center: function() {
       return this.normal.add(new Posn((this.width * this.zoom) / 2, (this.height * this.zoom) / 2));
     },
+    orientToWindowPosn: function(windowPosn, canvasPosn) {},
     centerOn: function(posn) {
       posn = posn.subtract(this.center());
       this.normal.x += posn.x;
       this.normal.y += posn.y;
       return this.refreshPosition();
     },
+    alignWithClient: function(canvasZoomedPosn, clientPosn) {
+      var canvasEquivalentOfGivenPosn;
+      canvasEquivalentOfGivenPosn = lab.conversions.posn.clientToCanvasZoomed(clientPosn);
+      return this.nudge((canvasEquivalentOfGivenPosn.x - canvasZoomedPosn.x) * this.zoom, (canvasZoomedPosn.y - canvasEquivalentOfGivenPosn.y) * this.zoom);
+    },
     posnInCenterOfWindow: function() {
       return ui.window.center().subtract(this.normal).setZoom(ui.canvas.zoom);
     },
-    zoomIn: function(amt) {
-      if (amt == null) {
-        amt = 1.15;
-      }
-      return this.setZoom(this.zoom * amt);
+    zoomIn: function(o) {
+      return this.setZoom(this.zoom * 1.15, o);
     },
-    zoomOut: function(amt) {
-      if (amt == null) {
-        amt = 0.85;
-      }
-      return this.setZoom(this.zoom * amt);
+    zoomOut: function(o) {
+      return this.setZoom(this.zoom * 0.85, o);
     },
     zoom100: function() {
       this.setZoom(1);
@@ -15825,9 +15828,8 @@ Contact: me@artur.co
         if (ui.hotkeys.modifiersDown.has("alt")) {
           ui.canvas.zoom100();
         } else {
-          ui.canvas.zoomIn();
+          ui.canvas.zoomIn(e.clientPosn);
         }
-        ui.window.centerOn(new Posn(e.canvasX, e.canvasY));
         return ui.refreshAfterZoom();
       }
     },
@@ -15836,9 +15838,8 @@ Contact: me@artur.co
         if (ui.hotkeys.modifiersDown.has("alt")) {
           ui.canvas.zoom100();
         } else {
-          ui.canvas.zoomOut();
+          ui.canvas.zoomOut(e.clientPosn);
         }
-        ui.window.centerOn(new Posn(e.canvasX, e.canvasY));
         return ui.refreshAfterZoom();
       }
     },

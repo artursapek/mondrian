@@ -20,8 +20,7 @@ tools.zoom = new Tool
       if ui.hotkeys.modifiersDown.has "alt"
         ui.canvas.zoom100()
       else
-        ui.canvas.zoomIn()
-      ui.window.centerOn(new Posn(e.canvasX, e.canvasY))
+        ui.canvas.zoomIn(e.clientPosn)
       ui.refreshAfterZoom()
 
   rightClick:
@@ -29,8 +28,7 @@ tools.zoom = new Tool
       if ui.hotkeys.modifiersDown.has "alt"
         ui.canvas.zoom100()
       else
-        ui.canvas.zoomOut()
-      ui.window.centerOn(new Posn(e.canvasX, e.canvasY))
+        ui.canvas.zoomOut(e.clientPosn)
       ui.refreshAfterZoom()
 
   startDrag:

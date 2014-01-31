@@ -163,11 +163,12 @@ ui.canvas =
     @
 
 
-  setZoom: (zoom) ->
+  setZoom: (zoom, origin = ui.window.center()) ->
     # Set the zoom level, sus
     #
     # I/P:
     #   amt: float (1.0 == 100%)
+    #   origin: client-level posn origin for the transformation
     #
     # No O/P
     #
@@ -182,18 +183,17 @@ ui.canvas =
     # This should just always be called at the appropriate
     # time in every tool/utility which can zoom (not many)
 
-    ui.selection.points.hide()
+    canvasPosnAtOrigin = lab.conversions.posn.clientToCanvasZoomed(origin)
 
-    # Get the canvas posn at the center of the window.
-    prevCenter = ui.window.centerRelativeToCanvas()
+    ui.selection.points.hide()
 
     # Change the zoom level
     @zoom = zoom
     @redraw()
     ui.transformer.redraw(true)
 
-    # Recenter the canvas on the previous center
-    ui.window.centerOn prevCenter
+    # Realign the image so the same posn is under the cursor as before we zoomed
+    @alignWithClient(canvasPosnAtOrigin, origin)
 
     # Make sure the canvas is within the visible limits in any direction
     @ensureVisibility()
@@ -210,22 +210,26 @@ ui.canvas =
     @refreshPosition()
 
 
+  alignWithClient: (canvasZoomedPosn, clientPosn) ->
+    canvasEquivalentOfGivenPosn = lab.conversions.posn.clientToCanvasZoomed(clientPosn)
+    @nudge((canvasEquivalentOfGivenPosn.x - canvasZoomedPosn.x) * @zoom,
+           (canvasZoomedPosn.y - canvasEquivalentOfGivenPosn.y) * @zoom)
+
   posnInCenterOfWindow: ->
     ui.window.center().subtract(@normal).setZoom(ui.canvas.zoom)
 
 
-  zoomIn: (amt = 1.15) ->
-    @setZoom(@zoom * amt)
+  zoomIn: (o) ->
+    @setZoom(@zoom * 1.15, o)
 
 
-  zoomOut: (amt = 0.85) ->
-    @setZoom(@zoom * amt)
+  zoomOut: (o) ->
+    @setZoom(@zoom * 0.85, o)
 
 
   zoom100: ->
     @setZoom(1)
     @centerOn ui.window.center()
-
 
 
   zoomToFit: (bounds) ->
