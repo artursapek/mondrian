@@ -54,13 +54,11 @@ class Tool
 
     e.clientPosn = new Posn(e.clientX, e.clientY)
 
-    e.canvasX = e.clientX - ui.canvas.normal.x
-    e.canvasY = e.clientY - ui.canvas.normal.y
-    e.canvasPosn = new Posn(e.canvasX, e.canvasY)
-    e.canvasPosnZoomed = e.canvasPosn.clone().multiplyBy(1 / ui.canvas.zoom) # Compensate for zoom
+    e.canvasX = (e.clientX - ui.canvas.normal.x) / ui.canvas.zoom
+    e.canvasY = (e.clientY - ui.canvas.normal.y) / ui.canvas.zoom
 
-    e.canvasX /= ui.canvas.zoom
-    e.canvasY /= ui.canvas.zoom
+    e.canvasPosn = lab.conversions.posn.clientToCanvas(e.clientPosn)
+    e.canvasPosnZoomed = lab.conversions.posn.clientToCanvasZoomed(e.clientPosn)
 
     if ui.grid.visible()
       e = ui.snap.supplementForGrid e
