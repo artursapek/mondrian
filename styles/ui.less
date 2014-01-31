@@ -172,6 +172,7 @@ div#tool-palette {
     cursor: url('img/cursors/cursor.png') 1 1, default!important;
     margin-left: 20px;
     margin-bottom: 5px;
+    position: relative;
 
     &#cursor-btn{
       background-image: url('img/cursors/cursor.png')!important;
@@ -216,6 +217,40 @@ div#tool-palette {
     &#eyedropper-btn{
       background-image: url('img/cursors/eyedropper.png')!important;
       background-position: 10px 9px;
+    }
+
+    .tool-info {
+      display: none;
+      position: absolute;
+      white-space: nowrap; // Dynamic width
+      top: 0;
+      left: 50px;
+      background: @medium-grey;
+      padding: 9px;
+      padding-right: 45px;
+      border-bottom: 1px solid rgba(220, 220, 220, 0.92);
+
+      &.disabled {
+        color: #818181;
+      }
+
+      .shortcut {
+        position: absolute;
+        top: 9px;
+        right: 9px;
+        margin-left: 10px;
+        opacity: 0.5;
+
+        &:before {
+          display: block;
+          width: 20px;
+          height: 1px;
+        }
+
+        span.modifier {
+          font-size: 12px;
+        }
+      }
     }
   }
 }

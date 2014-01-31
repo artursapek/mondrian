@@ -11,6 +11,8 @@
 
 ui.topUI =
 
+  _tooltipTimeouts: {}
+
   dispatch: (e, event) ->
     for cl in e.target.className.split(" ")
       @[event]["." + cl]?(e)
@@ -20,10 +22,27 @@ ui.topUI =
   hover:
     "slider knob": (e) ->
 
+    ".tool-button": (e) ->
+      # clearTimeout automatically discards invalid / undefined values.
+      clearTimeout ui.topUI._tooltipTimeouts[e.target.id]
+      # The target can change while async (in the timeout).
+      elem = $(e.target)
+
+      ui.topUI._tooltipTimeouts[e.target.id] = setTimeout(->
+        elem.children(".tool-info").fadeIn()
+      , 960)
 
   unhover:
     "slider knob": ->
 
+    ".tool-button": (e) ->
+      clearTimeout ui.topUI._tooltipTimeouts[e.target.id]
+      # The target can change while async (in the timeout).
+      elem = $(e.target)
+
+      ui.topUI._tooltipTimeouts[e.target.id] = setTimeout(->
+        elem.children(".tool-info").fadeOut()
+      , 340)
 
   click:
     ".swatch": (e) ->
