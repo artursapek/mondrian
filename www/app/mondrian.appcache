@@ -1,8 +1,8 @@
 CACHE MANIFEST
-# Revision de087fc7e57d6b61f16f8908544f67b7f4b3e55a
-/build/jquery-2.1.0.min.js
-/build/md5.min.js
-/build/jquery.tinysort.min.js
+# Revision ee087fc7e57d6b61f16f8908544f67b7f4b3e55a
+/build/vendor/jquery-2.1.0.min.js
+/build/vendor/md5.min.js
+/build/vendor/jquery.tinysort.min.js
 /build/fonts/maven-pro.400.woff
 /build/fonts/maven-pro.500.woff
 /build/fonts/maven-pro.700.woff

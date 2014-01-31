@@ -67,7 +67,7 @@
 .utility-window-colors {
   background-color: rgba(234, 234, 234, 0.92);
   border-bottom: 1px solid rgba(220, 220, 220, 0.92);
-  cursor: url('img/cursors/cursor.png') 1 1, default !important;
+  cursor: url('/build/img/cursors/cursor.png') 1 1, default !important;
 }
 .no-select {
   -webkit-touch-callout: none;
@@ -98,22 +98,22 @@ body {
 body[tool="cursor"],
 body[tool="cursor"] svg,
 body[tool="cursor"] svg * {
-  cursor: url('img/cursors/cursor.png') 1 1, default !important;
+  cursor: url('/build/img/cursors/cursor.png') 1 1, default !important;
 }
 body[tool="pen"],
 body[tool="pen"] svg,
 body[tool="pen"] svg * {
-  cursor: url('img/cursors/type-a.png') 5 0, default !important;
+  cursor: url('/build/img/cursors/type-a.png') 5 0, default !important;
 }
 body[tool="crayon"],
 body[tool="crayon"] svg,
 body[tool="crayon"] svg * {
-  cursor: url('img/cursors/crayon.png') 5 0, default !important;
+  cursor: url('/build/img/cursors/crayon.png') 5 0, default !important;
 }
 body[tool="crosshair"],
 body[tool="crosshair"] svg,
 body[tool="crosshair"] svg * {
-  cursor: url('img/cursors/crosshair.png') 7 7, default !important;
+  cursor: url('/build/img/cursors/crosshair.png') 7 7, default !important;
 }
 body[tool="type"],
 body[tool="type"] svg,
@@ -123,17 +123,17 @@ body[tool="type"] svg * {
 body[tool="zoom"],
 body[tool="zoom"] svg,
 body[tool="zoom"] svg * {
-  cursor: url('img/cursors/loupe.png') 5 5, default !important;
+  cursor: url('/build/img/cursors/loupe.png') 5 5, default !important;
 }
 body[tool="eyedropper"],
 body[tool="eyedropper"] svg,
 body[tool="eyedropper"] svg * {
-  cursor: url('img/cursors/eyedropper.png') 1 15, default !important;
+  cursor: url('/build/img/cursors/eyedropper.png') 1 15, default !important;
 }
 body[tool="paw"],
 body[tool="paw"] svg,
 body[tool="paw"] svg * {
-  cursor: url('img/cursors/none.png') 1 1, default !important;
+  cursor: url('/build/img/cursors/none.png') 1 1, default !important;
 }
 body[tool="paw-clutch"],
 body[tool="paw-clutch"] svg,
@@ -173,28 +173,28 @@ div#tool-cursor-placeholder {
   z-index: 10000;
 }
 div#tool-cursor-placeholder[tool="cursor"] {
-  background-image: url('img/cursors/cursor.png') !important;
+  background-image: url('/build/img/cursors/cursor.png') !important;
 }
 div#tool-cursor-placeholder[tool="pen"] {
-  background-image: url('img/cursors/type-a.png') !important;
+  background-image: url('/build/img/cursors/type-a.png') !important;
 }
 div#tool-cursor-placeholder[tool="crayon"] {
-  background-image: url('img/cursors/crayon.png') !important;
+  background-image: url('/build/img/cursors/crayon.png') !important;
 }
 div#tool-cursor-placeholder[tool="crosshair"] {
-  background-image: url('img/cursors/crosshair.png') !important;
+  background-image: url('/build/img/cursors/crosshair.png') !important;
 }
 div#tool-cursor-placeholder[tool="zoom"] {
-  background-image: url('img/cursors/loupe.png') !important;
+  background-image: url('/build/img/cursors/loupe.png') !important;
 }
 div#tool-cursor-placeholder[tool="eyedropper"] {
-  background-image: url('img/cursors/eyedropper.png') !important;
+  background-image: url('/build/img/cursors/eyedropper.png') !important;
 }
 div#tool-cursor-placeholder[tool="paw"] {
-  background-image: url('img/cursors/paw.png') !important;
+  background-image: url('/build/img/cursors/paw.png') !important;
 }
 div#tool-cursor-placeholder[tool="paw-clutch"] {
-  background-image: url('img/cursors/paw-clutch.png') !important;
+  background-image: url('/build/img/cursors/paw-clutch.png') !important;
 }
 #dialog-title {
   position: absolute;
@@ -217,52 +217,52 @@ div#tool-palette div.tool-button {
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: rgba(220, 220, 220, 0.92);
-  cursor: url('img/cursors/cursor.png') 1 1, default !important;
+  cursor: url('/build/img/cursors/cursor.png') 1 1, default !important;
   margin-left: 20px;
   margin-bottom: 5px;
 }
 div#tool-palette div.tool-button#cursor-btn {
-  background-image: url('img/cursors/cursor.png') !important;
+  background-image: url('/build/img/cursors/cursor.png') !important;
   background-position: 14px 10px;
 }
 div#tool-palette div.tool-button#pen-btn {
-  background-image: url('img/cursors/type-a.png') !important;
+  background-image: url('/build/img/cursors/type-a.png') !important;
   background-position: 13px 8px;
 }
 div#tool-palette div.tool-button#crayon-btn {
-  background-image: url('img/cursors/crayon.png') !important;
+  background-image: url('/build/img/cursors/crayon.png') !important;
   background-position: 12px 8px;
 }
 div#tool-palette div.tool-button#ellipse-btn {
-  background-image: url('img/cursors/ellipse.png') !important;
+  background-image: url('/build/img/cursors/ellipse.png') !important;
   background-position: 10px 9px;
 }
 div#tool-palette div.tool-button#rectangle-btn {
-  background-image: url('img/cursors/rectangle.png') !important;
+  background-image: url('/build/img/cursors/rectangle.png') !important;
   background-position: 10px 9px;
 }
 div#tool-palette div.tool-button#line-btn {
-  background-image: url('img/cursors/line.png') !important;
+  background-image: url('/build/img/cursors/line.png') !important;
   background-position: 10px 9px;
 }
 div#tool-palette div.tool-button#rotate-btn {
-  background-image: url('img/cursors/rotate.png') !important;
+  background-image: url('/build/img/cursors/rotate.png') !important;
   background-position: 10px 9px;
 }
 div#tool-palette div.tool-button#type-btn {
-  background-image: url('img/cursors/olivetti.png') !important;
+  background-image: url('/build/img/cursors/olivetti.png') !important;
   background-position: 8px 9px;
 }
 div#tool-palette div.tool-button#eyedropper-btn {
-  background-image: url('img/cursors/eyedropper.png') !important;
+  background-image: url('/build/img/cursors/eyedropper.png') !important;
   background-position: 10px 9px;
 }
 div#tool-palette div.tool-button#zoom-btn {
-  background-image: url('img/cursors/loupe.png') !important;
+  background-image: url('/build/img/cursors/loupe.png') !important;
   background-position: 10px 9px;
 }
 div#tool-palette div.tool-button#eyedropper-btn {
-  background-image: url('img/cursors/eyedropper.png') !important;
+  background-image: url('/build/img/cursors/eyedropper.png') !important;
   background-position: 10px 9px;
 }
 div#menu-bar,
@@ -401,7 +401,7 @@ div#current-service .menu-group > .menu-item {
   margin-left: 1px;
   display: inline-block;
   padding: 9px 10px;
-  cursor: url('img/cursors/cursor.png') 1 1, default !important;
+  cursor: url('/build/img/cursors/cursor.png') 1 1, default !important;
   position: relative;
   border-bottom-width: 1px;
   border-bottom-style: solid;
@@ -427,7 +427,7 @@ div#menu-bar .menu-group > .menu-item a:not(.normal-link),
 div#login-bar .menu-group > .menu-item a:not(.normal-link),
 div#register-bar .menu-group > .menu-item a:not(.normal-link),
 div#current-service .menu-group > .menu-item a:not(.normal-link) {
-  cursor: url('img/cursors/cursor.png') 1 1, default !important;
+  cursor: url('/build/img/cursors/cursor.png') 1 1, default !important;
 }
 div#menu-bar .menu-group > .menu.with-input,
 div#login-bar .menu-group > .menu.with-input,
@@ -635,7 +635,7 @@ div#current-service .menu-modal {
   width: 195px;
   background-color: rgba(234, 234, 234, 0.92);
   border-bottom: 1px solid rgba(220, 220, 220, 0.92);
-  cursor: url('img/cursors/cursor.png') 1 1, default !important;
+  cursor: url('/build/img/cursors/cursor.png') 1 1, default !important;
   display: none;
 }
 div#menu-bar .menu-modal button,
@@ -818,7 +818,7 @@ button .secure:before {
   background-position: left;
 }
 .service-logo.dropbox {
-  background-image: url("img/icons/dropbox.png");
+  background-image: url("/build/img/icons/dropbox.png");
 }
 #service-file-gallery {
   display: none;
@@ -1043,22 +1043,22 @@ button .secure:before {
 #service-file-browser > div#browser-directory .scrollbar-screen-directory-col .directory-col .directory-button.directory-button,
 #service-file-browser > div#browser-directory .scrollbar-screen-directory-col .directory-col .file-button.directory-button,
 #service-file-browser > div#browser-directory .scrollbar-screen-directory-col .directory-col .service-button.directory-button {
-  background-image: url("img/icons/folder.png");
+  background-image: url("/build/img/icons/folder.png");
 }
 #service-file-browser > div#browser-directory .scrollbar-screen-directory-col .directory-col .directory-button.file-button,
 #service-file-browser > div#browser-directory .scrollbar-screen-directory-col .directory-col .file-button.file-button,
 #service-file-browser > div#browser-directory .scrollbar-screen-directory-col .directory-col .service-button.file-button {
-  background-image: url("img/icons/file.png");
+  background-image: url("/build/img/icons/file.png");
 }
 #service-file-browser > div#browser-directory .scrollbar-screen-directory-col .directory-col .directory-button.service-button.local,
 #service-file-browser > div#browser-directory .scrollbar-screen-directory-col .directory-col .file-button.service-button.local,
 #service-file-browser > div#browser-directory .scrollbar-screen-directory-col .directory-col .service-button.service-button.local {
-  background-image: url("img/icons/local.service.png");
+  background-image: url("/build/img/icons/local.service.png");
 }
 #service-file-browser > div#browser-directory .scrollbar-screen-directory-col .directory-col .directory-button.service-button.dropbox,
 #service-file-browser > div#browser-directory .scrollbar-screen-directory-col .directory-col .file-button.service-button.dropbox,
 #service-file-browser > div#browser-directory .scrollbar-screen-directory-col .directory-col .service-button.service-button.dropbox {
-  background-image: url("img/icons/dropbox.service.png");
+  background-image: url("/build/img/icons/dropbox.service.png");
 }
 #service-file-browser > div#browser-directory .scrollbar-screen-directory-col .directory-col .directory-button:hover,
 #service-file-browser > div#browser-directory .scrollbar-screen-directory-col .directory-col .file-button:hover,
@@ -1088,7 +1088,7 @@ button .secure:before {
   width: 20px;
 }
 .service-logo-small.dropbox div {
-  background-image: url("img/icons/dropbox.20.png");
+  background-image: url("/build/img/icons/dropbox.20.png");
   height: 20px;
 }
 .service-logo-small.permalink,
@@ -1096,7 +1096,7 @@ button .secure:before {
   width: 21px;
 }
 .service-logo-small.permalink div {
-  background-image: url("img/icons/permalink.20.png");
+  background-image: url("/build/img/icons/permalink.20.png");
   height: 21px;
 }
 .service-logo-small.local,
@@ -1192,7 +1192,7 @@ svg#hover-targets * {
   width: 15px;
   height: 20px;
   background: white;
-  background-image: url("img/slider/knob.png");
+  background-image: url("/build/img/slider/knob.png");
   border-bottom: 1px solid rgba(220, 220, 220, 0.92);
   cursor: col-resize;
   position: absolute;
@@ -1219,10 +1219,10 @@ svg#hover-targets * {
   width: 36px;
   height: 36px;
   box-sizing: border-box;
-  cursor: url('img/cursors/cursor.png') 1 1, default !important;
+  cursor: url('/build/img/cursors/cursor.png') 1 1, default !important;
 }
 .swatch[empty] {
-  background-image: url("img/swatches/empty-color.png");
+  background-image: url("/build/img/swatches/empty-color.png");
 }
 .swatch-duo {
   display: inline-block;
@@ -1234,13 +1234,13 @@ svg#hover-targets * {
   border-bottom: none!important;
 }
 .swatch-duo .swatch:first-child[empty] {
-  background-image: url("img/swatches/empty-color-half-top.png");
+  background-image: url("/build/img/swatches/empty-color-half-top.png");
 }
 .swatch-duo .swatch:last-child {
   border-top: none!important;
 }
 .swatch-duo .swatch:last-child[empty] {
-  background-image: url("img/swatches/empty-color-half-bottom.png");
+  background-image: url("/build/img/swatches/empty-color-half-bottom.png");
 }
 #current-swatches {
   position: absolute;
@@ -1283,7 +1283,7 @@ svg#hover-targets * {
 #color-picker-ut div#pool-window {
   background-color: rgba(234, 234, 234, 0.92);
   border-bottom: 1px solid rgba(220, 220, 220, 0.92);
-  cursor: url('img/cursors/cursor.png') 1 1, default !important;
+  cursor: url('/build/img/cursors/cursor.png') 1 1, default !important;
   width: 280px;
   height: 350px;
   overflow: hidden;
@@ -1316,10 +1316,10 @@ svg#hover-targets * {
   pointer-events: none;
 }
 #color-picker-ut div#pool-window #pool-scrollbar-hide #pool-container .indicator.white {
-  background-image: url("img/picker/indicator-white.png");
+  background-image: url("/build/img/picker/indicator-white.png");
 }
 #color-picker-ut div#pool-window #pool-scrollbar-hide #pool-container .indicator.black {
-  background-image: url("img/picker/indicator-black.png");
+  background-image: url("/build/img/picker/indicator-black.png");
 }
 #color-picker-ut div#pool-window #pool-scrollbar-hide #pool-container #pool-canvas-div {
   width: 260px;
@@ -1347,11 +1347,11 @@ svg#hover-targets * {
   position: absolute;
 }
 #color-picker-ut div#pool-window #saturation-slider #no-saturation {
-  background-image: url("img/picker/saturation.0.png");
+  background-image: url("/build/img/picker/saturation.0.png");
   left: 10px;
 }
 #color-picker-ut div#pool-window #saturation-slider #full-saturation {
-  background-image: url("img/picker/saturation.100.png");
+  background-image: url("/build/img/picker/saturation.100.png");
   right: 10px;
 }
 #color-picker-ut div#pool-window #saturation-slider #saturation-slider-track {
@@ -1370,7 +1370,7 @@ svg#hover-targets * {
   height: 19px;
   border: 1px solid rgba(207, 207, 207, 0.92);
   background-color: rgba(255, 255, 255, 0.5);
-  background-image: url("img/swatches/empty-color-line.png");
+  background-image: url("/build/img/swatches/empty-color-line.png");
   background-position: center;
   background-repeat: no-repeat;
   box-sizing: border-box;
@@ -1423,15 +1423,15 @@ svg#hover-targets * {
   margin-top: -10px;
   margin-left: -10px;
   z-index: 41;
-  background-image: url("img/transformer/corner-handle.png");
+  background-image: url("/build/img/transformer/corner-handle.png");
 }
 .transform.handle.corner:hover {
-  background-image: url("img/transformer/corner-handle-hover.png");
+  background-image: url("/build/img/transformer/corner-handle-hover.png");
 }
 .transform.handle.point {
   width: 6px;
   height: 6px;
-  background-image: url("img/transformer/point-handle.png");
+  background-image: url("/build/img/transformer/point-handle.png");
   margin-left: -5px;
   margin-top: -3px;
   padding: 1px;
@@ -1443,22 +1443,22 @@ svg#hover-targets * {
 }
 .transform.handle.point:hover,
 .transform.handle.point[hover] {
-  background-image: url("img/transformer/point-handle-hover.png");
+  background-image: url("/build/img/transformer/point-handle-hover.png");
 }
 .transform.handle.point:active,
 .transform.handle.point[selected] {
-  background-image: url("img/transformer/point-handle-select.png");
+  background-image: url("/build/img/transformer/point-handle-select.png");
 }
 .transform.handle.point[action] {
   width: 11px;
   height: 11px;
   margin-left: -7px;
   margin-top: -6px;
-  background-image: url("img/transformer/point-handle-action.png");
+  background-image: url("/build/img/transformer/point-handle-action.png");
 }
 .transform.handle.point[action]:active,
 .transform.handle.point[action][active] {
-  background-image: url("img/transformer/point-handle-action-active.png");
+  background-image: url("/build/img/transformer/point-handle-action-active.png");
 }
 .transform.handle.side {
   width: 6px;
@@ -1468,13 +1468,13 @@ svg#hover-targets * {
   left: -10000px;
   top: -10000px;
   z-index: 41;
-  background-image: url("img/transformer/side-handle.png");
+  background-image: url("/build/img/transformer/side-handle.png");
 }
 .transform.handle.side:hover {
-  background-image: url("img/transformer/side-handle-hover.png");
+  background-image: url("/build/img/transformer/side-handle-hover.png");
 }
 .transform.handle.side:active {
-  background-image: url("img/transformer/side-handle-select.png");
+  background-image: url("/build/img/transformer/side-handle-select.png");
 }
 .transform.center {
   width: 5px;
@@ -1484,7 +1484,7 @@ svg#hover-targets * {
   top: -10000px;
   margin-top: -4px;
   margin-left: -4px;
-  background-image: url("img/transformer/transformer-center.png");
+  background-image: url("/build/img/transformer/transformer-center.png");
 }
 #text-underline {
   position: absolute;
@@ -1498,7 +1498,7 @@ svg#hover-targets * {
   position: absolute;
   width: 11px;
   height: 11px;
-  background-image: url("img/transformer/rotate-nondefault-origin.png");
+  background-image: url("/build/img/transformer/rotate-nondefault-origin.png");
 }
 #utilities {
   position: absolute;
@@ -1518,7 +1518,7 @@ svg#hover-targets * {
   margin-bottom: 10px;
   background-color: rgba(234, 234, 234, 0.92);
   border-bottom: 1px solid rgba(220, 220, 220, 0.92);
-  cursor: url('img/cursors/cursor.png') 1 1, default !important;
+  cursor: url('/build/img/cursors/cursor.png') 1 1, default !important;
   z-index: 6000;
 }
 #utilities .utility-window div[inputholder] {
@@ -1563,7 +1563,7 @@ svg#hover-targets * {
 #utilities .utility-window#transform-ut #preview-pane #origin-icon {
   width: 7px;
   height: 7px;
-  background-image: url("img/transformer/transform.origin.png");
+  background-image: url("/build/img/transformer/transform.origin.png");
   position: absolute;
   top: 40px;
   left: 20px;
