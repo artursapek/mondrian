@@ -77,8 +77,17 @@
   -ms-user-select: none;
   user-select: none;
 }
-body {
+html,
+body,
+input,
+textarea,
+select,
+button {
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+body {
   font-family: Maven Pro, 'Maven Pro';
   font-size: 14px;
   margin: 0;
