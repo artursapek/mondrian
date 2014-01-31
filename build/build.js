@@ -10502,16 +10502,18 @@ Contact: me@artur.co
       return this.refreshPosition();
     },
     refreshPosition: function() {
-      var _ref3, _ref4, _ref5;
+      var _ref3, _ref4,
+        _this = this;
       if ((_ref3 = dom.canvas) != null) {
         _ref3.style.left = this.normal.x;
       }
       if ((_ref4 = dom.canvas) != null) {
         _ref4.style.top = this.normal.y;
       }
-      if ((_ref5 = ui.uistate) != null) {
-        _ref5.set('normal', this.normal);
-      }
+      async(function() {
+        var _ref5;
+        return (_ref5 = ui.uistate) != null ? _ref5.set('normal', _this.normal) : void 0;
+      });
       return this;
     },
     setZoom: function(zoom, origin) {

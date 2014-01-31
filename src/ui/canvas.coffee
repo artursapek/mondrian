@@ -159,7 +159,8 @@ ui.canvas =
   refreshPosition: ->
     dom.canvas?.style.left = @normal.x
     dom.canvas?.style.top = @normal.y
-    ui.uistate?.set 'normal', @normal
+    async =>
+      ui.uistate?.set 'normal', @normal
     @
 
 
