@@ -1,4 +1,20 @@
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Thumbs.db
+
+# Node.js #
+###########
+node_modules
+npm-debug.log
+
+# Build #
+###########
 .compiletime
-.DS_Store
 build/build.coffee
-node_modules/*
+
+# Sublime Text #
+##############
+*.sublime-project
+*.sublime-workspace
