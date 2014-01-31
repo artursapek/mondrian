@@ -10531,7 +10531,6 @@ Contact: me@artur.co
     center: function() {
       return this.normal.add(new Posn((this.width * this.zoom) / 2, (this.height * this.zoom) / 2));
     },
-    orientToWindowPosn: function(windowPosn, canvasPosn) {},
     centerOn: function(posn) {
       posn = posn.subtract(this.center());
       this.normal.x += posn.x;
@@ -15826,7 +15825,7 @@ Contact: me@artur.co
     click: {
       all: function(e) {
         if (ui.hotkeys.modifiersDown.has("alt")) {
-          ui.canvas.zoom100();
+          ui.canvas.zoomOut(e.clientPosn);
         } else {
           ui.canvas.zoomIn(e.clientPosn);
         }
@@ -15835,12 +15834,7 @@ Contact: me@artur.co
     },
     rightClick: {
       all: function(e) {
-        if (ui.hotkeys.modifiersDown.has("alt")) {
-          ui.canvas.zoom100();
-        } else {
-          ui.canvas.zoomOut(e.clientPosn);
-        }
-        return ui.refreshAfterZoom();
+        return ui.canvas.zoom100();
       }
     },
     startDrag: {

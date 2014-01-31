@@ -18,18 +18,13 @@ tools.zoom = new Tool
   click:
     all: (e) ->
       if ui.hotkeys.modifiersDown.has "alt"
-        ui.canvas.zoom100()
+        ui.canvas.zoomOut(e.clientPosn)
       else
         ui.canvas.zoomIn(e.clientPosn)
       ui.refreshAfterZoom()
 
   rightClick:
-    all: (e) ->
-      if ui.hotkeys.modifiersDown.has "alt"
-        ui.canvas.zoom100()
-      else
-        ui.canvas.zoomOut(e.clientPosn)
-      ui.refreshAfterZoom()
+    all: (e) -> ui.canvas.zoom100()
 
   startDrag:
     all: (e) ->
