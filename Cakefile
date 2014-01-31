@@ -114,8 +114,8 @@ compileCoffee = (src, outputFile = 'build/build.js', callback = ->) ->
 task 'build', 'Build project', ->
   # TODO This is a dupe for now, for simplicity's sake
   compileCSS([
-    { source: 'styles/ui.less',    dest: 'build/styles.css' }
-    { source: 'styles/embed.less', dest: 'build/embed.css' }
+    { source: 'styles/ui.less',    dest: 'build/styles/app.css' }
+    { source: 'styles/embed.less', dest: 'build/styles/embed.css' }
   ])
 
   barLength = 15
@@ -196,11 +196,7 @@ task 'tests', 'Run unit tests cuz', (options) ->
 
 
 task 'styles', 'Compile CSS', ->
-  compileCSS([
-    { source: 'styles/ui.less',    dest: 'build/styles.css' }
-    { source: 'styles/embed.less', dest: 'build/embed.css' }
-  ])
-
+  console.log "Build script changed. Build CSS with 'cake build'."
 
 task 'pages', 'Build pages', ->
   compileCSS([
