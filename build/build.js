@@ -1630,6 +1630,27 @@ Contact: me@artur.co
         }
       }
       return results;
+    },
+    posn: {
+      clientToCanvas: function(p) {
+        p = p.clone();
+        p.x -= ui.canvas.normal.x;
+        p.y -= ui.canvas.normal.y;
+        return p;
+      },
+      canvasToClient: function(p) {
+        p = p.clone();
+        p.x += ui.canvas.normal.x;
+        p.y += ui.canvas.normal.y;
+        return p;
+      },
+      canvasZoomedToClient: function(p) {
+        p = p.multiplyBy(ui.canvas.zoom);
+        return this.canvasToClient(p);
+      },
+      clientToCanvasZoomed: function(p) {
+        return this.clientToCanvas(p).multiplyBy(1 / ui.canvas.zoom);
+      }
     }
   };
 

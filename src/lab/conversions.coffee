@@ -84,5 +84,24 @@ lab.conversions =
 
     results
 
+  posn:
 
+    clientToCanvas: (p) ->
+      p = p.clone()
+      p.x -= ui.canvas.normal.x
+      p.y -= ui.canvas.normal.y
+      p
+
+    canvasToClient: (p) ->
+      p = p.clone()
+      p.x += ui.canvas.normal.x
+      p.y += ui.canvas.normal.y
+      p
+
+    canvasZoomedToClient: (p) ->
+      p = p.multiplyBy(ui.canvas.zoom)
+      @canvasToClient(p)
+
+    clientToCanvasZoomed: (p) ->
+      @clientToCanvas(p).multiplyBy(1 / ui.canvas.zoom)
 
