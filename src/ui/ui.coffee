@@ -88,14 +88,11 @@ window.ui =
 
 
 
-  new: (width, height, normal = @canvas.normal, zoom = @canvas.zoom) ->
+  new: (width, height) ->
     # Set up the UI for a new file. Give two dimensions.
     # TODO Add a user interface for specifying file dimensions
     @canvas.width = width
     @canvas.height = height
-    @canvas.zoom = zoom
-    @canvas.normal = normal
-    @canvas.redraw()
     @deleteAll()
 
 

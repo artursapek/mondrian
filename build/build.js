@@ -9033,18 +9033,9 @@ Contact: me@artur.co
         });
       }
     },
-    "new": function(width, height, normal, zoom) {
-      if (normal == null) {
-        normal = this.canvas.normal;
-      }
-      if (zoom == null) {
-        zoom = this.canvas.zoom;
-      }
+    "new": function(width, height) {
       this.canvas.width = width;
       this.canvas.height = height;
-      this.canvas.zoom = zoom;
-      this.canvas.normal = normal;
-      this.canvas.redraw();
       return this.deleteAll();
     },
     configurations: {
