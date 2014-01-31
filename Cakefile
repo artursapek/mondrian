@@ -4,6 +4,7 @@
 fs     = require 'fs'
 {exec} = require 'child_process'
 lessc  = require 'less'
+colors = require 'colors'
 
 SOURCE_HEADER = '''
                 ###
@@ -47,6 +48,13 @@ validateBuildFiles = (paths) ->
     if not fs.existsSync path
       throw "#{path} does not exist"
 
+log = (status, msg) ->
+  switch status
+    when "ok"
+      console.log "[OK] ".green + msg
+    when "error"
+      console.log "[ERROR] ".red + msg
+
 compileCSS = (pairs) ->
   pairs.forEach (config) ->
     startTime = new Date()
@@ -54,7 +62,8 @@ compileCSS = (pairs) ->
       lessc.render data, (e, css) ->
         if not e
           fs.writeFile config.dest, css
-          console.log "Compiled #{config.source} => #{config.dest} in #{(new Date().valueOf() - startTime.valueOf()) / 1000} seconds"
+          compileTime = (new Date().valueOf() - startTime.valueOf()) / 1000
+          log "ok", "Compiled #{config.source} => #{config.dest} in #{compileTime} seconds"
         else
           console.log lessc.formatError e, { color: true } if e
 
@@ -97,12 +106,19 @@ compileCoffee = (src, outputFile = 'build/build.js', callback = ->) ->
   fs.writeFile tmpFile, src, 'utf8', (err) ->
     throw err if err
     exec "coffee --compile #{tmpFile}", (err, stdout) ->
+      log "error", "Coffee compilation failed                           "
       throw err if err
       callback()
 
 
 task 'build', 'Build project', ->
-  barLength = 30
+  # TODO This is a dupe for now, for simplicity's sake
+  compileCSS([
+    { source: 'styles/ui.less',    dest: 'build/styles.css' }
+    { source: 'styles/embed.less', dest: 'build/embed.css' }
+  ])
+
+  barLength = 15
 
   if fs.existsSync '.compiletime'
     lastCompileTime = fs.readFileSync '.compiletime', 'utf8'
@@ -116,8 +132,6 @@ task 'build', 'Build project', ->
     validateBuildFiles paths
     # Concat files
     completeSrc = "#{SOURCE_HEADER}\n#{concatSrcFiles paths}"
-    # Compile it all into build/build.js
-    console.log "Compiling #{completeSrc.match(/\n/g).length} lines"
 
     # Progress bar
     compileStart = new Date()
@@ -132,19 +146,20 @@ task 'build', 'Build project', ->
       for x in [0...compileProgress]
         bar += "█"
       for x in [0...barLength - compileProgress]
-        bar += "-"
+        bar += " "
       bar += "] #{Math.round((lastCompileTime - ((compileProgress / barLength) * lastCompileTime)) / 1000)} seconds remaining  \r"
       process.stdout.write bar
     ), progressInterval
 
     compileCoffee completeSrc, 'build/build.js', ->
       compileTime = new Date().valueOf() - compileStart.valueOf()
-      finishedMessage = "Compiled in #{compileTime / 1000} seconds"
+      finishedMessage = "Compiled JavaScript blob #{compileTime / 1000} seconds"
       for x in [0...(barLength - finishedMessage.length) + 30]
         finishedMessage += " "
-      console.log finishedMessage
+      log "ok", finishedMessage
       clearInterval barInterval
       exec "echo #{compileTime} > .compiletime"
+
 
 task 'lengths', 'Print source file lengths', ->
   filePaths (paths) ->
