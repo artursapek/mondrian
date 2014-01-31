@@ -62,9 +62,9 @@ You can also access the latest stable build at [mondrian.io](http://mondrian.io)
 
 `npm install`
 
-#### Building the JavaScript
+#### Building the app
 
-Run the build task to compile all of the files into the executable [`build.js`](build/build.js):
+Run the build task to compile all of the JavaScript and CSS.
 
 `cake build`
 
@@ -108,12 +108,6 @@ src/ui/selection.coffee
 src/geometry/posn.coffee
 src/geometry/line-segment.coffee
 ```
-
-#### Building the CSS
-
-The stylesheets are written in LESS, and compiled into CSS like so:
-
-`cake styles`
 
 ## Contributing
 
