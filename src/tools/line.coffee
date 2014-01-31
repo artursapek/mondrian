@@ -21,6 +21,8 @@ tools.line = new Tool
   cssid: 'crosshair'
   id: 'line'
 
+  hotkey: '\\'
+
   offsetX: 7
   offsetY: 7
 

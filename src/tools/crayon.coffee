@@ -11,6 +11,8 @@ tools.crayon = new Tool
   cssid: 'crayon'
   id: 'crayon'
 
+  hotkey: 'C'
+
   drawing: false
 
   setup: ->

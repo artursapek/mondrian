@@ -36,22 +36,7 @@ ui.hotkeys =
       context: ui
       ignoreAllOthers: false
       down:
-        # Tool hotkeys
-        'V' : (e) -> @switchToTool tools.cursor
-        'P' : (e) -> @switchToTool tools.pen
-        'C' : (e) -> @switchToTool tools.crayon
-        '\\': (e) -> @switchToTool tools.line
-        'L' : (e) -> @switchToTool tools.ellipse
-        'T' : (e) -> @switchToTool tools.type
-        'M' : (e) -> @switchToTool tools.rectangle
-        'R' : (e) -> @switchToTool tools.rotate
-        'Z' : (e) -> @switchToTool tools.zoom
-        'I' : (e) -> @switchToTool tools.eyedropper
-
-        # Start up the paw
-        'space': (e) ->
-          e.preventDefault()
-          @switchToTool tools.paw
+        # Tools and Menu items define their own hotkeys in their respective files.
 
         'shift-X': ->
           f = ui.fill.clone()

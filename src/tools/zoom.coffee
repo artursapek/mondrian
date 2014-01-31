@@ -13,6 +13,8 @@ tools.zoom = new Tool
   cssid: 'zoom'
   id: 'zoom'
 
+  hotkey: 'Z'
+
   ignoreDoubleclick: true
 
   click:
