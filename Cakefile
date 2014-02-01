@@ -38,7 +38,7 @@ filePaths = (callback, keys) ->
     else
       dir = key
 
-    paths = paths.concat ("src/#{dir or ''}#{if dir then '/' else ''}#{fn}.coffee" for fn in fns)
+    paths = paths.concat ("src/coffee/#{dir or ''}#{if dir then '/' else ''}#{fn}.coffee" for fn in fns)
 
   callback paths
 
@@ -100,7 +100,7 @@ concatSrcFiles = (paths) ->
   contents
 
 
-compileCoffee = (src, outputFile = 'www/build/build.js', callback = ->) ->
+compileCoffee = (src, outputFile = 'www/assets/build.js', callback = ->) ->
   # Write temp file
   tmpFile = outputFile.replace /\.js/, '.coffee'
   fs.writeFile tmpFile, src, 'utf8', (err) ->
@@ -115,8 +115,8 @@ compileCoffee = (src, outputFile = 'www/build/build.js', callback = ->) ->
 task 'build', 'Build project', ->
   # TODO This is a dupe for now, for simplicity's sake
   compileCSS([
-    { source: 'styles/ui.less',    dest: 'www/build/styles/app.css' }
-    { source: 'styles/embed.less', dest: 'www/build/styles/embed.css' }
+    { source: 'src/less/ui.less',    dest: 'www/assets/styles/app.css' }
+    { source: 'src/less/embed.less', dest: 'www/assets/styles/embed.css' }
   ])
 
   barLength = 15
@@ -152,7 +152,7 @@ task 'build', 'Build project', ->
       process.stdout.write bar
     ), progressInterval
 
-    compileCoffee completeSrc, 'www/build/build.js', ->
+    compileCoffee completeSrc, 'www/assets/build.js', ->
       compileTime = new Date().valueOf() - compileStart.valueOf()
       finishedMessage = "Compiled JavaScript blob #{compileTime / 1000} seconds"
       for x in [0...(barLength - finishedMessage.length) + 30]
@@ -201,9 +201,9 @@ task 'styles', 'Compile CSS', ->
 
 task 'pages', 'Build pages', ->
   compileCSS([
-    { source: 'styles/page.less', dest: 'www/build/styles/page.css' }
-    { source: 'styles/contributing.less', dest: 'www/build/styles/contributing.css' }
-    { source: 'styles/testing.less', dest: 'www/build/styles/testing.css' }
+    { source: 'src/less/page.less', dest: 'www/assets/styles/page.css' }
+    { source: 'src/less/contributing.less', dest: 'www/assets/styles/contributing.css' }
+    { source: 'src/less/testing.less', dest: 'www/assets/styles/testing.css' }
   ])
 
   exec 'haml terms-of-use/index.haml > terms-of-use/index.html'
@@ -215,9 +215,9 @@ task 'pages', 'Build pages', ->
     throw err if err
 
 task 'minify', 'Minify source code', ->
-    exec 'uglifyjs www/build/build.js > www/build/build.min.js', (err, stdout, stderr) ->
+    exec 'uglifyjs www/assets/build.js > www/assets/build.min.js', (err, stdout, stderr) ->
         throw err if err
-        console.log 'Minified JavaScript in www/build/'
+        console.log 'Minified JavaScript in www/assets/'
 
 task 'dependencies', 'Install node dependencies', ->
   dependencies = [
