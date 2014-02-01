@@ -98,8 +98,6 @@ ui.hotkeys =
 
       up:
         'space': -> @switchToLastTool()
-        '+': -> @refreshAfterZoom()
-        '-': -> @refreshAfterZoom()
 
 
   use: (set) ->
