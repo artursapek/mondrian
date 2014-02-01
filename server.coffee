@@ -1,7 +1,7 @@
 connect = require('connect')
 http = require('http')
 
-directory = __dirname + "/www"
+directory = [__dirname, "build"].join('/')
 
 connect()
   .use(connect.static(directory))
