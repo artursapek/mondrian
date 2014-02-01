@@ -12,9 +12,9 @@ npm-debug.log
 # Build #
 ###########
 .compiletime
-build/build.coffee
-build/build.js
-build/build.min.js
+build/assets/build.coffee
+build/assets/build.js
+build/assets/build.min.js
 
 # Sublime Text #
 ##############
