@@ -1,0 +1,267 @@
+@font-face {
+  font-family: 'Maven Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Maven Pro Light'), local('Maven-Pro-Light'), url(/build/fonts/maven-pro.400.woff) format('woff');
+}
+@font-face {
+  font-family: 'Maven Pro';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Maven Pro Medium'), local('Maven-Pro-Medium'), url(/build/fonts/maven-pro.500.woff) format('woff');
+}
+@font-face {
+  font-family: 'Maven Pro';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Maven Pro Dark'), local('Maven-Pro-Dark'), url(/build/fonts/maven-pro.700.woff) format('woff');
+}
+#logo {
+  width: 36px;
+  height: 35px;
+  background-color: rgba(30, 30, 30, 0.92);
+  border-bottom: 1px solid #0d0d0d;
+  position: absolute;
+  top: 10px;
+  left: 20px;
+}
+#logo > div {
+  position: absolute;
+  top: 4px;
+}
+#logo > div.red {
+  background-color: #e03f4a;
+}
+#logo > div.yellow {
+  background-color: #f1cf2e;
+}
+#logo > div.blue {
+  background-color: #3fb2e0;
+}
+#logo #left-bar,
+#logo #right-bar {
+  width: 8px;
+  height: 28px;
+}
+#logo #middle-bar {
+  width: 8px;
+  height: 10px;
+  left: 16px;
+}
+#logo #left-bar {
+  left: 4px;
+}
+#logo #right-bar {
+  right: 0px;
+}
+.ellipsis-overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -moz-text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;
+}
+.maven-pro {
+  font-family: 'Maven Pro';
+}
+body {
+  font-family: "Maven Pro";
+  background: #f7f7f7;
+}
+#page {
+  width: 950px;
+}
+#content {
+  padding-top: 100px;
+  float: left;
+  margin-bottom: 10px;
+}
+a.cta {
+  display: inline-block;
+  margin-top: 12px;
+  background: #3fb2e0;
+  border-bottom: 3px solid rgba(63, 142, 185, 0.92);
+  color: white;
+  font-family: "Maven Pro";
+  font-weight: 300;
+  padding: 10px;
+  font-size: 30px;
+  text-decoration: none;
+}
+a.cta:hover {
+  opacity: 0.9;
+}
+a.cta:active {
+  position: relative;
+  top: 2px;
+  border-bottom: none;
+}
+#cta-bottom {
+  float: left;
+  width: 100%;
+  text-align: center;
+}
+#hero {
+  width: 100%;
+  height: 570px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+#hero h1 {
+  margin-top: 20px;
+  margin-bottom: 6px;
+}
+#hero p {
+  margin-top: 5px;
+}
+h1 {
+  font-weight: normal;
+  font-size: 26px;
+  font-family: "Maven Pro";
+}
+.feature {
+  width: 950px;
+  position: relative;
+  float: left;
+  font-family: "Maven Pro";
+  min-height: 400px;
+}
+.feature p {
+  margin: 0;
+  line-height: 1.5;
+}
+.feature div {
+  display: inline-block;
+  width: 450px;
+  padding: 50px 0px;
+  font-size: 16px;
+  text-align: left;
+}
+.feature div:first-child {
+  float: left;
+}
+.feature div:first-child.icon {
+  text-align: left;
+}
+.feature div:last-child {
+  float: right;
+}
+.feature div.icon {
+  width: 500px;
+  text-align: right;
+}
+.feature div.desc {
+  width: 450px;
+  position: absolute;
+  top: 25%;
+}
+#pricing {
+  float: left;
+  width: 100%;
+  text-align: center;
+}
+#pricing h1 {
+  text-align: left;
+}
+#pricing .tier {
+  text-align: left;
+  height: 300px;
+  padding: 15px;
+  width: 273px;
+  float: left;
+  display: inline-block;
+}
+#pricing .tier.middle {
+  margin: 0 17px;
+}
+#pricing .tier .price {
+  margin-top: 8px;
+}
+#pricing .tier .price.free,
+#pricing .tier .price.custom {
+  color: rgba(0, 0, 0, 0.4);
+}
+#pricing .tier .price.money {
+  color: #75C56D;
+}
+#pricing .tier .details {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+#pricing .tier .details.main {
+  background: #ffffff;
+}
+#pricing .tier .details a {
+  text-decoration: none;
+}
+#pricing .tier .details button {
+  border: none;
+  color: white;
+  font-size: 18px;
+  font-family: Maven Pro;
+  padding: 10px;
+  cursor: pointer;
+  display: block;
+  margin: 10px auto;
+}
+#pricing .tier .details button.main {
+  background: #3fb2e0;
+  border-bottom: 1px solid rgba(63, 142, 185, 0.92);
+}
+#pricing .tier .details button.main:hover {
+  background: #6bc4e7;
+  border-bottom: 1px solid rgba(98, 165, 201, 0.92);
+}
+#pricing .tier .details button.secondary {
+  background: #72a6b9;
+  border-bottom: 1px solid #698ea1;
+}
+#pricing .tier .details button.secondary:hover {
+  background: #8ab5c5;
+  border-bottom: 1px solid #7f9faf;
+}
+#pricing .tier h2 {
+  font-weight: 300;
+  margin-top: 0;
+}
+#pricing p {
+  margin: 15px;
+}
+#pricing ul {
+  margin: 15px;
+  padding: 0;
+}
+#pricing ul li {
+  padding-left: 10px;
+  border-left: 2px solid rgba(0, 0, 0, 0.25);
+  margin: 7px 0;
+  list-style: none;
+}
+#pricing ul li emph {
+  border-bottom: 2px dotted #75C56D;
+}
+video,
+img {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+#footer {
+  margin: 100px 0 50px 0;
+  float: left;
+  font-family: "Maven Pro";
+  color: rgba(0, 0, 0, 0.85);
+}
+#footer ul li {
+  display: inline-block;
+  margin: 0 25px;
+}
+#footer ul li.dark {
+  font-weight: 500;
+}
+#footer ul li a {
+  color: rgba(63, 142, 185, 0.92);
+  text-decoration: none;
+}
+#footer ul li a:hover {
+  text-decoration: underline;
+}
