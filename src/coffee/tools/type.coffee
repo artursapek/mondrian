@@ -11,6 +11,8 @@ tools.type = new Tool
   cssid: 'type'
   id: 'type'
 
+  hotkey: 'T'
+
   typingInto: undefined
 
   tearDown: ->

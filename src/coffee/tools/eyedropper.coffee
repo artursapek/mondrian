@@ -13,6 +13,7 @@ tools.eyedropper = new Tool
   cssid: 'eyedropper'
   id: 'eyedropper'
 
+  hotkey: 'I'
 
   click:
     elem_hoverTarget_point: (e) ->

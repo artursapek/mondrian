@@ -29,6 +29,8 @@ tools.cursor = new Tool
   cssid: 'cursor'
   id: 'cursor'
 
+  hotkey: 'V'
+
   tearDown: ->
     for elem in ui.elements
       if not ui.selection.elements.all.has elem

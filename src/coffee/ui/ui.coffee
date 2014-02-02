@@ -227,10 +227,16 @@ window.ui =
             # Get the right menu
             menu = menus.filter((menu) -> menu.itemid is target.id)[0]
             menu.openDropdown() if menu?
+        else
+          @topUI.dispatch(e, "hover")
+
 
   unhover: (e, target) ->
     e.target = target
-    @uistate.get('tool').dispatch(e, "unhover")
+    if isOnTopUI(target)
+      @topUI.dispatch(e, "unhover")
+    else
+      @uistate.get('tool').dispatch(e, "unhover")
 
   click: (e, target) ->
     # Certain targets we ignore.

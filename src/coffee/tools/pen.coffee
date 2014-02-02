@@ -26,6 +26,8 @@ tools.pen = new Tool
 
   id: 'pen'
 
+  hotkey: 'P'
+
   ignoreDoubleclick: true
 
   tearDown: ->

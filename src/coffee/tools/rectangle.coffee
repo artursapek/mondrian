@@ -13,3 +13,4 @@ tools.rectangle = new ArbitraryShapeTool
     width: 0.2
     height: 0.2
 
+  hotkey: 'M'

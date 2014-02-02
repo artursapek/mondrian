@@ -15,6 +15,11 @@ class Tool
     for i, x of attrs
       @[i] = x
 
+    if @hotkey?
+      ui.hotkeys.sets.app.down[@hotkey] = (e) =>
+        e.preventDefault()
+        ui.switchToTool @
+
   tearDown: ->
 
   setup: ->
