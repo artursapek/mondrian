@@ -230,7 +230,6 @@ div#tool-palette {
       white-space: nowrap; // Dynamic width
       top: 0;
       left: 50px;
-      background: @medium-grey;
       padding: 9px;
       padding-right: 45px;
       border-bottom: 1px solid rgba(220, 220, 220, 0.92);
@@ -540,7 +539,7 @@ div#menu-bar, div#login-bar, div#register-bar, div#current-service {
   &:not(.disabled):not(.pending){
 
     &.blue {
-      &:hover, &[selected] {
+      &:hover, &[selected], .tool-info {
         background-color: @mondy-blue-light !important;
         border-bottom-color: @mondy-border-blue-light !important;
       }
@@ -550,7 +549,7 @@ div#menu-bar, div#login-bar, div#register-bar, div#current-service {
     }
 
     &.red {
-      &:hover, &[selected] {
+      &:hover, &[selected], .tool-info {
         background-color: @mondy-red-light !important;
         border-bottom-color: @mondy-border-red-light !important;
       }
@@ -560,7 +559,7 @@ div#menu-bar, div#login-bar, div#register-bar, div#current-service {
     }
 
     &.yellow {
-      &:hover, &[selected] {
+      &:hover, &[selected], .tool-info {
         background-color: @mondy-yellow-light !important;
         border-bottom-color: @mondy-border-yellow-light !important;
       }
