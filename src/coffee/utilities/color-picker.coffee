@@ -139,7 +139,8 @@ ui.utilities.color = new Utility
 
   selectColor: (e) ->
     @selected = new Posn(e).subtract(@offset).subtract(new Posn(10, 12))
-    @selected.x = 0 if @selected.x < 0
+    @selected.x = Math.max(0, @selected.x)
+    @selected.x = Math.min(260, @selected.x)
     @selected.y += @poolContainer.scrollTop
     color = @getColorAt @selected
     @set color
