@@ -1,6 +1,9 @@
 # Cakefile for Mondrian
 # Builds the app and the test files
 
+connect = require('connect')
+http = require('http')
+
 fs     = require 'fs'
 {exec} = require 'child_process'
 lessc  = require 'less'
@@ -54,9 +57,11 @@ validateBuildFiles = (paths) ->
 log = (status, msg) ->
   switch status
     when "ok"
-      console.log "[OK] ".green + msg
+      console.log "[OK]    ".green + msg
     when "error"
       console.log "[ERROR] ".red + msg
+    when "info"
+      console.log "[INFO]  ".magenta + msg
 
 compileCSS = (pairs) ->
   pairs.forEach (config) ->
@@ -182,6 +187,17 @@ task 'build', 'Build project', ->
       log "ok", finishedMessage
       clearInterval barInterval
       exec "echo #{compileTime} > .compiletime"
+
+
+task 'server', 'Run local server', ->
+  directory = [__dirname, "build"].join('/')
+
+  connect()
+    .use(connect.static(directory))
+    .use(connect.logger('dev'))
+    .listen 3000
+
+  log "info", "Listening on port 3000."
 
 
 task 'lengths', 'Print source file lengths', ->
