@@ -70,7 +70,7 @@ You can also access the latest stable build at [mondrian.io](http://mondrian.io)
 
 #### Building the app
 
-Run the build task to compile all of the JavaScript and CSS.
+Run the build task to compile all of the JavaScript, HTML, and CSS from `/src/` into `/build/`.
 
 `cake build`
 
@@ -78,7 +78,6 @@ It features a dumb progress bar that's based off the last compile time. It's act
 
 ```
 > cake build
-Compiling 16455 lines
 [██████         ] 14 seconds remaining
 ```
 
