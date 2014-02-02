@@ -11,38 +11,52 @@
 
 ui.topUI =
 
-  _tooltipTimeouts: {}
+  _tooltipShowTimeout: undefined
+  _tooltipHideTimeout: undefined
+  _$tooltipVisible:    undefined
 
   dispatch: (e, event) ->
     for cl in e.target.className.split(" ")
       @[event]["." + cl]?(e)
     @[event]["#" + e.target.id]?(e)
 
-
   hover:
     "slider knob": (e) ->
 
     ".tool-button": (e) ->
-      # clearTimeout automatically discards invalid / undefined values.
-      clearTimeout ui.topUI._tooltipTimeouts[e.target.id]
-      # The target can change while async (in the timeout).
-      elem = $(e.target)
+      $tooltip = $(e.target).find(".tool-info")
+      $visible = ui.topUI._$tooltipVisible
 
-      ui.topUI._tooltipTimeouts[e.target.id] = setTimeout(->
-        elem.children(".tool-info").fadeIn()
-      , 960)
+      if $visible? and $visible.text() == $tooltip.text()
+        return clearTimeout ui.topUI._tooltipHideTimeout
+
+      if $visible?
+        clearTimeout ui.topUI._tooltipHideTimeout
+        $visible.hide()
+        $tooltip.show()
+        ui.topUI._$tooltipVisible = $tooltip
+      else
+        clearTimeout ui.topUI._tooltipShowTimeout
+        ui.topUI._tooltipShowTimeout = setTimeout =>
+          $tooltip.fadeIn(50)
+          ui.topUI._$tooltipVisible = $tooltip
+        , 400
 
   unhover:
     "slider knob": ->
 
     ".tool-button": (e) ->
-      clearTimeout ui.topUI._tooltipTimeouts[e.target.id]
-      # The target can change while async (in the timeout).
-      elem = $(e.target)
+      $tooltip = $(e.target).find(".tool-info")
+      $visible = ui.topUI._$tooltipVisible
 
-      ui.topUI._tooltipTimeouts[e.target.id] = setTimeout(->
-        elem.children(".tool-info").fadeOut()
-      , 340)
+      if $visible?
+        if $visible.text() == $tooltip.text()
+          ui.topUI._tooltipHideTimeout = setTimeout =>
+            $tooltip.fadeOut(50)
+            ui.topUI._$tooltipVisible = undefined
+          , 300
+      else
+        clearTimeout ui.topUI._tooltipShowTimeout
 
   click:
     ".swatch": (e) ->
@@ -62,6 +76,11 @@ ui.topUI =
 
     ".tool-button": (e) ->
       ui.switchToTool tools[e.target.id.replace("-btn", "")]
+      # Don't show the tooltip if the user selects the tool,
+      # or hide the tooltip if it has already come up.
+      clearTimeout ui.topUI._tooltipShowTimeout
+      ui.topUI._$tooltipVisible?.hide()
+      ui.topUI._$tooltipVisible = undefined
 
     ".slider": (e) ->
       $(e.target).trigger("release")
