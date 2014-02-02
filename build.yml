@@ -1,4 +1,4 @@
-# Mondrian build files
+# Mondrian CoffeeScript source files
 # See explanation in /README.md
 
 src: !!omap
