@@ -102,7 +102,7 @@ concatSrcFiles = (paths) ->
   contents
 
 
-compileCoffee = (src, outputFile = "#{ROOT_BUILD_DIRECTORY}/assets/build.js", callback = ->) ->
+compileCoffee = (src, outputFile = "#{ROOT_BUILD_DIRECTORY}/assets/javascript/build.js", callback = ->) ->
   # Write temp file
   tmpFile = outputFile.replace /\.js/, '.coffee'
   fs.writeFile tmpFile, src, 'utf8', (err) ->
@@ -117,8 +117,11 @@ compileCoffee = (src, outputFile = "#{ROOT_BUILD_DIRECTORY}/assets/build.js", ca
 task 'build', 'Build project', ->
   # TODO This is a dupe for now, for simplicity's sake
   compileCSS([
-    { source: 'src/less/ui.less',    dest: "#{ROOT_BUILD_DIRECTORY}/assets/styles/app.css" }
-    { source: 'src/less/embed.less', dest: "#{ROOT_BUILD_DIRECTORY}/assets/styles/embed.css" }
+    { source: 'src/less/ui.less',    dest: "#{ROOT_BUILD_DIRECTORY}/assets/style/app.css" }
+    { source: 'src/less/embed.less', dest: "#{ROOT_BUILD_DIRECTORY}/assets/style/embed.css" }
+    { source: 'src/less/page.less', dest: "#{ROOT_BUILD_DIRECTORY}/assets/style/page.css" }
+    { source: 'src/less/contributing.less', dest: "#{ROOT_BUILD_DIRECTORY}/assets/style/contributing.css" }
+    { source: 'src/less/testing.less', dest: "#{ROOT_BUILD_DIRECTORY}/assets/style/testing.css" }
   ])
 
   barLength = 15
@@ -154,7 +157,7 @@ task 'build', 'Build project', ->
       process.stdout.write bar
     ), progressInterval
 
-    compileCoffee completeSrc, "#{ROOT_BUILD_DIRECTORY}/assets/build.js", ->
+    compileCoffee completeSrc, "#{ROOT_BUILD_DIRECTORY}/assets/javascript/build.js", ->
       compileTime = new Date().valueOf() - compileStart.valueOf()
       finishedMessage = "Compiled JavaScript blob #{compileTime / 1000} seconds"
       for x in [0...(barLength - finishedMessage.length) + 30]
@@ -203,9 +206,6 @@ task 'styles', 'Compile CSS', ->
 
 task 'pages', 'Build pages', ->
   compileCSS([
-    { source: 'src/less/page.less', dest: "#{ROOT_BUILD_DIRECTORY}/assets/styles/page.css" }
-    { source: 'src/less/contributing.less', dest: "#{ROOT_BUILD_DIRECTORY}/assets/styles/contributing.css" }
-    { source: 'src/less/testing.less', dest: "#{ROOT_BUILD_DIRECTORY}/assets/styles/testing.css" }
   ])
 
   exec 'haml terms-of-use/index.haml > terms-of-use/index.html'
@@ -213,11 +213,8 @@ task 'pages', 'Build pages', ->
   exec 'haml contributing/index.haml > contributing/index.html'
   exec 'haml signup/index.haml > signup/index.html'
 
-  exec 'coffee --compile contributing/dance.coffee', (err) ->
-    throw err if err
-
 task 'minify', 'Minify source code', ->
-    exec "uglifyjs #{ROOT_BUILD_DIRECTORY}/assets/build.js > #{ROOT_BUILD_DIRECTORY}/assets/build.min.js", (err, stdout, stderr) ->
+    exec "uglifyjs #{ROOT_BUILD_DIRECTORY}/assets/javascript/build.js > #{ROOT_BUILD_DIRECTORY}/assets/javascript/build.min.js", (err, stdout, stderr) ->
         throw err if err
         console.log "Minified JavaScript in #{ROOT_BUILD_DIRECTORY}/assets/"
 
