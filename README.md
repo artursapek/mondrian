@@ -79,7 +79,7 @@ It features a dumb progress bar that's based off the last compile time. It's act
 ```
 > cake build
 Compiling 16455 lines
-[██████------------------------] 14 seconds remaining
+[██████         ] 14 seconds remaining
 ```
 
 The entire app is written in [Coffeescript](http://coffeescript.org/). You have
