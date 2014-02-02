@@ -172,9 +172,11 @@ task 'build', 'Build project', ->
       process.stdout.write bar
     ), progressInterval
 
-    compileCoffee completeSrc, "#{ROOT_BUILD_DIRECTORY}/assets/javascript/build.js", ->
+    compiledAppPath = "#{ROOT_BUILD_DIRECTORY}/assets/javascript/build.js"
+
+    compileCoffee completeSrc, compiledAppPath, ->
       compileTime = new Date().valueOf() - compileStart.valueOf()
-      finishedMessage = "Compiled JavaScript blob #{compileTime / 1000} seconds"
+      finishedMessage = "Compiled app => #{compiledAppPath} in #{compileTime / 1000} seconds"
       for x in [0...(barLength - finishedMessage.length) + 30]
         finishedMessage += " "
       log "ok", finishedMessage
