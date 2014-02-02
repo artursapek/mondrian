@@ -74,7 +74,7 @@ compileHAML = (pairs) ->
   pairs.forEach (config) ->
     startTime = new Date()
     fs.readFile config.source, 'utf-8', (e, data) ->
-      html = haml.render data
+      html = haml.render data.toString()
       fs.writeFile config.dest, html
       compileTime = (new Date().valueOf() - startTime.valueOf()) / 1000
       log "ok", "Compiled #{config.source} => #{config.dest} in #{compileTime} seconds"
