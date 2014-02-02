@@ -4,12 +4,11 @@
     %title
       Mondrian - About
 
-    %link{ rel: "stylesheet", href: "/build/styles.css", type: "text/css", media: "screen", charset: "utf-9" }
-    %link{ rel: "stylesheet", href: "/build/styles/page.css", type: "text/css", media: "screen", charset: "utf-8" }
-    %link{ rel: "stylesheet", href: "/build/styles/contributing.css", type: "text/css", media: "screen", charset: "utf-8" }
+    %link{ rel: "stylesheet", href: "/assets/style/app.css", type: "text/css", media: "screen", charset: "utf-9" }
+    %link{ rel: "stylesheet", href: "/assets/style/page.css", type: "text/css", media: "screen", charset: "utf-8" }
+    %link{ rel: "stylesheet", href: "/assets/style/contributing.css", type: "text/css", media: "screen", charset: "utf-8" }
 
-    %link{ rel: "shortcut icon", href: "build/img/favicon.gif" }
-    %script{ src: "/build/jquery-1.7.2.min.js", type: "text/javascript", charset: "utf-8" }
+    %link{ rel: "shortcut icon", href: "/assets/images/favicon.gif" }
 
     :javascript
 
@@ -27,7 +26,7 @@
   %body
     #hero
       %a{ href: "/" }
-        %img{ src: "/build/img/screenshot.png" }
+        %img{ src: "/assets/images/screenshot.png" }
 
     #page
       #content
@@ -37,6 +36,7 @@
           Mondrian is a free vector graphics web app like Adobe Illustrator or Inkscape, available at
           %a{ href: "/" }
             %button.dark-blue mondrian.io
+          \.
           %br
           Today I'm open-sourcing it.
 
@@ -61,6 +61,7 @@
           fork the repo and open a pull request at
           %a{ href: "http://github.com/artursapek/mondrian" }
             %button.dark-red github/artursapek/mondrian
+          \.
 
           I'd love to meet you if you live in New York and are interested in getting involved.
           Please get in touch.
@@ -78,5 +79,3 @@
           New York City
           %br
           January 24, 2014
-
-    %script{ src: "dance.js", type: "text/javascript", charset: "utf-8" }
