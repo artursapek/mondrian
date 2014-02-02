@@ -5,6 +5,7 @@ fs     = require 'fs'
 {exec} = require 'child_process'
 lessc  = require 'less'
 colors = require 'colors'
+haml   = require 'haml'
 
 ROOT_BUILD_DIRECTORY = 'build'
 
@@ -69,6 +70,16 @@ compileCSS = (pairs) ->
         else
           console.log lessc.formatError e, { color: true } if e
 
+compileHAML = (pairs) ->
+  pairs.forEach (config) ->
+    startTime = new Date()
+    fs.readFile config.source, 'utf-8', (e, data) ->
+      html = haml.render data
+      fs.writeFile config.dest, html
+      compileTime = (new Date().valueOf() - startTime.valueOf()) / 1000
+      log "ok", "Compiled #{config.source} => #{config.dest} in #{compileTime} seconds"
+
+
 fileLengths = (paths) ->
   lineLengths = paths.map (p) -> p.length
   maxPathLength = Math.max.apply(Math, lineLengths)
@@ -115,13 +126,17 @@ compileCoffee = (src, outputFile = "#{ROOT_BUILD_DIRECTORY}/assets/javascript/bu
 
 
 task 'build', 'Build project', ->
-  # TODO This is a dupe for now, for simplicity's sake
   compileCSS([
-    { source: 'src/less/ui.less',    dest: "#{ROOT_BUILD_DIRECTORY}/assets/style/app.css" }
-    { source: 'src/less/embed.less', dest: "#{ROOT_BUILD_DIRECTORY}/assets/style/embed.css" }
-    { source: 'src/less/page.less', dest: "#{ROOT_BUILD_DIRECTORY}/assets/style/page.css" }
+    { source: 'src/less/ui.less',           dest: "#{ROOT_BUILD_DIRECTORY}/assets/style/app.css" }
+    { source: 'src/less/embed.less',        dest: "#{ROOT_BUILD_DIRECTORY}/assets/style/embed.css" }
+    { source: 'src/less/page.less',         dest: "#{ROOT_BUILD_DIRECTORY}/assets/style/page.css" }
     { source: 'src/less/contributing.less', dest: "#{ROOT_BUILD_DIRECTORY}/assets/style/contributing.css" }
-    { source: 'src/less/testing.less', dest: "#{ROOT_BUILD_DIRECTORY}/assets/style/testing.css" }
+    { source: 'src/less/testing.less',      dest: "#{ROOT_BUILD_DIRECTORY}/assets/style/testing.css" }
+  ])
+
+  compileHAML([
+    { source: "src/haml/xml.haml",          dest: "#{ROOT_BUILD_DIRECTORY}/xml/index.html" }
+    { source: "src/haml/contributing.haml", dest: "#{ROOT_BUILD_DIRECTORY}/contributing/index.html" }
   ])
 
   barLength = 15
@@ -204,14 +219,6 @@ task 'tests', 'Run unit tests cuz', (options) ->
 task 'styles', 'Compile CSS', ->
   console.log "Build script changed. Build CSS with 'cake build'."
 
-task 'pages', 'Build pages', ->
-  compileCSS([
-  ])
-
-  exec 'haml terms-of-use/index.haml > terms-of-use/index.html'
-  exec 'haml xml/index.haml > xml/index.html'
-  exec 'haml contributing/index.haml > contributing/index.html'
-  exec 'haml signup/index.haml > signup/index.html'
 
 task 'minify', 'Minify source code', ->
     exec "uglifyjs #{ROOT_BUILD_DIRECTORY}/assets/javascript/build.js > #{ROOT_BUILD_DIRECTORY}/assets/javascript/build.min.js", (err, stdout, stderr) ->
