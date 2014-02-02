@@ -43,15 +43,17 @@ There are no tests written for this system. It's a big todo.
 
 ## Running the app
 
-The app is a simple static site. To run it locally just clone the repo, install the dependencies,
-and build the sources files.
+Mondrian is a simple static site.
+
+To run it locally for the first time you have to clone the repo,
+install the dependencies, and build the source files.
 
 ```
 git clone git@github.com:artursapek/mondrian.git
 cd mondrian
 npm install
 cake build
-coffee server.coffee --nodejs
+cake server
 ```
 
 Then, open [`localhost:3000`](http://localhost:3000) in your web browser, and there you have it!
@@ -61,6 +63,10 @@ You can also access the latest stable build at [mondrian.io](http://mondrian.io)
 #### Installing Dependencies
 
 `npm install`
+
+#### Running the local server
+
+`cake server`
 
 #### Building the app
 
