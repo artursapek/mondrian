@@ -196,6 +196,14 @@ ui.hotkeys =
 
   lastEvent: {}
 
+  modifierCodes:
+    8: 'backspace'
+    16: 'shift'
+    17: 'ctrl'
+    18: 'alt'
+    91: 'cmd'
+    92: 'cmd'
+    224: 'cmd'
 
   ###
     Strategy:
@@ -210,6 +218,11 @@ ui.hotkeys =
   ###
 
   setup: ->
+    # Map the ctrl key as cmd if the user is on windows.
+    if ~navigator.appVersion.indexOf("Win")
+      @modifierCodes[17] = 'cmd'
+      dom.body?.setAttribute 'os', 'windows'
+
     @use "app"
 
     ui.window.on 'focus', =>
@@ -436,17 +449,8 @@ ui.hotkeys =
 
   parseKeystroke: (e) ->
 
-    modifiers =
-      8: 'backspace'
-      16: 'shift'
-      17: 'ctrl'
-      18: 'alt'
-      91: 'cmd'
-      92: 'cmd'
-      224: 'cmd'
-
-    if modifiers[e.which]?
-      return modifiers[e.which]
+    if @modifierCodes[e.which]?
+      return @modifierCodes[e.which]
 
     accepted = [
       new Range(9, 9) # Enter
