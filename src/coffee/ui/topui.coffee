@@ -40,7 +40,7 @@ ui.topUI =
         ui.topUI._tooltipShowTimeout = setTimeout =>
           $tooltip.fadeIn(50)
           ui.topUI._$tooltipVisible = $tooltip
-        , 400
+        , 500
 
   unhover:
     "slider knob": ->
