@@ -19,9 +19,7 @@ class Tool
       ui.hotkeys.sets.app.down[@hotkey] = (e) =>
         e.preventDefault()
         ui.switchToTool @
-        # Hide tooltip
-        ui.topUI._$tooltipVisible?.hide()
-        ui.topUI._$tooltipVisible = undefined
+        ui.tooltips.hideVisible()
 
   tearDown: ->
 

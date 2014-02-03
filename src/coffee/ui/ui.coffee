@@ -183,7 +183,7 @@ window.ui =
       # in the UI. Update those buttons unless we're just temporarily
       # activating the paw.
       q(".tool-button[selected]")?.removeAttribute('selected')
-      q("##{tool.id}-btn")?.setAttribute('selected', '')
+      q(".tool-button[tool=\"#{tool.id}\"]")?.setAttribute('selected', '')
 
       # A hack, somewhat. Changing the document cursor offset in the CSS
       # fires a mousemove so if we're changing to a tool with a different

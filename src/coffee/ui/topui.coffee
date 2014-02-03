@@ -21,42 +21,12 @@ ui.topUI =
     @[event]["#" + e.target.id]?(e)
 
   hover:
-    "slider knob": (e) ->
-
     ".tool-button": (e) ->
-      $tooltip = $(e.target).find(".tool-info")
-      $visible = ui.topUI._$tooltipVisible
-
-      if $visible? and $visible.text() == $tooltip.text()
-        return clearTimeout ui.topUI._tooltipHideTimeout
-
-      if $visible?
-        clearTimeout ui.topUI._tooltipHideTimeout
-        $visible.hide()
-        $tooltip.show()
-        ui.topUI._$tooltipVisible = $tooltip
-      else
-        clearTimeout ui.topUI._tooltipShowTimeout
-        ui.topUI._tooltipShowTimeout = setTimeout =>
-          $tooltip.fadeIn(50)
-          ui.topUI._$tooltipVisible = $tooltip
-        , 500
+      ui.tooltips.activate(e.target.getAttribute("tool"))
 
   unhover:
-    "slider knob": ->
-
     ".tool-button": (e) ->
-      $tooltip = $(e.target).find(".tool-info")
-      $visible = ui.topUI._$tooltipVisible
-
-      if $visible?
-        if $visible.text() == $tooltip.text()
-          ui.topUI._tooltipHideTimeout = setTimeout =>
-            $tooltip.fadeOut(50)
-            ui.topUI._$tooltipVisible = undefined
-          , 300
-      else
-        clearTimeout ui.topUI._tooltipShowTimeout
+      ui.tooltips.deactivate(e.target.getAttribute("tool"))
 
   click:
     ".swatch": (e) ->
@@ -75,12 +45,9 @@ ui.topUI =
           ui.utilities.color.setting.getAttribute("type"))
 
     ".tool-button": (e) ->
-      ui.switchToTool tools[e.target.id.replace("-btn", "")]
-      # Don't show the tooltip if the user selects the tool,
-      # or hide the tooltip if it has already come up.
-      clearTimeout ui.topUI._tooltipShowTimeout
-      ui.topUI._$tooltipVisible?.hide()
-      ui.topUI._$tooltipVisible = undefined
+      tool = e.target.getAttribute('tool')
+      ui.switchToTool tools[tool]
+      ui.tooltips.hideVisible()
 
     ".slider": (e) ->
       $(e.target).trigger("release")
