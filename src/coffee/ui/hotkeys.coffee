@@ -188,7 +188,6 @@ ui.hotkeys =
   setup: ->
     # Map the ctrl key as cmd if the user is on windows.
     if ~navigator.appVersion.indexOf("Win")
-      console.log 'windows'
       @modifierCodes[17] = 'cmd'
       dom.body?.setAttribute 'os', 'windows'
 
