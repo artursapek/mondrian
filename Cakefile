@@ -222,7 +222,7 @@ task 'tests', 'Run unit tests cuz', (options) ->
     validateBuildFiles paths
     completeSrc = concatSrcFiles paths
     compileCoffee completeSrc, "tests/#{name}.test.js", ->
-      
+
       if Object.keys(options).indexOf("console") > -1
         startTime = new Date().valueOf()
         exec "node tests/#{name}.test.js", (err, stdout) ->
@@ -242,12 +242,3 @@ task 'minify', 'Minify source code', ->
     exec "uglifyjs #{ROOT_BUILD_DIRECTORY}/assets/javascript/build.js > #{ROOT_BUILD_DIRECTORY}/assets/javascript/build.min.js", (err, stdout, stderr) ->
         throw err if err
         console.log "Minified JavaScript in #{ROOT_BUILD_DIRECTORY}/assets/"
-
-task 'dependencies', 'Install node dependencies', ->
-  dependencies = [
-    'js-yaml'
-  ]
-
-  dependencies.forEach (dep) ->
-    exec "npm install #{dep} --skip-installed -g"
-
