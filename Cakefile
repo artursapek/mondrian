@@ -129,8 +129,40 @@ compileCoffee = (src, outputFile = "#{ROOT_BUILD_DIRECTORY}/assets/javascript/bu
         throw err
       callback()
 
+compileAppcache = ->
+  fs.readFile 'build/app/mondrian.appcache', 'utf8', (err, old) ->
+    buildno = 1
+    if old
+      buildno = parseInt(/^# Revision (\d+)$/m.exec(old)[1]) + 1
+
+    next = 'CACHE MANIFEST\n# Revision ' + buildno + '\n'
+    getGitHeadSHA (sha) ->
+      next += '# SHA ' + sha + '\n'
+      next += '# Date: ' + new Date().toDateString() + '\n'
+      fs.readFile 'src/app/mondrian.appcache', 'utf8', (err, data) ->
+        if err or typeof data isnt "string"
+          console.log("'src/app/mondrian.appcache' is missing or malformed.")
+          console.log("Unable to compile appcache.")
+          return
+        fs.writeFile 'build/app/mondrian.appcache', next + data
+
+getGitHeadSHA = (cb) ->
+  fs.readFile '.git/HEAD', 'utf8', (err, ref) ->
+    if err or typeof ref isnt "string"
+      console.log('Missing or malformed git HEAD - SHA unavailable.')
+      return cb null
+    getGitSHAFromRef '.git/' + ref.slice(4, ref.length).trim(), cb
+
+getGitSHAFromRef = (ref, cb) ->
+  fs.readFile ref, 'utf8', (err, sha) ->
+    if err or typeof sha isnt "string"
+      console.log('Missing or malformed git branch SHA.')
+      return cb null
+    cb sha.trim()
 
 task 'build', 'Build project', ->
+  compileAppcache()
+
   compileCSS([
     { source: 'src/less/ui.less',           dest: "#{ROOT_BUILD_DIRECTORY}/assets/style/app.css" }
     { source: 'src/less/embed.less',        dest: "#{ROOT_BUILD_DIRECTORY}/assets/style/embed.css" }
