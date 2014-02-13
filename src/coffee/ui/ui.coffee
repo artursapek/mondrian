@@ -183,7 +183,7 @@ window.ui =
       # in the UI. Update those buttons unless we're just temporarily
       # activating the paw.
       q(".tool-button[selected]")?.removeAttribute('selected')
-      q("##{tool.id}-btn")?.setAttribute('selected', '')
+      q(".tool-button[tool=\"#{tool.id}\"]")?.setAttribute('selected', '')
 
       # A hack, somewhat. Changing the document cursor offset in the CSS
       # fires a mousemove so if we're changing to a tool with a different
@@ -227,10 +227,16 @@ window.ui =
             # Get the right menu
             menu = menus.filter((menu) -> menu.itemid is target.id)[0]
             menu.openDropdown() if menu?
+        else
+          @topUI.dispatch(e, "hover")
+
 
   unhover: (e, target) ->
     e.target = target
-    @uistate.get('tool').dispatch(e, "unhover")
+    if isOnTopUI(target)
+      @topUI.dispatch(e, "unhover")
+    else
+      @uistate.get('tool').dispatch(e, "unhover")
 
   click: (e, target) ->
     # Certain targets we ignore.

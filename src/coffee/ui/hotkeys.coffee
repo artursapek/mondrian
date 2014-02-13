@@ -29,40 +29,14 @@ ui.hotkeys =
 
     root:
       context: ui
-      down:
-        'cmd-S': (e) ->
-          e.preventDefault() # Save
-          @file.save()
-        'cmd-N': (e) ->
-          e.preventDefault() # New
-          console.log "new"
-        'cmd-O': (e) ->
-          e.preventDefault()
-          if @file.service?
-            @file.service.open()
-
+      down: {}
       up: {}
 
     app:
       context: ui
       ignoreAllOthers: false
       down:
-        # Tool hotkeys
-        'V' : (e) -> @switchToTool tools.cursor
-        'P' : (e) -> @switchToTool tools.pen
-        'C' : (e) -> @switchToTool tools.crayon
-        '\\': (e) -> @switchToTool tools.line
-        'L' : (e) -> @switchToTool tools.ellipse
-        'T' : (e) -> @switchToTool tools.type
-        'M' : (e) -> @switchToTool tools.rectangle
-        'R' : (e) -> @switchToTool tools.rotate
-        'Z' : (e) -> @switchToTool tools.zoom
-        'I' : (e) -> @switchToTool tools.eyedropper
-
-        # Start up the paw
-        'space': (e) ->
-          e.preventDefault()
-          @switchToTool tools.paw
+        # Tools and Menu items define their own hotkeys in their respective files.
 
         'shift-X': ->
           f = ui.fill.clone()
@@ -110,10 +84,6 @@ ui.hotkeys =
         # Ignore certain browser defaults
         'cmd-D': (e) -> e.preventDefault() # Bookmark
 
-        'cmd-S': (e) ->
-          e.preventDefault() # Save
-          ui.file.save()
-
         'ctrl-L': -> ui.annotations.clear()
 
         # Nudge
@@ -128,8 +98,6 @@ ui.hotkeys =
 
       up:
         'space': -> @switchToLastTool()
-        '+': -> @refreshAfterZoom()
-        '-': -> @refreshAfterZoom()
 
 
   use: (set) ->
@@ -250,17 +218,10 @@ ui.hotkeys =
       # Save this event for
       @lastEvent = e
 
-      if not e.metaKey
-        @cmdDown = false
-        @registerModifierUp "cmd"
-      else
-        @registerModifier "cmd"
-
       # Cmd has been pushed
       if keystroke is 'cmd'
-        if not @cmdDown
-          @cmdDown = true # Custom tracking for cmd
-          @registerModifier "cmd"
+        @cmdDown = true # Custom tracking for cmd
+        @registerModifier "cmd"
         return
 
       else if keystroke in ['shift', 'alt', 'ctrl']
@@ -368,8 +329,7 @@ ui.hotkeys =
       @using.up?.always?.call(@using.context, @lastEvent)
 
       if keystroke is 'cmd' # CMD has been released!
-        @modifiersDown = @modifiersDown.remove 'cmd'
-        ui.uistate.get('tool').deactivateModifier 'cmd'
+        @registerModifierUp keystroke
         @keysDown = []
         @cmdDown = false
 
@@ -380,8 +340,7 @@ ui.hotkeys =
         return @maintainInterval()
 
       else if keystroke in ['shift', 'alt', 'ctrl']
-        @modifiersDown = @modifiersDown.remove keystroke
-        ui.uistate.get('tool').deactivateModifier keystroke
+        @registerModifierUp keystroke
         return @maintainInterval()
       else
         @keysDown = @keysDown.remove keystroke

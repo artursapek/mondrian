@@ -13,6 +13,8 @@ tools.rotate = new Tool
   offsetX: 7
   offsetY: 7
 
+  hotkey: 'R'
+
   setup: ->
     @$rndo = $("#r-nd-o")
     ui.transformer.onRotatingMode()

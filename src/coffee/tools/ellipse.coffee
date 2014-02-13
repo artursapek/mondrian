@@ -12,3 +12,5 @@ tools.ellipse = new ArbitraryShapeTool
     cy: 0.0
     rx: 0.1
     ry: 0.1
+
+  hotkey: 'L'

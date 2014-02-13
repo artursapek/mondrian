@@ -14,6 +14,8 @@ tools.paw = new Tool
   id:    'paw'
   cssid: 'paw'
 
+  hotkey: 'space'
+
   setup: ->
     # Ran into a crazy bug where the canvas normal suddenly had NaN
     # as its X value. Prevent that from happening

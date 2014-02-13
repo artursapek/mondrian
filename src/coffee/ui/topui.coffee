@@ -11,19 +11,22 @@
 
 ui.topUI =
 
+  _tooltipShowTimeout: undefined
+  _tooltipHideTimeout: undefined
+  _$tooltipVisible:    undefined
+
   dispatch: (e, event) ->
     for cl in e.target.className.split(" ")
       @[event]["." + cl]?(e)
     @[event]["#" + e.target.id]?(e)
 
-
   hover:
-    "slider knob": (e) ->
-
+    ".tool-button": (e) ->
+      ui.tooltips.activate(e.target.getAttribute("tool"))
 
   unhover:
-    "slider knob": ->
-
+    ".tool-button": (e) ->
+      ui.tooltips.deactivate(e.target.getAttribute("tool"))
 
   click:
     ".swatch": (e) ->
@@ -42,7 +45,9 @@ ui.topUI =
           ui.utilities.color.setting.getAttribute("type"))
 
     ".tool-button": (e) ->
-      ui.switchToTool tools[e.target.id.replace("-btn", "")]
+      tool = e.target.getAttribute('tool')
+      ui.switchToTool tools[tool]
+      ui.tooltips.hideVisible()
 
     ".slider": (e) ->
       $(e.target).trigger("release")

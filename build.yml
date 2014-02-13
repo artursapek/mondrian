@@ -81,6 +81,7 @@ src: !!omap
     - error-reporting
     - afk
     - topui
+    - tooltips
     - swatch
     - swatch-duo
     - snapping
