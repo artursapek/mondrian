@@ -164,6 +164,14 @@ ui.hotkeys =
 
   lastEvent: {}
 
+  modifierCodes:
+    8: 'backspace'
+    16: 'shift'
+    17: 'ctrl'
+    18: 'alt'
+    91: 'cmd'
+    92: 'cmd'
+    224: 'cmd'
 
   ###
     Strategy:
@@ -178,6 +186,11 @@ ui.hotkeys =
   ###
 
   setup: ->
+    # Map the ctrl key as cmd if the user is on windows.
+    if ~navigator.appVersion.indexOf("Win")
+      @modifierCodes[17] = 'cmd'
+      dom.body?.setAttribute 'os', 'windows'
+
     @use "app"
 
     ui.window.on 'focus', =>
@@ -205,17 +218,10 @@ ui.hotkeys =
       # Save this event for
       @lastEvent = e
 
-      if not e.metaKey
-        @cmdDown = false
-        @registerModifierUp "cmd"
-      else
-        @registerModifier "cmd"
-
       # Cmd has been pushed
       if keystroke is 'cmd'
-        if not @cmdDown
-          @cmdDown = true # Custom tracking for cmd
-          @registerModifier "cmd"
+        @cmdDown = true # Custom tracking for cmd
+        @registerModifier "cmd"
         return
 
       else if keystroke in ['shift', 'alt', 'ctrl']
@@ -323,8 +329,7 @@ ui.hotkeys =
       @using.up?.always?.call(@using.context, @lastEvent)
 
       if keystroke is 'cmd' # CMD has been released!
-        @modifiersDown = @modifiersDown.remove 'cmd'
-        ui.uistate.get('tool').deactivateModifier 'cmd'
+        @registerModifierUp keystroke
         @keysDown = []
         @cmdDown = false
 
@@ -335,8 +340,7 @@ ui.hotkeys =
         return @maintainInterval()
 
       else if keystroke in ['shift', 'alt', 'ctrl']
-        @modifiersDown = @modifiersDown.remove keystroke
-        ui.uistate.get('tool').deactivateModifier keystroke
+        @registerModifierUp keystroke
         return @maintainInterval()
       else
         @keysDown = @keysDown.remove keystroke
@@ -404,17 +408,8 @@ ui.hotkeys =
 
   parseKeystroke: (e) ->
 
-    modifiers =
-      8: 'backspace'
-      16: 'shift'
-      17: 'ctrl'
-      18: 'alt'
-      91: 'cmd'
-      92: 'cmd'
-      224: 'cmd'
-
-    if modifiers[e.which]?
-      return modifiers[e.which]
+    if @modifierCodes[e.which]?
+      return @modifierCodes[e.which]
 
     accepted = [
       new Range(9, 9) # Enter

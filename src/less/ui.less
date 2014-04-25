@@ -89,6 +89,22 @@ body {
       cursor: none!important;
     }
   }
+
+  .⌘ {
+    &:after {
+      content: '⌘';
+    }
+  }
+
+  &[os="windows"] {
+    .⌘ {
+      &:after {
+        content: 'ctrl';
+        margin: auto 2px;
+        letter-spacing: -0.01em;
+      }
+    }
+  }
 }
 
 div#canvas {
