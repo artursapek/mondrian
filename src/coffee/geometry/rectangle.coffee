@@ -73,7 +73,6 @@ class Rect extends Monsvg
   overlaps: (other) ->
 
     ###
-      Fuck you whore
       Redirects to appropriate method.
 
       I/P: Polygon/Circle/Rect
