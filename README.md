@@ -1,8 +1,9 @@
 # Mondrian
 
+[http://mondrian.io](http://mondrian.io).
+
 Mondrian is a smart and easy-to-learn vector graphics web app.
 
-Try it at [mondrian.io](http://mondrian.io).
 
 [![mondrian.io](/build/assets/images/screenshot.png)](http://mondrian.io)
 
