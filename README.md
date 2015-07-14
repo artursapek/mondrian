@@ -1,6 +1,6 @@
 # Mondrian
 
-[http://mondrian.io](http://mondrian.io).
+[http://mondrian.io](http://mondrian.io)
 
 Mondrian is a smart and easy-to-learn vector graphics web app.
 
