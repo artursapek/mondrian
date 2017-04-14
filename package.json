@@ -21,15 +21,17 @@
   },
   "homepage": "https://github.com/artursapek/mondrian",
   "dependencies": {
+    "coffee-loader": "^0.7.3",
     "connect": "~2.12.0"
   },
   "devDependencies": {
-    "coffee-script": "~1.6.3",
-    "connect": "~2.12.0",
     "cake": "~0.1.1",
+    "coffee-script": "~1.6.3",
+    "colors": "~0.6.2",
+    "connect": "~2.12.0",
+    "haml": "~0.4.3",
     "js-yaml": "~3.0.1",
     "less": "~1.6.1",
-    "colors": "~0.6.2",
-    "haml": "~0.4.3"
+    "webpack": "^2.3.3"
   }
 }
