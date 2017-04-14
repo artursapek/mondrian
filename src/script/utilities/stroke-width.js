@@ -1,3 +1,5 @@
+import setup from 'script/setup';
+import Utility from 'script/utilities/utility';
 /*
 
   Stroke thickness utility

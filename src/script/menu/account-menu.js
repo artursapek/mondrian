@@ -1,3 +1,5 @@
+import setup from 'script/setup';
+
 setup.push(function() {
 
   return ui.menu.menus.account = new Menu({

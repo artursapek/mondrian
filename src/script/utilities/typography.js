@@ -1,3 +1,4 @@
+import Utility from 'script/utilities/utility';
 
 ui.utilities.typography = new Utility({
   setup() {

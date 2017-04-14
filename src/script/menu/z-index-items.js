@@ -1,6 +1,6 @@
+import setup from 'script/setup';
+
 setup.push(function() {
-
-
   ui.menu.items.moveBack = new MenuItem({
     itemid: 'move-back-item',
 

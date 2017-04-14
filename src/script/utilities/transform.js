@@ -1,3 +1,5 @@
+import Utility from 'script/utilities/utility';
+
 /*
 
   Transform utility

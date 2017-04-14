@@ -1,5 +1,4 @@
-
-
+import Utility from 'script/utilities/utility';
 
 ui.utilities.currentSwatches = new Utility({
   setup() {

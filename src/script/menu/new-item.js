@@ -1,3 +1,5 @@
+import setup from 'script/setup';
+
 setup.push(() =>
 
   ui.menu.items.new = new MenuItem({

@@ -1,7 +1,8 @@
+import setup from 'script/setup';
 
 ui.utilities = {};
 
-class Utility {
+export default class Utility {
 
   constructor(attrs) {
     for (let i of Object.keys(attrs || {})) {
