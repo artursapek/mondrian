@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
@@ -6,6 +7,11 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'build')
   },
+
+  plugins: [
+    new webpack.SourceMapDevToolPlugin({
+    })
+  ],
 
   resolve: {
     modules: [

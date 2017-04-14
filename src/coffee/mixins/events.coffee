@@ -3,6 +3,7 @@
   Standard event system
 
 ###
+mixins = {}
 
 mixins.events =
 

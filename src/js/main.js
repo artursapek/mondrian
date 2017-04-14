@@ -8,7 +8,6 @@ import 'coffee/utils'
 import 'coffee/plugins'
 import 'coffee/tracking'
 
-import 'coffee/mixins/mixins'
 import 'coffee/mixins/events'
 
 import 'coffee/io/io'
@@ -18,9 +17,9 @@ import 'coffee/io/png'
 import 'coffee/uiClasses/font'
 import 'coffee/uiClasses/color'
 
-import 'coffee/lab/lab'
-import 'coffee/lab/analysis'
-import 'coffee/lab/conversions'
+// import 'coffee/lab/lab'
+// import 'coffee/lab/analysis'
+// import 'coffee/lab/conversions'
 
 import 'coffee/geometry/transformations'
 import 'coffee/geometry/posn'
