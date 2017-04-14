@@ -14,6 +14,7 @@ npm-debug.log
 .compiletime
 build/assets/javascript/*.js
 build/assets/javascript/*.coffee
+build/bundles
 build/*/*.html
 build/assets/style/*.css
 build/app/mondrian.appcache
