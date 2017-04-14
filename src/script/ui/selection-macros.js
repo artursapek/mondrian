@@ -1,3 +1,5 @@
+import ui from 'script/ui/ui';
+
 $.extend(ui.selection, {
   macro(actions) {
     // Given an object with 'elements' and/or 'points'

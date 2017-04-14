@@ -1,3 +1,4 @@
+import ui from 'script/ui/ui';
 // ui.dragSelection
 //
 // Drag rectangle over elements to select many

@@ -1,3 +1,4 @@
+import ui from 'script/ui/ui';
 /*
 
   Tools class and organization object.
@@ -6,12 +7,7 @@
 
 */
 
-// All tools are stored under this namespace
-let tools = {};
-
-export default tools;
-
-class Tool {
+export default class Tool {
   static initClass() {
   
     this.prototype.followingAngle = false;

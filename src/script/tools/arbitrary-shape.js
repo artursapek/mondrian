@@ -1,3 +1,5 @@
+import tools from 'script/tools/tools';
+import Tool from 'script/tools/tool';
 /*
 
   Arbitrary Shape Tool
@@ -10,7 +12,7 @@
 */
 
 
-class ArbitraryShapeTool extends Tool {
+export default class ArbitraryShapeTool extends Tool {
   static initClass() {
   
     this.prototype.drawing = false;

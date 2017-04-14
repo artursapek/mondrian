@@ -12,7 +12,7 @@ import setup from 'script/setup';
 */
 
 
-window.ui = {
+export default {
   // This is the highest level of UI in Mondy.
   // It contains lots of more specific objects and dispatches events to tools
   // as appropriate. It also handles tool switching.

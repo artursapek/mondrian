@@ -1,3 +1,5 @@
+import ui from 'script/ui/ui';
+
 /*
 
   Animated Mondy logo for indicating progress

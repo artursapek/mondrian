@@ -5,7 +5,7 @@ import Control from 'script/controls/control';
 
 */
 
-class Dropdown extends Control {
+export default class Dropdown extends Control {
   static initClass() {
   
     this.prototype.opened = false;
@@ -78,7 +78,7 @@ class Dropdown extends Control {
 Dropdown.initClass();
 
 
-class DropdownOption {
+export class DropdownOption {
   constructor(val) {
     this.val = val;
     this.$rep = $(`<div class=\"dropdown-item\">${this.val}</div>`);
@@ -86,10 +86,11 @@ class DropdownOption {
 }
 
 
-class FontFaceOption extends DropdownOption {
+export class FontFaceOption extends DropdownOption {
   constructor(name) {
-    this.name = name;
     super(...arguments);
+
+    this.name = name;
 
     this.$rep.css({
       'font-family': this.name,

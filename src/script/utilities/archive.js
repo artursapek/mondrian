@@ -1,3 +1,5 @@
+import ui from 'script/ui/ui';
+import Utility from 'script/utilities/utility';
 
 ui.utilities.history = new Utility({
 

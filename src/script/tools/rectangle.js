@@ -1,6 +1,9 @@
+import tools from 'script/tools/tools';
+import Tool from 'script/tools/tool';
+import ArbitraryShapeTool from 'script/tools/arbitrary-shape';
 /*
 
-  Ellipse
+  Rectangle
 
 */
 
