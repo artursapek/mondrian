@@ -1,5 +1,18 @@
 import tools from 'script/tools/tools';
 import Tool from 'script/tools/tool';
+import Posn from 'script/geometry/posn';
+import Path from 'script/geometry/path';
+import ui from 'script/ui/ui';
+import {
+  PathPoint,
+  MoveTo,
+  LineTo,
+  HorizTo,
+  VertiTo,
+  CurveTo,
+  SmoothTo,
+} from 'script/geometry/path-points';
+
 /*
 
   Crayon plz

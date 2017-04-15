@@ -1,4 +1,6 @@
 import Posn from 'script/geometry/posn';
+import Range from 'script/geometry/range';
+import Rect from 'script/geometry/rectangle';
 
 export default class Bounds {
 

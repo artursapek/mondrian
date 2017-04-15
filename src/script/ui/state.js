@@ -1,5 +1,5 @@
 import events from 'script/mixins/events';
-import tools from 'script/tools/tool';
+import tools from 'script/tools/tools';
 import Posn from 'script/geometry/posn';
 
 /*
@@ -43,7 +43,7 @@ class UIState {
   }
 
   get(key) {
-    return this.attributes[key];
+    return this.attributes[key] || this.DEFAULTS()[key];
   }
 
   saveLocally() {

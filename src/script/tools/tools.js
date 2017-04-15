@@ -2,3 +2,5 @@
 let tools = {};
 
 export default tools;
+
+window.tools = tools;

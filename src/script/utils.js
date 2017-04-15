@@ -19,10 +19,10 @@
 
 */
 
-let print = function() { return console.log.apply(console, arguments); };
+window.print = function() { return console.log.apply(console, arguments); };
 
 
-let async = fun =>
+window.async = fun =>
   // Shorthand for breaking out of current execution block
   // Usage:
   //
@@ -38,9 +38,9 @@ let async = fun =>
 // so only use it when necessary.
 // That being said, it's still better
 // than using $() just to select shit
-let q = query => document.querySelector.call(document, query);
+window.q = query => document.querySelector.call(document, query);
 
-let qa = query => document.querySelectorAll.call(document,query);
+window.qa = query => document.querySelectorAll.call(document,query);
 
 
 window.uuid = function(len) {
@@ -61,36 +61,36 @@ window.uuid = function(len) {
 // This shit sucks:
 // TODO remove this or do it better
 // Checks if a given event target is one of the shapes on the board
-let isSVGElement = target => target.namespaceURI === 'http://www.w3.org/2000/svg';
+window.isSVGElement = target => { target.namespaceURI === 'http://www.w3.org/2000/svg'; }
 
-let isSVGElementInMain = target => (target.namespaceURI === 'http://www.w3.org/2000/svg') && ($(target).closest("#main").length > 0) && (target.id !== 'main');
+window.isSVGElementInMain = target => (target.namespaceURI === 'http://www.w3.org/2000/svg') && ($(target).closest("#main").length > 0) && (target.id !== 'main');
 
 // Testing if target is certain type of handle
-let isPointHandle = target => target.className === 'transform handle point';
+window.isPointHandle = target => target.className === 'transform handle point';
 
-let isBezierControlHandle = target => target.className === 'transform handle point bz-ctrl';
+window.isBezierControlHandle = target => target.className === 'transform handle point bz-ctrl';
 
-let isTransformerHandle = target => target.className.mentions('transform handle');
+window.isTransformerHandle = target => target.className.mentions('transform handle');
 
-let isHoverTarget = target => (target.parentNode != null ? target.parentNode.id : undefined) === 'hover-targets';
+window.isHoverTarget = target => (target.parentNode != null ? target.parentNode.id : undefined) === 'hover-targets';
 
 // Testing if target is any type of handle
-let isHandle = function(target) {
+window.isHandle = function(target) {
   if (target.nodeName.toLowerCase() === 'div') {
     return target.className.mentions('handle');
   }
   return false;
 };
 
-let isTextInput = target => (target.nodeName.toLowerCase() === "input") && (target.getAttribute("type") === "text");
+window.isTextInput = target => (target.nodeName.toLowerCase() === "input") && (target.getAttribute("type") === "text");
 
-let isUtilityWindow = target => target.className.mentions("utility-window") || ($(target).closest('.utility-window').length > 0);
+window.isUtilityWindow = target => target.className.mentions("utility-window") || ($(target).closest('.utility-window').length > 0);
 
-let isSwatch = target => target.className.mentions("swatch");
+window.isSwatch = target => target.className.mentions("swatch");
 
 // This really sucks
 // TODO anything else
-let isOnTopUI = function(target) {
+window.isOnTopUI = function(target) {
   if (typeof target.className === "string") {
     let cl = target.className.split(" ");
     if (cl.has("disabled")) {
@@ -131,9 +131,11 @@ let isOnTopUI = function(target) {
 // </sucks>
 
 
-let allowsHotkeys = target => $(target).closest("[h]").length > 0;
+window.allowsHotkeys = function(target) {
+  return $(target).closest("[h]").length > 0; 
+}
 
-let isDefaultQuarantined = function(target) {
+window.isDefaultQuarantined = function(target) {
   if (target.hasAttribute("quarantine")) {
     return true;
   } else if ($(target).closest("[quarantine]").length > 0) {
@@ -143,23 +145,23 @@ let isDefaultQuarantined = function(target) {
   }
 };
 
-let queryElemByUUID = uuid => ui.queryElement(q(`#main [uuid="${uuid}"]`));
+window.queryElemByUUID = uuid => ui.queryElement(q(`#main [uuid="${uuid}"]`));
 
-let queryElemByZIndex = zi => ui.queryElement(dom.$main.children()[zi]);
+window.queryElemByZIndex = zi => ui.queryElement(dom.$main.children()[zi]);
 
 
 
-let cleanUpNumber = function(n) {
+window.cleanUpNumber = function(n) {
   n = n.roundIfWithin(SETTINGS.MATH.POINT_ROUND_DGAF);
   n = n.places(SETTINGS.MATH.POINT_DECIMAL_PLACES);
   return n;
 };
 
-let int = n => parseInt(n, 10);
+window.int = n => parseInt(n, 10);
 
-let float = n => parseFloat(n);
+window.float = n => parseFloat(n);
 
-let oots = Object.prototype.toString;
+window.oots = Object.prototype.toString;
 
 Object.prototype.toString = function() {
   if (this instanceof $) {
@@ -174,7 +176,7 @@ Object.prototype.toString = function() {
 };
 
 
-let objectValues = function(obj) {
+export function objectValues(obj) {
   let vals = [];
   for (let key of Object.keys(obj || {})) {
     let val = obj[key];
@@ -184,7 +186,7 @@ let objectValues = function(obj) {
 };
 
 
-let cloneObject = function(obj) {
+window.cloneObject = function(obj) {
   let newo = new Object();
   for (let key of Object.keys(obj || {})) {
     let val = obj[key];
@@ -193,7 +195,7 @@ let cloneObject = function(obj) {
   return newo;
 };
 
-let sortNumbers = function(a, b) {
+window.sortNumbers = function(a, b) {
   if (a < b) {
     return -1;
   } else if (a > b) {

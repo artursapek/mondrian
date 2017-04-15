@@ -1,4 +1,5 @@
 import Monsvg from 'script/geometry/monsvg'
+import PointsList from 'script/geometry/points-list'
 
 /*
 
@@ -8,7 +9,7 @@ import Monsvg from 'script/geometry/monsvg'
 
 */
 
-class Path extends Monsvg {
+export default class Path extends Monsvg {
   static initClass() {
     this.prototype.type = 'path';
   
@@ -35,8 +36,8 @@ class Path extends Monsvg {
 
 
   constructor(data) {
+    super(data);
     this.data = data;
-    super(this.data);
 
     if ((this.data != null ? this.data.d : undefined) != null) {
       this.importNewPoints(this.data.d);

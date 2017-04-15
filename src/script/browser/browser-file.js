@@ -1,5 +1,7 @@
 import setup from 'script/setup';
 import ui from 'script/ui/ui';
+import File from 'script/files/file';
+import services from 'script/services/services';
 /*
 
   Managing the persistent file state we save in the browser.
@@ -58,7 +60,7 @@ ui.browserFile = {
 
       // Given the service and key, rebuild the file and use() it.
       let service = fileMetadata.service.toLowerCase();
-      new File().fromService(services[service])(fileMetadata.key).use();
+      File.fromService(services[service])(fileMetadata.key).use();
 
       if (fileArchive != null) {
         return archive.loadFromString(fileArchive, false);

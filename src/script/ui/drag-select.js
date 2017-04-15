@@ -1,4 +1,8 @@
 import ui from 'script/ui/ui';
+import dom from 'script/dom/dom';
+import Posn from 'script/geometry/posn';
+import Bounds from 'script/geometry/bounds';
+
 // ui.dragSelection
 //
 // Drag rectangle over elements to select many

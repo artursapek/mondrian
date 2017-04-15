@@ -1,5 +1,13 @@
 import ui from 'script/ui/ui';
+import dom from 'script/dom/dom';
 import Bounds from 'script/geometry/bounds';
+import Path from 'script/geometry/path';
+import Text from 'script/geometry/text';
+import Rect from 'script/geometry/rectangle';
+import Ellipse from 'script/geometry/ellipse';
+import Polygon from 'script/geometry/polygon';
+import Polyline from 'script/geometry/polyline';
+import Monsvg from 'script/geometry/monsvg';
 /*
 
   io

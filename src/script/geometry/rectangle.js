@@ -1,13 +1,13 @@
 import Monsvg from 'script/geometry/monsvg'
 
-class Rect extends Monsvg {
+export default class Rect extends Monsvg {
   static initClass() {
     this.prototype.type = 'rect';
   }
 
   constructor(data) {
+    super(data);
     this.data = data;
-    super(this.data);
     if ((this.data.x == null)) { this.data.x = 0; }
     if ((this.data.y == null)) { this.data.y = 0; }
 

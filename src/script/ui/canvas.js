@@ -229,7 +229,7 @@ ui.canvas = {
     // time in every tool/utility which can zoom (not many)
 
     if (origin == null) { origin = ui.window.center(); }
-    let canvasPosnAtOrigin = lab.conversions.posn.clientToCanvasZoomed(origin);
+    let canvasPosnAtOrigin = ui.canvas.clientToCanvasZoomed(origin);
 
     ui.selection.points.hide();
 
@@ -260,7 +260,7 @@ ui.canvas = {
 
 
   alignWithClient(canvasZoomedPosn, clientPosn) {
-    let canvasEquivalentOfGivenPosn = lab.conversions.posn.clientToCanvasZoomed(clientPosn);
+    let canvasEquivalentOfGivenPosn = ui.canvas.clientToCanvasZoomed(clientPosn);
     return this.nudge((canvasEquivalentOfGivenPosn.x - canvasZoomedPosn.x) * this.zoom,
            (canvasZoomedPosn.y - canvasEquivalentOfGivenPosn.y) * this.zoom);
   },
@@ -322,7 +322,7 @@ ui.canvas = {
 
   clientToCanvasZoomed(p) {
     return this.clientToCanvas(p).multiplyBy(1 / ui.canvas.zoom);
-  }
+  },
 
   petrified: false,
 

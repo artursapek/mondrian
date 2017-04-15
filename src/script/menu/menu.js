@@ -1,4 +1,5 @@
 import ui from 'script/ui/ui';
+import { objectValues } from 'script/utils';
 /*
 
   Menubar, which manage MenuItems

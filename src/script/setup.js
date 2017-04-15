@@ -21,7 +21,6 @@ $(document).ajaxComplete(() => ui.logo.stopAnimating());
 
 $(document).ready(function() {
   for (var procedure of Array.from(setup)) {
-    console.log(procedure);
     procedure();
   }
 

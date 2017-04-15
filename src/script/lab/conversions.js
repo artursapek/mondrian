@@ -1,3 +1,16 @@
+import CONSTANTS from 'script/constants';
+import Point from 'script/geometry/point';
+import {
+  PathPoint,
+  MoveTo,
+  LineTo,
+  HorizTo,
+  VertiTo,
+  CurveTo,
+  SmoothTo,
+
+} from 'script/geometry/path-points';
+
 import lab from 'script/lab/lab';
 // Geometry conversions and operations
 
@@ -68,7 +81,7 @@ lab.conversions = {
     for (let point of Array.from(all_matches)) {
       // Point's constructor decides what kind of subclass to make
       // (MoveTo, CurveTo, etc)
-      let p = new Point(point, owner, previous);
+      let p = PathPoint.fromString(point, owner, previous);
 
       if (p instanceof Point) {
         if (previous != null) { p.setPrec(previous); }

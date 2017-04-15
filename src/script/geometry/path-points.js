@@ -1,3 +1,4 @@
+import Posn from 'script/geometry/posn';
 import Point from 'script/geometry/point';
 /*
 
@@ -31,15 +32,147 @@ import Point from 'script/geometry/point';
 
 */
 
-
-class MoveTo extends Point {
+export class PathPoint extends Point {
   constructor(x, y, owner, prec, rel) {
+    super(x, y, owner);
     this.x = x;
     this.y = y;
     this.owner = owner;
     this.prec = prec;
     this.rel = rel;
-    super(this.x, this.y, this.owner);
+  }
+
+  static fromString(point, owner, prec) {
+    // Given a string like "M 10.2 502.19"
+    // return the corresponding Point.
+    // Returns one of:
+    //   MoveTo
+    //   CurveTo
+    //   SmoothTo
+    //   LineTo
+    //   HorizTo
+    //   VertiTo
+
+    let patterns = {
+      moveTo:   /M[^A-Za-z]+/gi,
+      lineTo:   /L[^A-Za-z]+/gi,
+      curveTo:  /C[^A-Za-z]+/gi,
+      smoothTo: /S[^A-Za-z]+/gi,
+      horizTo:  /H[^A-Za-z]+/gi,
+      vertiTo:  /V[^A-Za-z]+/gi
+    };
+
+    let classes = {
+      moveTo:   MoveTo,
+      lineTo:   LineTo,
+      curveTo:  CurveTo,
+      smoothTo: SmoothTo,
+      horizTo:  HorizTo,
+      vertiTo:  VertiTo
+    };
+
+    let lengths = {
+      moveTo:   2,
+      lineTo:   2,
+      curveTo:  6,
+      smoothTo: 4,
+      horizTo:  1,
+      vertiTo:  1
+    };
+
+    let pairs = /[-+]?\d*\.?\d*(e\-)?\d*/g;
+
+    // It's possible in SVG to list several sets of coords
+    // for one character key. For example, "L 10 20 40 50"
+    // is actually two seperate LineTos: a (10, 20) and a (40, 50)
+    //
+    // So we build the point(s) into an array, and return points[0]
+    // if there's one, or the whole array if there's more.
+    let points = [];
+
+    for (let key in patterns) {
+      // Find which pattern this string matches.
+      // This check uses regex to also validate the point's syntax at the same time.
+
+      let val = patterns[key];
+      let matched = point.match(val);
+
+      if (matched !== null) {
+
+        // Matched will not be null when we find the correct point from the 'pattern' regex collection.
+        // Match for the cooridinate pairs inside this point (1-3 should show up)
+        // These then get mapped with parseFloat to get the true values, as coords
+
+        let coords = (point.match(pairs)).filter(p => p.length > 0).map(parseFloat);
+
+        let relative = point.substring(0,1).match(/[mlcshv]/) !== null; // Is it lower-case? So it's relative? Shit!
+
+        let clen = coords.length;
+        let elen = lengths[key]; // The expected amount of values for this kind of point
+
+        // If the number of coordinates checks out, build the point(s)
+        if ((clen % elen) === 0) {
+
+          let sliceAt = 0;
+
+          for (let i = 0, end = (clen / elen) - 1, asc = 0 <= end; asc ? i <= end : i >= end; asc ? i++ : i--) {
+            let set = coords.slice(sliceAt, sliceAt + elen);
+
+            if (i > 0) {
+              if (key === "moveTo") {
+                key = "lineTo";
+              }
+            }
+
+            let values = [null].concat(set);
+
+            values.push(owner); // Point owner
+            values.push(prec);
+            values.push(relative);
+
+            if (values.join(' ').mentions("NaN")) { debugger; }
+
+            // At this point, values should be an array that looks like this:
+            //   [null, 100, 120, 300.5, 320.5, Path]
+            // The amount of numbers depends on what kind of point we're making.
+
+            // Build the point from the appropriate constructor
+
+            let constructed = new (Function.prototype.bind.apply(classes[key], values));
+
+            points.push(constructed);
+
+            sliceAt += elen;
+          }
+
+        } else {
+          // We got a weird amount of points. Dunno what to do with that.
+          // TODO maybe I should actually rethink this later to be more robust: like, parse what I can and
+          // ignore the rest. Idk if that would be irresponsible.
+          throw new Error(`Wrong amount of coordinates: ${point}. Expected ${elen} and got ${clen}.`);
+        }
+
+        // Don't keep looking
+        break;
+      }
+    }
+
+    if (points.length === 0) {
+      // We have no clue what this is, cuz
+      throw new Error(`Unreadable path value: ${point}`);
+    }
+
+    if (points.length === 1) {
+      return points[0];
+    } else {
+      return points;
+    }
+  }
+}
+
+export class MoveTo extends PathPoint {
+  constructor(x, y, owner, prec, rel) {
+    super(...arguments);
   }
 
 
@@ -99,14 +232,9 @@ class MoveTo extends Point {
 }
 
 
-export class LineTo extends Point {
+export class LineTo extends PathPoint {
   constructor(x, y, owner, prec, rel) {
-    super(x, y, owner);
-    this.x = x;
-    this.y = y;
-    this.owner = owner;
-    this.prec = prec;
-    this.rel = rel;
+    super(...arguments);
   }
 
   relative() {
@@ -148,14 +276,10 @@ export class LineTo extends Point {
 
 
 
-class HorizTo extends Point {
+export class HorizTo extends PathPoint {
   constructor(x, owner, prec, rel) {
-    this.x = x;
-    this.owner = owner;
-    this.prec = prec;
-    this.rel = rel;
+    super(...arguments);
     this.inheritFromPrec(this.prec);
-    super(this.x, this.y, this.owner);
   }
 
   inheritFromPrec(prec) {
@@ -195,14 +319,10 @@ class HorizTo extends Point {
 
 
 
-class VertiTo extends Point {
+export class VertiTo extends PathPoint {
   constructor(y, owner, prec, rel) {
-    this.y = y;
-    this.owner = owner;
-    this.prec = prec;
-    this.rel = rel;
+    super(...arguments);
     this.inheritFromPrec(this.prec);
-    super(this.x, this.y, this.owner);
   }
 
   inheritFromPrec(prec) {
@@ -252,8 +372,9 @@ class VertiTo extends Point {
 
 */
 
-class CurvePoint extends Point {
+export class CurvePoint extends PathPoint {
   constructor(x2, y2, x3, y3, x, y, owner, prec, rel) {
+    super(x, y, owner, prec, rel);
     this.x2 = x2;
     this.y2 = y2;
     this.x3 = x3;
@@ -286,8 +407,6 @@ class CurvePoint extends Point {
         rel:    bool - true if it's relative or false if it's absolute
 
     */
-
-    super(this.x, this.y, this.owner);
   }
 
 
@@ -394,8 +513,9 @@ class CurvePoint extends Point {
 }
 
 
-class CurveTo extends CurvePoint {
+export class CurveTo extends CurvePoint {
   constructor(x2, y2, x3, y3, x, y, owner, prec, rel) {
+    super(x2, y2, x3, y3, x, y, owner, prec, rel);
     this.x2 = x2;
     this.y2 = y2;
     this.x3 = x3;
@@ -405,7 +525,6 @@ class CurveTo extends CurvePoint {
     this.owner = owner;
     this.prec = prec;
     this.rel = rel;
-    super(this.x2, this.y2, this.x3, this.y3, this.x, this.y, this.owner, this.prec, this.rel);
   }
 
   toString() { return `${this.rel ? 'c' : 'C'}${this.x2},${this.y2} ${this.x3},${this.y3} ${this.x},${this.y}`; }
@@ -418,9 +537,10 @@ class CurveTo extends CurvePoint {
 }
 
 
-class SmoothTo extends CurvePoint {
+export class SmoothTo extends CurvePoint {
   constructor(x3, y3, x, y, owner, prec, rel) {
-
+    // TODO FIX???? 0 0???
+    super(0, 0, x3, y3, x, y, owner, prec, rel);
     this.x3 = x3;
     this.y3 = y3;
     this.x = x;
@@ -429,8 +549,6 @@ class SmoothTo extends CurvePoint {
     this.prec = prec;
     this.rel = rel;
     this.inheritFromPrec(this.prec);
-
-    super(this.x2, this.y2, this.x3, this.y3, this.x, this.y, this.owner, this.prec, this.rel);
   }
 
   inheritFromPrec(prec) {

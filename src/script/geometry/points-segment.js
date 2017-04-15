@@ -1,3 +1,12 @@
+import {
+  PathPoint,
+  MoveTo,
+  LineTo,
+  HorizTo,
+  VertiTo,
+  CurveTo,
+  SmoothTo,
+} from 'script/geometry/path-points';
 /*
 
   PointsSegment
@@ -8,7 +17,7 @@
 */
 
 
-class PointsSegment {
+export default class PointsSegment {
   constructor(points, list) {
     this.points = points;
     this.list = list;

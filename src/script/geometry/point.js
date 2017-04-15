@@ -1,4 +1,6 @@
 import Posn from 'script/geometry/posn';
+import ui from 'script/ui/ui';
+import dom from 'script/dom/dom';
 
 /*
 
@@ -43,6 +45,7 @@ export default class Point extends Posn {
   constructor(x, y, owner) {
     super(x, y);
 
+
     this.x = x;
     this.y = y;
     this.owner = owner;
@@ -82,14 +85,8 @@ export default class Point extends Posn {
         this.x = this.x.x;
       }
     } else if (typeof this.x === "string") {
-      // Call signature in this case:
-      // new Point(pointString, owner, prec)
-      // Example in lab.conversions.stringToAlop
-      let prec;
-      if (this.owner != null) { prec   = this.owner; }
-      if (this.y != null) { this.owner = this.y; }
-      let p = this.fromString(this.x, prec);
-      return p;
+      console.trace();
+      console.log('UNSUPPORTED');
     }
 
     if (isNaN(this.x)) { console.warn('NaN x'); }
@@ -98,135 +95,6 @@ export default class Point extends Posn {
     this._flags = [];
 
     this.makeAntlers();
-  }
-
-
-
-  fromString(point, prec) {
-    // Given a string like "M 10.2 502.19"
-    // return the corresponding Point.
-    // Returns one of:
-    //   MoveTo
-    //   CurveTo
-    //   SmoothTo
-    //   LineTo
-    //   HorizTo
-    //   VertiTo
-
-    let patterns = {
-      moveTo:   /M[^A-Za-z]+/gi,
-      lineTo:   /L[^A-Za-z]+/gi,
-      curveTo:  /C[^A-Za-z]+/gi,
-      smoothTo: /S[^A-Za-z]+/gi,
-      horizTo:  /H[^A-Za-z]+/gi,
-      vertiTo:  /V[^A-Za-z]+/gi
-    };
-
-    let classes = {
-      moveTo:   MoveTo,
-      lineTo:   LineTo,
-      curveTo:  CurveTo,
-      smoothTo: SmoothTo,
-      horizTo:  HorizTo,
-      vertiTo:  VertiTo
-    };
-
-    let lengths = {
-      moveTo:   2,
-      lineTo:   2,
-      curveTo:  6,
-      smoothTo: 4,
-      horizTo:  1,
-      vertiTo:  1
-    };
-
-    let pairs = /[-+]?\d*\.?\d*(e\-)?\d*/g;
-
-    // It's possible in SVG to list several sets of coords
-    // for one character key. For example, "L 10 20 40 50"
-    // is actually two seperate LineTos: a (10, 20) and a (40, 50)
-    //
-    // So we build the point(s) into an array, and return points[0]
-    // if there's one, or the whole array if there's more.
-    let points = [];
-
-    for (let key in patterns) {
-      // Find which pattern this string matches.
-      // This check uses regex to also validate the point's syntax at the same time.
-
-      let val = patterns[key];
-      let matched = point.match(val);
-
-      if (matched !== null) {
-
-        // Matched will not be null when we find the correct point from the 'pattern' regex collection.
-        // Match for the cooridinate pairs inside this point (1-3 should show up)
-        // These then get mapped with parseFloat to get the true values, as coords
-
-        let coords = (point.match(pairs)).filter(p => p.length > 0).map(parseFloat);
-
-        let relative = point.substring(0,1).match(/[mlcshv]/) !== null; // Is it lower-case? So it's relative? Shit!
-
-        let clen = coords.length;
-        let elen = lengths[key]; // The expected amount of values for this kind of point
-
-        // If the number of coordinates checks out, build the point(s)
-        if ((clen % elen) === 0) {
-
-          let sliceAt = 0;
-
-          for (let i = 0, end = (clen / elen) - 1, asc = 0 <= end; asc ? i <= end : i >= end; asc ? i++ : i--) {
-            let set = coords.slice(sliceAt, sliceAt + elen);
-
-            if (i > 0) {
-              if (key === "moveTo") {
-                key = "lineTo";
-              }
-            }
-
-            let values = [null].concat(set);
-
-            values.push(this.owner); // Point owner
-            values.push(prec);
-            values.push(relative);
-
-            if (values.join(' ').mentions("NaN")) { debugger; }
-
-            // At this point, values should be an array that looks like this:
-            //   [null, 100, 120, 300.5, 320.5, Path]
-            // The amount of numbers depends on what kind of point we're making.
-
-            // Build the point from the appropriate constructor
-
-            let constructed = new (Function.prototype.bind.apply(classes[key], values));
-
-            points.push(constructed);
-
-            sliceAt += elen;
-          }
-
-        } else {
-          // We got a weird amount of points. Dunno what to do with that.
-          // TODO maybe I should actually rethink this later to be more robust: like, parse what I can and
-          // ignore the rest. Idk if that would be irresponsible.
-          throw new Error(`Wrong amount of coordinates: ${point}. Expected ${elen} and got ${clen}.`);
-        }
-
-        // Don't keep looking
-        break;
-      }
-    }
-
-    if (points.length === 0) {
-      // We have no clue what this is, cuz
-      throw new Error(`Unreadable path value: ${point}`);
-    }
-
-    if (points.length === 1) {
-      return points[0];
-    } else {
-      return points;
-    }
   }
 
   select() {
@@ -277,8 +145,7 @@ export default class Point extends Posn {
       p2 = null;
     }
     let p3 = (this.p3 != null) ? this.p3() : null;
-    console.log('TODO');
-    //this.antlers = new Antlers(this, p3, p2);
+    this.antlers = new Antlers(this, p3, p2);
     return this;
   }
 
@@ -491,3 +358,341 @@ export default class Point extends Posn {
 }
 Point.initClass();
 
+
+
+/*
+
+  Antlers
+
+     \
+        \ O  -  (succx, succy)
+          \\
+            \
+             \
+              o
+               \
+                \
+                \\
+                \ O  -  (basex, basey)
+                |
+                |
+               /
+              /
+
+
+  Control handles for any vector Point. Edits base's x3 and base's succ's p2
+  Each CurvePoint gets one of these. It keeps track of coordinates locally so we can
+  draw these pre-emptively. For example, if you take the Pen tool and just drag a curve point right away,
+  those curves don't exist yet but they come into play as soon as you add another point
+  (...which will have to be a CurvePoint even if it's a static click)
+
+  This class handles the GUI and updating the base and its succ's x2 y2 x3 y3. :)
+
+*/
+
+
+
+
+
+export class Antlers {
+  static initClass() {
+  
+    this.prototype.angleLockThreshold = 0.5;
+  
+    this.prototype.visible = false;
+  }
+
+  constructor(base, basep3, succp2) {
+    // I/P: base, a CurvePoint
+    //      basex3 - either a Posn or null
+    //      succx2 - either a Posn or null
+
+    // Decide whether or not to lock the angle
+    // (ensure points are always on a straight line)
+
+    this.base = base;
+    this.basep3 = basep3;
+    this.succp2 = succp2;
+    if ((this.basep3 != null) && (this.succp2 != null)) {
+      let diff = Math.abs(this.basep3.angle360(this.base) - this.succp2.angle360(this.base));
+      this.lockAngle = diff.within(this.angleLockThreshold, 180);
+    } else {
+      this.lockAngle = false;
+    }
+  }
+
+  commit() {
+    // Export the data to the element
+    if (this.basep3 != null) {
+      this.base.x3 = this.basep3.x;
+      this.base.y3 = this.basep3.y;
+    }
+    if ((this.succp2 != null) && this.succ()) {
+      this.succ().x2 = this.succp2.x;
+      this.succ().y2 = this.succp2.y;
+    }
+    return this;
+  }
+
+  importNewSuccp2(succp2) {
+    this.succp2 = succp2;
+    if (this.succp2 != null) {
+      this.basep3 = this.succp2.reflect(this.base);
+    }
+    return this.commit().refresh();
+  }
+
+  killSuccp2() {
+    this.succp2 = new Posn(this.base.x, this.base.y);
+    return this.commit().refresh();
+  }
+
+  succ() {
+    return this.base.succ;
+  }
+
+  refresh() {
+    if (!this.visible) { return; }
+    return this.hide().show();
+  }
+
+  show() {
+    this.hide();
+    this.visible = true;
+    // Actually draws it, instead of just revealing it.
+    // We don't keep the elements for this unless they're actually being shown.
+    // We refresh it whenever we want it.
+    if (this.basep3 != null) {
+      this.basep = new AntlerPoint(this.basep3.x, this.basep3.y, this.base.owner, this, -1);
+    }
+
+    if (this.succp2 != null) {
+      this.succp = new AntlerPoint(this.succp2.x, this.succp2.y, this.base.owner, this, 1);
+    }
+
+    return (() => this.hide());
+  }
+
+  hide() {
+    this.visible = false;
+    // Removes elements from DOM to avoid needlessly updating them.
+    if (this.basep != null) {
+      this.basep.remove();
+    }
+    if (this.succp != null) {
+      this.succp.remove();
+    }
+    if (this.base.owner.antlerPoints != null) {
+      this.base.owner.antlerPoints.remove([this.basep, this.succp]);
+    }
+    return this;
+  }
+
+  redraw() {
+    this.hide();
+    this.show();
+    return this;
+  }
+
+  hideTemp(p) {
+    return __guard__((p === 2 ? this.succp : this.basep), x => x.hideTemp());
+  }
+
+  nudge(x, y) {
+
+    if (this.basep3 != null) {
+      this.basep3.nudge(x, y);
+    }
+    if (this.succp2 != null) {
+      this.succp2.nudge(x, y);
+    }
+    if (this.succ() instanceof CurvePoint) {
+      this.succ().x2 += x;
+      this.succ().y2 -= y;
+    }
+    return this.commit();
+  }
+
+  scale(x, y, origin) {
+    // When the shape is closed, this gets handled by the last point's antlers.
+
+    if (this.basep3 != null) {
+      this.basep3.scale(x, y, origin);
+    }
+    return (this.succp2 != null ? this.succp2.scale(x, y, origin) : undefined);
+  }
+
+  rotate(a, origin) {
+
+    if (this.basep3 != null) {
+      this.basep3.rotate(a, origin);
+    }
+    if (this.succp2 != null) {
+      this.succp2.rotate(a, origin);
+    }
+    return this;
+  }
+
+  other(p) {
+    if (p === this.succp) { return this.basep; } else { return this.succp; }
+  }
+
+  angleDiff(a, b) {
+    let x = a - b;
+    if (x < 0) {
+      x += 360;
+    }
+    return x;
+  }
+
+  flatten() {
+    let ahead, compensate;
+    if ((this.succp2 == null) || (this.basep3 == null)) { return; }
+
+    // Whichever one's ahead keeps moving ahead
+
+
+    let angleSuccp2 = this.succp2.angle360(this.base);
+    let angleBasep3 = this.basep3.angle360(this.base);
+
+    let p2p3d = this.angleDiff(angleSuccp2, angleBasep3);
+    let p3p2d = this.angleDiff(angleBasep3, angleSuccp2);
+
+    if (p2p3d < p3p2d) {
+      ahead = "p2";
+    } else {
+      ahead = "p3";
+    }
+
+    if (ahead === "p2") {
+      // Move p2 forward, p3 back
+      if (p2p3d < 180) {
+       compensate = (180 - p2p3d) / 2;
+       this.succp2 = this.succp2.rotate(compensate, this.base);
+       return this.basep3 = this.basep3.rotate(-compensate, this.base);
+     }
+    } else {
+      // Move p2 forward, p3 back
+      if (p3p2d < 180) {
+       compensate = (180 - p3p2d) / 2;
+       this.succp2 = this.succp2.rotate(-compensate, this.base);
+       return this.basep3 = this.basep3.rotate(compensate, this.base);
+     }
+    }
+  }
+}
+Antlers.initClass();
+
+export class AntlerPoint extends Point {
+  constructor(x, y, owner, family, role) {
+    // I/P: x: int
+    //      y: int
+    //      owner: Monsvg
+    //      family: Antlers
+    //      role: int, -1 or 1 (-1 = base p3, 1 = succ p2)
+    super(x, y, owner);
+    this.x = x;
+    this.y = y;
+    this.owner = owner;
+    this.family = family;
+    this.role = role;
+    this.draw();
+    this.baseHandle.className += ' bz-ctrl';
+    this.line = ui.annotations.drawLine(this.zoomedc(), this.family.base.zoomedc());
+    if (this.owner.antlerPoints != null) {
+      this.owner.antlerPoints.push(this);
+    }
+  }
+
+  succ() { return this.family.base.succ; }
+
+  base() { return this.family.base; }
+
+  hideTemp() {
+    this.line.rep.style.display = 'none';
+    this.baseHandle.style.display = 'none';
+    return () => {
+      this.line.rep.style.display = 'block';
+      return this.baseHandle.style.display = 'block';
+    };
+  }
+
+  remove() {
+    this.line.remove();
+    return super.remove(...arguments);
+  }
+
+
+  nudge(x, y) {
+
+    if (!this.family.lockAngle) {
+      super.nudge(x, y);
+      this.persist();
+    } else {
+      let oldangle = this.angle360(this.family.base);
+      super.nudge(x, y);
+
+      let newangle = this.angle360(this.family.base);
+      __guard__(this.family.other(this), x1 => x1.rotate(newangle - oldangle, this.family.base));
+      this.persist();
+    }
+
+    if ((this.role === -1) && this.family.base.succ instanceof SmoothTo) {
+      let s = this.family.base.succ;
+      return s.replaceWith(s.toCurveTo());
+    }
+  }
+
+
+  scale(x, y, origin) {
+    super.scale(x, y, origin);
+    return this.persist();
+  }
+
+  rotate(a, origin) {
+    super.rotate(a, origin);
+    return this.persist();
+  }
+
+  persist() {
+    if (this.role === -1) {// or @family.lockedTogether
+      this.family.basep3.copy(this);
+    }
+
+    if (this.role === 1) {// or @family.lockedTogether
+      this.family.succp2.copy(this);
+    }
+
+    if (this.family.base === this.owner.points.last) {
+      // Special case for when they are moving the last point's
+      // antlers. We need to make the same changes on the first point's
+      // antlers IF THE SHAPE IS CLOSED.
+
+      let { first } = this.owner.points;
+
+      if (this.family.base.equal(first)) {
+        // Make sure the first point's antlers
+        // have the same succp2 and basep3 as this does
+        //
+        // Copy this antler's succp2 and basep3 and give them to
+        // the first point's antlers as well.
+        first.antlers.succp2 = this.family.succp2.clone();
+        first.antlers.basep3 = this.family.basep3.clone();
+        first.antlers.commit();
+      }
+    }
+
+    this.line.absorbA(this.family.base.zoomedc());
+    this.line.absorbB(this.zoomedc());
+
+    this.line.commit();
+
+    return this.family.commit();
+  }
+}
+
+
+
+function __guard__(value, transform) {
+  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
+}

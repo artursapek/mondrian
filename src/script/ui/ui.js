@@ -1,6 +1,7 @@
 import setup from 'script/setup';
 import dom from 'script/dom/dom';
 import Color from 'script/uiClasses/color';
+import Posn from 'script/geometry/posn';
 
 /*
 

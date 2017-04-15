@@ -1,4 +1,5 @@
 import ui from 'script/ui/ui';
+import Posn from 'script/geometry/posn';
 /*
 
   Tools class and organization object.
@@ -70,8 +71,8 @@ export default class Tool {
     e.canvasX = (e.clientX - ui.canvas.normal.x) / ui.canvas.zoom;
     e.canvasY = (e.clientY - ui.canvas.normal.y) / ui.canvas.zoom;
 
-    e.canvasPosn = lab.conversions.posn.clientToCanvas(e.clientPosn);
-    e.canvasPosnZoomed = lab.conversions.posn.clientToCanvasZoomed(e.clientPosn);
+    e.canvasPosn = ui.canvas.clientToCanvas(e.clientPosn);
+    e.canvasPosnZoomed = ui.canvas.clientToCanvasZoomed(e.clientPosn);
 
     if (ui.grid.visible()) {
       e = ui.snap.supplementForGrid(e);

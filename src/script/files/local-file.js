@@ -1,7 +1,10 @@
+import services from 'script/services/services';
 import File from 'script/files/file';
 
 export default class LocalFile extends File {
   constructor(key) {
+    super(key, key, '', undefined, undefined);
+
     this.key = key;
     this.service = services.local;
 
@@ -15,10 +18,6 @@ export default class LocalFile extends File {
 
     // Go ahead and get it right away
     this.load();
-
-    super(this.key, this.name, this.path, this.thumbnail, this.contents);
-
-    this;
   }
 
   load(ok) {

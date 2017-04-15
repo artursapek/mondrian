@@ -1,3 +1,16 @@
+import lab from 'script/lab/lab';
+import PointsSegment from 'script/geometry/points-segment';
+import {
+  PathPoint,
+  MoveTo,
+  LineTo,
+  HorizTo,
+  VertiTo,
+  CurveTo,
+  SmoothTo,
+} from 'script/geometry/path-points';
+
+
 /*
 
   PointsList
@@ -8,7 +21,7 @@
 */
 
 
-class PointsList {
+export default class PointsList {
   static initClass() {
   
     this.prototype.first = null;
@@ -306,7 +319,7 @@ class PointsList {
     if (x instanceof Array) {
       return Array.from(x).map((p) =>
         this.remove(p));
-    } else if (x instanceof Point) {
+    } else if (x instanceof PathPoint) {
       return this.segmentContaining(x).remove(x);
     }
   }

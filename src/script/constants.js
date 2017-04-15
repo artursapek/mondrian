@@ -1,4 +1,4 @@
-const CONSTANTS = {
+export default {
   MATCHERS: {
     POINT: /[MLCSHV][\-\de\.\,\-\s]+/gi
   },
