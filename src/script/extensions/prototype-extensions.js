@@ -271,3 +271,7 @@ Number.prototype.places = function(x) {
   return parseFloat(this.toFixed(x));
 };
 
+
+window.q = function(selector) {
+  return document.querySelector(selector);
+}

@@ -17,9 +17,9 @@ import 'script/io/png'
 import 'script/uiClasses/font'
 import 'script/uiClasses/color'
 
-// import 'script/lab/lab'
+import 'script/lab/lab'
 // import 'script/lab/analysis'
-// import 'script/lab/conversions'
+import 'script/lab/conversions'
 
 import 'script/geometry/transformations'
 import 'script/geometry/posn'

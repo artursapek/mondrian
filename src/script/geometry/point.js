@@ -1,4 +1,5 @@
 import Posn from 'script/geometry/posn';
+
 /*
 
   Point
@@ -40,6 +41,8 @@ export default class Point extends Posn {
   }
 
   constructor(x, y, owner) {
+    super(x, y);
+
     this.x = x;
     this.y = y;
     this.owner = owner;
@@ -95,8 +98,6 @@ export default class Point extends Posn {
     this._flags = [];
 
     this.makeAntlers();
-
-    super(this.x, this.y);
   }
 
 
@@ -276,7 +277,8 @@ export default class Point extends Posn {
       p2 = null;
     }
     let p3 = (this.p3 != null) ? this.p3() : null;
-    this.antlers = new Antlers(this, p3, p2);
+    console.log('TODO');
+    //this.antlers = new Antlers(this, p3, p2);
     return this;
   }
 

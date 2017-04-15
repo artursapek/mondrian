@@ -1,4 +1,5 @@
 import Utility from 'script/utilities/utility';
+import Slider from 'script/controls/slider';
 import ui from 'script/ui/ui';
 
 /*

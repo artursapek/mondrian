@@ -54,7 +54,7 @@ ui.menu = {
 
 */
 
-class Menu {
+export default class Menu {
   static initClass() {
   
     this.prototype.disabled = false;

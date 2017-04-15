@@ -95,4 +95,6 @@ let dom = {
   }
 };
 
+export default dom;
+
 setup.push(() => dom.setup());

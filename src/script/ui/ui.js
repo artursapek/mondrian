@@ -1,4 +1,7 @@
 import setup from 'script/setup';
+import dom from 'script/dom/dom';
+import Color from 'script/uiClasses/color';
+
 /*
 
   UI handling
@@ -12,7 +15,7 @@ import setup from 'script/setup';
 */
 
 
-export default {
+let ui = {
   // This is the highest level of UI in Mondy.
   // It contains lots of more specific objects and dispatches events to tools
   // as appropriate. It also handles tool switching.
@@ -496,6 +499,8 @@ export default {
     logoBlue:   new Color("#3FB2E0")
   }
 };
+
+export default ui;
 
 
 setup.push(() => ui.setup());

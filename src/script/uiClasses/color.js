@@ -6,9 +6,7 @@
 
 */
 
-
-
-class Color {
+export default class Color {
 
   constructor(r, g, b, a) {
 

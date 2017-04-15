@@ -1,6 +1,7 @@
 import ui from 'script/ui/ui';
 import setup from 'script/setup';
 import Posn from 'script/geometry/posn';
+import LineSegment from 'script/geometry/line-segment';
 /*
 
   UI selected elements transformer

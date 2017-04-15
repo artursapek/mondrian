@@ -1,3 +1,4 @@
+import ui from 'script/ui/ui';
 /*
 
   A button in a menu dropdown.
@@ -24,7 +25,7 @@
 
 
 
-class MenuItem {
+export default class MenuItem {
   static initClass() {
   
   

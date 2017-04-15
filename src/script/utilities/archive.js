@@ -1,5 +1,6 @@
 import ui from 'script/ui/ui';
 import Utility from 'script/utilities/utility';
+import Slider from 'script/controls/slider';
 
 ui.utilities.history = new Utility({
 

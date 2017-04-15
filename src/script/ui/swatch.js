@@ -11,6 +11,7 @@ class Swatch extends Color {
     this.prototype.type = null;
   }
   constructor(r, g, b, a) {
+    super(r, g ,b, a);
     this.r = r;
     this.g = g;
     this.b = b;
@@ -22,7 +23,6 @@ class Swatch extends Color {
       this.a = this.r.a;
       this.r = this.r.r;
     }
-    super(this.r, this.g ,this.b, this.a);
     this.$rep = $("<div class=\"swatch\"></div>");
     this.rep = this.$rep[0];
     this.refresh();
@@ -67,7 +67,7 @@ class Swatch extends Color {
   tiedTo() { return ui.selection.elements.all; } // "fill" or "stroke"
 
   appendTo(selector) {
-    q(selector).appendChild(this.rep);
+    //q(selector).appendChild(this.rep);
     return this;
   }
 }

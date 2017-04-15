@@ -1,6 +1,7 @@
 import ui from 'script/ui/ui';
 import setup from 'script/setup';
 import Utility from 'script/utilities/utility';
+import tools from 'script/tools/tools';
 /*
 
   Stroke thickness utility

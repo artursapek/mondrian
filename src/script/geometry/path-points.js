@@ -99,14 +99,14 @@ class MoveTo extends Point {
 }
 
 
-class LineTo extends Point {
+export class LineTo extends Point {
   constructor(x, y, owner, prec, rel) {
+    super(x, y, owner);
     this.x = x;
     this.y = y;
     this.owner = owner;
     this.prec = prec;
     this.rel = rel;
-    super(this.x, this.y, this.owner);
   }
 
   relative() {

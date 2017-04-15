@@ -1,5 +1,6 @@
 import setup from 'script/setup';
 import ui from 'script/ui/ui';
+import Posn from 'script/geometry/posn';
 
 /*
 

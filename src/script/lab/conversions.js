@@ -1,3 +1,4 @@
+import lab from 'script/lab/lab';
 // Geometry conversions and operations
 
 lab.conversions = {

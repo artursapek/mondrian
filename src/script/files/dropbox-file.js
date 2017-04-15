@@ -1,3 +1,5 @@
+import services from 'script/services/services';
+
 class DropboxFile extends File {
   constructor(key) {
     this.key = key;

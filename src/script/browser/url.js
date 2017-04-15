@@ -1,3 +1,5 @@
+import setup from 'script/setup';
+import ui from 'script/ui/ui';
 
 let url = {
   actions: {

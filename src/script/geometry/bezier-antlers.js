@@ -1,4 +1,5 @@
 import Point from 'script/geometry/point';
+
 /*
 
   Antlers
@@ -30,9 +31,7 @@ import Point from 'script/geometry/point';
 */
 
 
-
-
-class Antlers {
+export default class Antlers {
   static initClass() {
   
     this.prototype.angleLockThreshold = 0.5;
@@ -57,8 +56,6 @@ class Antlers {
     } else {
       this.lockAngle = false;
     }
-
-    this;
   }
 
   commit() {
@@ -223,20 +220,19 @@ class Antlers {
 }
 Antlers.initClass();
 
-
-class AntlerPoint extends Point {
+export class AntlerPoint extends Point {
   constructor(x, y, owner, family, role) {
     // I/P: x: int
     //      y: int
     //      owner: Monsvg
     //      family: Antlers
     //      role: int, -1 or 1 (-1 = base p3, 1 = succ p2)
+    super(x, y, owner);
     this.x = x;
     this.y = y;
     this.owner = owner;
     this.family = family;
     this.role = role;
-    super(this.x, this.y, this.owner);
     this.draw();
     this.baseHandle.className += ' bz-ctrl';
     this.line = ui.annotations.drawLine(this.zoomedc(), this.family.base.zoomedc());

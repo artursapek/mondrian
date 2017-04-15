@@ -1,6 +1,8 @@
 import ui from 'script/ui/ui';
+import dom from 'script/dom/dom';
 import setup from 'script/setup';
 import Posn from 'script/geometry/posn';
+import lab from 'script/lab/lab';
 /*
 
   The canvas
@@ -298,6 +300,29 @@ ui.canvas = {
 
     return async(() => ui.refreshAfterZoom());
   },
+
+  clientToCanvas(p) {
+    p = p.clone();
+    p.x -= ui.canvas.normal.x;
+    p.y -= ui.canvas.normal.y;
+    return p;
+  },
+
+  canvasToClient(p) {
+    p = p.clone();
+    p.x += ui.canvas.normal.x;
+    p.y += ui.canvas.normal.y;
+    return p;
+  },
+
+  canvasZoomedToClient(p) {
+    p = p.multiplyBy(ui.canvas.zoom);
+    return this.canvasToClient(p);
+  },
+
+  clientToCanvasZoomed(p) {
+    return this.clientToCanvas(p).multiplyBy(1 / ui.canvas.zoom);
+  }
 
   petrified: false,
 

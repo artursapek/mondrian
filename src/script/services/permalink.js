@@ -1,3 +1,6 @@
+import setup from 'script/setup';
+import services from 'script/services/services';
+import Service from 'script/services/service';
 /*
 
   Permalink file service

@@ -1,6 +1,8 @@
 import ui from 'script/ui/ui';
 import { FontFaceOption } from 'script/controls/dropdown';
 import Utility from 'script/utilities/utility';
+import Dropdown from 'script/controls/dropdown';
+import tools from 'script/tools/tools';
 
 ui.utilities.typography = new Utility({
   setup() {

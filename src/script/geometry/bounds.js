@@ -1,4 +1,6 @@
-class Bounds {
+import Posn from 'script/geometry/posn';
+
+export default class Bounds {
 
   constructor(x1, y1, width, height) {
     let x, y;

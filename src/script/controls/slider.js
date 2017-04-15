@@ -1,6 +1,6 @@
 import Control from 'script/controls/control';
 
-class Slider extends Control {
+export default class Slider extends Control {
 
   constructor(attrs) {
     // I/P:

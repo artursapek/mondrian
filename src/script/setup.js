@@ -7,7 +7,7 @@
 
 */
 
-let appLoaded = false;
+window.appLoaded = false;
 
 let setup = [];
 
@@ -21,10 +21,11 @@ $(document).ajaxComplete(() => ui.logo.stopAnimating());
 
 $(document).ready(function() {
   for (var procedure of Array.from(setup)) {
+    console.log(procedure);
     procedure();
   }
 
-  appLoaded = true;
+  window.appLoaded = true;
 
   for (procedure of Array.from(secondRoundSetup)) {
     procedure();

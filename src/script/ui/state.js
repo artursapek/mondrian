@@ -62,8 +62,8 @@ class UIState {
       strokeWidth: this.attributes.strokeWidth,
       zoom:        this.attributes.zoom,
       normal:      this.attributes.normal.toJSON(),
-      tool:        this.attributes.tool.id,
-      lastTool:    this.attributes.lastTool.id
+      //tool:        this.attributes.tool.id,
+      //lastTool:    this.attributes.lastTool.id
     };
   }
 
