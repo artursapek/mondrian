@@ -1,4 +1,6 @@
 import ui from 'script/ui/ui';
+import dom from 'script/dom/dom';
+import Line from 'script/geometry/line';
 /*
 
   Helper geometry layer

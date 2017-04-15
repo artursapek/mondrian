@@ -8,7 +8,7 @@ import Range from 'script/geometry/range'
 */
 
 
-class Line extends Monsvg {
+export default class Line extends Monsvg {
   static initClass() {
     this.prototype.type = 'line';
   }
