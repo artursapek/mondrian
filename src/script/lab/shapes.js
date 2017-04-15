@@ -1,383 +1,266 @@
-import Range from 'script/geometry/range'
-import Posn from 'script/geometry/posn'
-import Point from 'script/geometry/point'
-import Bounds from 'script/geometry/bounds'
+import Posn from 'script/geometry/posn';
+import Polynomial from 'script/geometry/polynomial';
+import CubicBezier from 'script/geometry/cubic-bezier-line-segment';
 
-/*
-  Internal representation of a cubic bezier line segment
+export default {
 
-  p1                                     p4
-   o                                     o
-    \\                                 //
-     \\                               //
-      \ \                           / /
-       \   \                     /   /
-        \     _               _     /
-         \      __         __      /
-          °       --_____--       °
-           p2                    p3
-
-  I/P:
-    p1: First absolute point, the moveto
-    p2: The first point's curve handle
-    p3: The second point's curve handle
-    p4: The second absolute point
-
-    In context with syntax: M[p1]C[p2] [p3] [p4]
-
-*/
-
-export default class CubicBezier {
-  static initClass() {
-  
-  
-    this.prototype.boundsCached = undefined;
-  }
-  constructor(p1, p2, p3, p4, source) {
-    this.p1 = p1;
-    this.p2 = p2;
-    this.p3 = p3;
-    this.p4 = p4;
-    if (source == null) { source = this.toCurveTo(); }
-    this.source = source;
-  }
-
-  /*
-  toString: ->
-    "(Cubic bezier: #{@p1},#{@p2},#{@p3},#{@p4})"
-  */
-
-  toString() {
-    return `new CubicBezier(${this.p1}, ${this.p2}, ${this.p3}, ${this.p4})`;
-  }
-
-  toCurveTo() {
-    return new CurveTo(this.p2.x, this.p2.y, this.p3.x, this.p3.y, this.p4.x, this.p4.y);
-  }
-
-  toSVGPoint() { return this.toCurveTo(); }
-
-  length() {
-    // Not that accurate lol
-    return this.intoLineSegments(4).reduce((a, b) => a + b.length);
-  }
-
-  beginning() { return this.p1; }
-
-  end() { return this.p4; }
-
-  nudge(x, y) {
-    this.p1.nudge(x, y);
-    this.p2.nudge(x, y);
-    this.p3.nudge(x, y);
-    this.p4.nudge(x, y);
-    return this;
-  }
-
-  scale(x, y, origin) {
-    this.p1.scale(x, y, origin);
-    this.p2.scale(x, y, origin);
-    this.p3.scale(x, y, origin);
-    this.p4.scale(x, y, origin);
-    return this;
-  }
-
-  rotate(angle, origin) {
-    this.p1.rotate(angle, origin);
-    this.p2.rotate(angle, origin);
-    this.p3.rotate(angle, origin);
-    this.p4.rotate(angle, origin);
-    return this;
-  }
-
-  reverse() {
-    // Note: this makes it lose its source
-    return new CubicBezier(this.p4, this.p3, this.p2, this.p1);
-  }
-
-  equal(cbls) {
-    if (cbls instanceof LineSegment) { return false; }
-    return ((this.p1.equal(cbls.p1)) && (this.p2.equal(cbls.p2)) &&
-      (this.p3.equal(cbls.p3)) && (this.p4.equal(cbls.p4))) ||
-     ((this.p1.equal(cbls.p4)) && (this.p2.equal(cbls.p3)) &&
-      (this.p3.equal(cbls.p2)) && (this.p4.equal(cbls.p1)));
-  }
-
-  intersects(other) {
-    let inter = this.intersection(other);
-    return inter instanceof Posn || (inter instanceof Array && (inter.length > 0));
-  }
-
-  intersection(other) {
-    switch (other.constructor) {
-      case LineSegment:
-        return this.intersectionWithLineSegment(other);
-      case CubicBezier:
-        return this.intersectionWithCubicBezier(other);
+  overlap(a, b) {
+    if (a.lineSegments && b.lineSegments) {
+      return this.lineSegmentsIntersect(a, b);
+    } else {
+      console.log('Incompatible overlap call', a, b);
+      console.trace();
     }
-  }
+  },
 
-  xRange() {
-    return this.bounds().xr;
-  }
-
-  yRange() {
-    return this.bounds().yr;
-  }
-
-  ends() {
-    return [this.p1, this.p4];
-  }
-
-  midPoint() {
-    return this.splitAt(0.5)[0].p4;
-  }
-
-  bounds(useCached) {
-    let height, maxy, miny, width;
-    if (useCached == null) { useCached = false; }
-    if ((this.boundsCached != null) && useCached) {
-      return this.boundsCached;
-    }
-
-    let minx = (miny = Infinity);
-    let maxx = (maxy = -Infinity);
-
-    let top2x = this.p2.x - this.p1.x;
-    let top2y = this.p2.y - this.p1.y;
-    let top3x = this.p3.x - this.p2.x;
-    let top3y = this.p3.y - this.p2.y;
-    let top4x = this.p4.x - this.p3.x;
-    let top4y = this.p4.y - this.p3.y;
-
-    for (let i = 0; i <= 40; i++) {
-      let d = i / 40;
-      let px = this.p1.x + (d * top2x);
-      let py = this.p1.y + (d * top2y);
-      let qx = this.p2.x + (d * top3x);
-      let qy = this.p2.y + (d * top3y);
-      let rx = this.p3.x + (d * top4x);
-      let ry = this.p3.y + (d * top4y);
-
-      let toqx = qx - px;
-      let toqy = qy - py;
-      let torx = rx - qx;
-      let tory = ry - qy;
-
-      let sx = px + (d * toqx);
-      let sy = py + (d * toqy);
-      let tx = qx + (d * torx);
-      let ty = qy + (d * tory);
-
-      let totx = tx - sx;
-      let toty = ty - sy;
-
-      let x = sx + (d * totx);
-      let y = sy + (d * toty);
-
-      minx = Math.min(minx, x);
-      miny = Math.min(miny, y);
-      maxx = Math.max(maxx, x);
-      maxy = Math.max(maxy, y);
-
-      width = maxx - minx;
-      height = maxy - miny;
-    }
-
-    // Cache the bounds and return them at the same time
-
-    return this.boundsCached = new Bounds(minx, miny, width, height);
-  }
-
-
-  intoLineSegments(n) {
-    // Given n, split the bezier into n consecutive LineSegments, returned in an Array
+  lineSegmentsIntersect(sa, sb) {
+    // Returns bool, whether or not this shape and that shape intersect or overlap
+    // Short-circuits as soon as it finds true.
     //
-    // I/P: n, number
-    // O/P: [LineSegment, LineSegment, LineSegment...] array
+    // I/P: Another shape that has lineSegments()
+    // O/P: Boolean
 
-    let segments = [];
-    for (let m = 0, end = n, asc = 0 <= end; asc ? m <= end : m >= end; asc ? m++ : m--) {
-      var last;
-      let i = 1 / m;
-      let x = (Math.pow((1-i), 3) * this.p1.x) + (3 * Math.pow((1-i), 2) * i * this.p2.x) +
-          (3 * (1 - i) * Math.pow(i, 2) * this.p3.x) + (Math.pow(i, 3) * this.p4.x);
-      let y = (Math.pow((1-i), 3) * this.p1.y) + (3 * Math.pow((1-i), 2) * i * this.p2.y) +
-          (3 * (1 - i) * Math.pow(i, 2) * this.p3.y) + (Math.pow(i, 3) * this.p4.y);
-      if ((m % 2) === 0) {
-        last = new Posn(x, y);
+    let alns = sa.lineSegments(); // My lineSegments
+    let blns = sb.lineSegments(); // Other's lineSegments
+
+    for (let aline of Array.from(alns)) {
+
+      // The true parameter on bounds() tells aline to use its cached bounds.
+      // It saves a lot of time and is okay to do in a situation like this where we're just going
+      // through a for-loop and not changing the lines at all.
+      //
+      // Admittedly, it really only saves time below when it calls it for bline since
+      // each aline is only being looked at once, but why not cache as much as possible? :)
+
+      var abounds;
+      if (aline instanceof CubicBezier) {
+        abounds = aline.bounds(true);
+      }
+
+      let a = aline instanceof LineSegment ? aline.a : aline.p1;
+      let b = aline instanceof LineSegment ? aline.b : aline.p2;
+
+      if (sb.contains) {
+        if (sb.contains(a) || sb.contains(b)) {
+          return true;
+        }
+      }
+
+      for (let bline of Array.from(blns)) {
+
+        var continueChecking;
+        if (aline instanceof CubicBezier && bline instanceof CubicBezier) {
+          let bbounds = bline.bounds(true);
+          console.log(abounds, bbounds);
+          continueChecking = abounds.overlapsBounds(bbounds);
+        } else {
+          continueChecking = true;
+        }
+
+        if (continueChecking) {
+          if (this.intersect(aline, bline)) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  },
+
+  intersect(ashape, bshape) {
+    let ints = this.intersections(ashape, bshape);
+    return (ints instanceof Array && ints.length > 0);
+  },
+
+  intersections(ashape, bshape) {
+    let line;
+    let subject;
+    if (ashape instanceof LineSegment || ashape instanceof CubicBezier) {
+      line = ashape;
+      subject = bshape;
+    } else if (bshape instanceof LineSegment || bshape instanceof CubicBezier) {
+      line = bshape;
+      subject = ashape;
+    }
+
+    if (line instanceof LineSegment) {
+      if (subject instanceof LineSegment) {
+        return this.lineSegmentIntersectionsWithLineSegment(line, subject);
+      } else if (subject instanceof CubicBezier) {
+        return this.lineSegmentIntersectionsWithCubicBezier(line, subject);
+      } else if (subject instanceof Circle) {
+        return this.lineSegmentIntersectionsWithCircle(line, subject);
+      } else if (subject instanceof Ellipse) {
+        return this.lineSegmentIntersectionsWithEllipse(line, subject);
       } else {
-        segments.push(new LineSegment(last, new Posn(x, y)));
+        throw new Error('Invalid intersections call');
+      }
+    } else if (line instanceof CubicBezier) {
+      if (subject instanceof LineSegment) {
+        return this.lineSegmentIntersectionsWithCubicBezier(subject, line); // Reverse args here
+      } else if (subject instanceof CubicBezier) {
+        return this.cubicBezierIntersectionsWithCubicBezier(line, subject);
+      } else {
+        throw new Error('Invalid intersections call');
       }
     }
-    return segments.splice(1);
-  }
+  },
+
+  lineSegmentIntersectionsWithLineSegment(aline, bline) {
+    /*
+      Get intersection with another LineSegment
+
+      I/P : LineSegment
+
+      O/P : If intersection exists, [x, y] coords of intersection
+            If none exists, null
+            If they're parallel, 0
+            If they're coincident, Infinity
+
+      Source: http://www.kevlindev.com/gui/math/intersection/Intersection.js
+    */
+
+    let ana_s = (bline.xbaDiff() * (aline.a.y - bline.a.y)) - (bline.ybaDiff() * (aline.a.x - bline.a.x));
+    let ana_m = (aline.xbaDiff() * (aline.a.y - bline.a.y)) - (aline.ybaDiff() * (aline.a.x - bline.a.x));
+    let crossDiff  = (bline.ybaDiff() * aline.xbaDiff()) - (bline.xbaDiff() * aline.ybaDiff());
+
+    if (crossDiff !== 0) {
+      let anas = ana_s / crossDiff;
+      let anam = ana_m / crossDiff;
+
+      if ((0 <= anas) && (anas <= 1) && (0 <= anam) && (anam <= 1)) {
+        return new Posn(aline.a.x + (anas * (aline.b.x - aline.a.x)), aline.a.y + (anas * (aline.b.y - aline.a.y)));
+      } else {
+        return null;
+      }
+    } else {
+      if ((ana_s === 0) || (ana_m === 0)) {
+        // Coinicident (identical)
+        return Infinity;
+      } else {
+        // Parallel
+        return 0;
+      }
+    }
+  },
+
+  lineSegmentIntersectionsWithEllipse(aline, bz) {
+
+    /*
+     Get intersection with an ellipse
+
+     I/P: Ellipse
+
+     O/P: null if no intersections, or Array of Posn(s) if there are
+
+      Source: http://www.kevlindev.com/gui/math/intersection/Intersection.js
+    */
 
 
-  splitAt(t, force) {
-    // Given a float t between 0 and 1, return two CubicBeziers that result from splitting this one at that percentage in.
-    //
-    // I/P: t, number between 0 and 1
-    // O/P: [CubicBezier, CubicBezier] array
-    //
-    // Uses de Casteljau's algorithm. Really damn good resources:
-    //   http://processingjs.nihongoresources.com/bezierinfo/
-    //   http://en.wikipedia.org/wiki/De_Casteljau's_algorithm
-    //
-    // Example, splitting in half:
-    // t = 0.5
-    // p1: (10,10),    p2: (20, 5),    p3: (40, 20), p4: (50, 10)
-    // p5: (15, 7.5),  p6: (30, 12.5), p7: (45, 15)
-    // p8: (22.5, 10), p9: (37.5, 13.75)
-    // p10: (30, 11.875)
-    //
-    // The split will happen at exactly p10, so the resulting curves will end and start there, respectively.
-    // The resulting curves will be
-    // [new CubicBezier(p1, p5, p8, p10), new CubicBezier(p10, p9, p7, p4)]
+    let { rx, ry, cx, cy } = bz.data;
 
-    if (force == null) { force = null; }
-    if (typeof t === "number") {
+    let origin = new Posn(aline.a.x, aline.a.y);
+    let dir    = new Posn(aline.b.x - aline.a.x, aline.b.y - aline.a.y);
+    let center = new Posn(cx, cy);
+    let diff   = origin.subtract(center);
+    let mDir   = new Posn(dir.x / (rx * rx), dir.y / (ry * ry));
+    let mDiff  = new Posn(diff.x / (rx * rx), diff.y / (ry * ry));
 
-      let p5 = new LineSegment(this.p1, this.p2).posnAtPercent(t);
-      let p6 = new LineSegment(this.p2, this.p3).posnAtPercent(t);
-      let p7 = new LineSegment(this.p3, this.p4).posnAtPercent(t);
-      let p8 = new LineSegment(p5, p6).posnAtPercent(t);
-      let p9 = new LineSegment(p6, p7).posnAtPercent(t);
-      let p10 = force ? force : new LineSegment(p8, p9).posnAtPercent(t);
+    let results = [];
 
-      return [new CubicBezier(this.p1, p5, p8, p10), new CubicBezier(p10, p9, p7, this.p4)];
+    let a = dir.dot(mDir);
+    let b = dir.dot(mDiff);
+    let c = diff.dot(mDiff) - 1.0;
+    let d = (b * b) - (a * c);
 
-    } else if (t instanceof Posn) {
-      // Given a single Posn, find its percentage and then split the line on it.
-      return this.splitAt(this.findPercentageOfPoint(t), t);
+    if (d < 0) {
+      // Line is outside ellipse
+      return null;
+    } else if (d > 0) {
+      let root = Math.sqrt(d);
+      let t_a = (-b - root) / a;
+      let t_b = (-b + root) / a;
 
-
-    } else if (t instanceof Array) {
-      // Given a list of Posns, we have a bit more work to do.
-      // We need to sort the Posns by their percentage along on the original line.
-      // Then we recur on the line, splitting it on each posn that occurs from 0.0 to 1.0.
-
-      // We always recur on the second half of the resulting split with
-      // the next Posn in line.
-
-      // We're going to use the Posns' percentages as keys
-      // with which we'll sort them and split the line on them
-      // one after the other.
-      let sortedPosns = {};
-
-      // This will be the final array of split segments.
-      let segments = [];
-
-      // Find percentage for each posn, save the posn under that percentage.
-      for (let posn of Array.from(t)) {
-        let percent = this.findPercentageOfPoint(posn);
-        sortedPosns[percent] = posn;
+      if (((t_a < 0) || (1 < t_a)) && ((t_b < 0) || (1 < t_b))) {
+        if (((t_a < 0) && (t_b < 0)) && ((t_a > 1) && (t_b > 1))) {
+          // Line is outside ellipse
+          return null;
+        } else {
+          // Line is inside ellipse
+          return null;
+        }
+      } else {
+        if ((0 <= t_a) && (t_a <= 1)) {
+          results.push(aline.a.lerp(aline.b, t_a));
+        }
+        if ((0 <= t_b) && (t_b <= 1)) {
+          results.push(aline.a.lerp(aline.b, t_b));
+        }
+      }
+    } else {
+        let t = -b / a;
+        if ((0 <= t) && (t <= 1)) {
+          results.push(aline.a.lerp(aline.b, t));
+        } else {
+          return null;
+        }
       }
 
-      // Sort the keys - the list of percentages at which posns are available.
-      let percentages = Object.keys(sortedPosns).map(parseFloat).sort(sortNumbers);
+    return results;
+  },
 
+  lineSegmentIntersectionsWithCircle(aline, circle) {
+    /*
+      Get intersection with a circle
 
+      I/P : Circle
 
-      // Start by splitting the entire bezier.
-      let tail = this;
+      O/P : If intersection exists, [x, y] coords of intersection
+            If none exists, null
+            If they're parallel, 0
+            If they're coincident, Infinity
 
-      // For each posn, going in order of percentages...
-      for (let perc of Array.from(percentages)) {
-        // Split the tail on that single posn
-        let pair = tail.splitAt(sortedPosns[perc]);
+      Source: http://www.kevlindev.com/gui/math/intersection/Intersection.js
+    */
 
-        // Keep the first half
-        segments.push(pair[0]);
-        // And "recur" on the second half by redefining tail to be it
-        tail = pair[1];
+    let a = Math.pow(aline.xDiff(), 2) + Math.pow(aline.yDiff(), 2);
+    let b = 2 * (((aline.b.x - aline.a.x) * (aline.a.x - circle.data.cx)) + ((aline.b.y - aline.a.y) * (aline.a.y - circle.data.cy)));
+    let cc = (Math.pow(circle.data.cx, 2) + Math.pow(circle.data.cy, 2) + Math.pow(aline.a.x, 2) + Math.pow(aline.a.y, 2)) -
+         (2 * ((circle.data.cx * aline.a.x) + (circle.data.cy * aline.a.y))) - Math.pow(circle.data.r, 2);
+    let deter = (b * b) - (4 * a * cc);
+
+    if (deter < 0) {
+      return null; // No intersection
+    } else if (deter === 0) {
+      return 0; // Tangent
+    } else {
+      let e = Math.sqrt(deter);
+      let u1 = (-b + e) / (2 * a);
+      let u2 = (-b - e) / (2 * a);
+
+      if (((u1 < 0) || (u1 > 1)) && ((u2 < 0) || (u2 > 1))) {
+        if (((u1 < 0) && (u2 < 0)) || ((u1 > 1) && (u2 > 1))) {
+          return null; // No intersection
+        } else {
+          return true; // It's inside
+        }
+      } else {
+        let ints = [];
+
+        if ((0 <= u1) && (u1 <= 1)) {
+          ints.push(aline.a.lerp(aline.b, u1));
+        }
+
+        if ((0 <= u2) && (u2 <= 1)) {
+          ints.push(aline.a.lerp(aline.b, u2));
+        }
+
+        return ints;
       }
-
-      // Don't abandon that last tail! ;)
-      segments.push(tail);
-
-      // Shazam
-
-      return segments;
     }
-  }
+  },
 
-
-  findPercentageOfPoint(posn, tolerance, accumulated, nextstep) {
-    // Recursively find the percentage (float from 0 - 1) of given posn on this bezier, within tolerance given.
-    // This works so well. I am so stoked about it.
-    // Basically, this splits the given bezier in half. If the midpoint is within the tolerance of the posn we're looking for,
-    // return the accumulated float. If not, it will recur on either or both of its halves,
-    // adding (0.5 * n / 2) to the accumulator for the one on the right and keeping it the same for the one on the left
-    // where n is the depth of recursion.
-    //
-    // I/P: posn: the Posn we're looking for
-    //      [tolerance]: find the value for within this much of the x and y of the given posn.
-    //
-    //      Ignore the accumulated and nextstep values, those should start as they're precoded.
-    //
-    // O/P: A float between 0 and 1.
-
-    let ac, bc;
-    if (tolerance == null) { tolerance = 1e-3; }
-    if (accumulated == null) { accumulated = 0.0; }
-    if (nextstep == null) { nextstep = 0.5; }
-    let split = this.splitAt(0.5);
-    let a = split[0];
-    let b = split[1];
-
-
-    // Base case - we've found it! Return the amt accumulated.
-    if (a.p4.within(tolerance, posn) || (nextstep < 1e-4)) {
-      return accumulated;
-    }
-
-    // Recursion
-    let ab = a.bounds();
-    let bb = b.bounds();
-
-    // Both halves might contain the point, if we have a shape that overlaps itself for example.
-    // For this reason we have to actually recur on both the left and right.
-    // When staying with a, however, we don't add to the accumulator because we're not advancing to the second half of the line.
-    // We're simply not making the jump, so we don't count it. But we might make the next smallest jump when we recur on a.
-
-    if (ab.xr.containsInclusive(posn.x, 0.2) && ab.yr.containsInclusive(posn.y, 0.2)) {
-      ac = a.findPercentageOfPoint(posn, tolerance, accumulated, nextstep / 2);
-    }
-    if (bb.xr.containsInclusive(posn.x, 0.2) && bb.yr.containsInclusive(posn.y, 0.2)) {
-      bc = b.findPercentageOfPoint(posn, tolerance, accumulated + nextstep, nextstep / 2);
-    }
-
-    // This is where the recursion bottoms out. Null means it's not on the bezier line within the tolerance.
-    //
-    //############
-    // IMPORTANT #
-    //############
-    // This is a compromise right now. Since the intersection algorithm is imperfect, we get as close as we can and
-    // return accumulated if there are no options. NOT null, which it used to be.
-    // All this means is that if a point is given that's a bit off the line the recursion will stop when it can't
-    // get any closer to it. So it does what it can, basically.
-    //
-    // This means you can't just feed any point into this and expect it to ignore you given a bad point.
-    // This also means there is some tolerance to a point being a little bit off, which can happen when calculating
-    // several intersections on one curve.
-    //
-    // It's very accurate this way. Nothing to worry about. Just a note so I don't forget. <3
-
-    if (ac != null) { return ac; } else if (bc != null) { return bc; } else { return accumulated; }
-  }
-
-
-
-
-  /*
-
-    Intersection methods
-
-  */
-
-
-  intersectionWithLineSegment(l) {
+  lineSegmentIntersectionsWithCubicBezier(aline, bz) {
     /*
 
       Given a LineSegment, lists intersection point(s).
@@ -392,33 +275,33 @@ export default class CubicBezier {
 
     */
 
-    let min = l.a.min(l.b);
-    let max = l.a.max(l.b);
+    let min = aline.a.min(aline.b);
+    let max = aline.a.max(aline.b);
 
     let results = [];
 
-    let a = this.p1.multiplyBy(-1);
-    let b = this.p2.multiplyBy(3);
-    let c = this.p3.multiplyBy(-3);
-    let d = a.add(b.add(c.add(this.p4)));
+    let a = bz.p1.multiplyBy(-1);
+    let b = bz.p2.multiplyBy(3);
+    let c = bz.p3.multiplyBy(-3);
+    let d = a.add(b.add(c.add(bz.p4)));
     let c3 = new Posn(d.x, d.y);
 
-    a = this.p1.multiplyBy(3);
-    b = this.p2.multiplyBy(-6);
-    c = this.p3.multiplyBy(3);
+    a = bz.p1.multiplyBy(3);
+    b = bz.p2.multiplyBy(-6);
+    c = bz.p3.multiplyBy(3);
     d = a.add(b.add(c));
     let c2 = new Posn(d.x, d.y);
 
-    a = this.p1.multiplyBy(-3);
-    b = this.p2.multiplyBy(3);
+    a = bz.p1.multiplyBy(-3);
+    b = bz.p2.multiplyBy(3);
     c = a.add(b);
     let c1 = new Posn(c.x, c.y);
 
-    let c0 = new Posn(this.p1.x, this.p1.y);
+    let c0 = new Posn(bz.p1.x, bz.p1.y);
 
-    let n = new Posn(l.a.y - l.b.y, l.b.x - l.a.x);
+    let n = new Posn(aline.a.y - aline.b.y, aline.b.x - aline.a.x);
 
-    let cl = (l.a.x * l.b.y) - (l.b.x * l.a.y);
+    let cl = (aline.a.x * aline.b.y) - (aline.b.x * aline.a.y);
 
     let roots = new Polynomial([n.dot(c3), n.dot(c2), n.dot(c1), n.dot(c0) + cl]).roots();
 
@@ -427,18 +310,18 @@ export default class CubicBezier {
       let t = roots[i];
       if ((0 <= t) && (t <= 1)) {
 
-        let p5 = this.p1.lerp(this.p2, t);
-        let p6 = this.p2.lerp(this.p3, t);
-        let p7 = this.p3.lerp(this.p4, t);
+        let p5 = bz.p1.lerp(bz.p2, t);
+        let p6 = bz.p2.lerp(bz.p3, t);
+        let p7 = bz.p3.lerp(bz.p4, t);
         let p8 = p5.lerp(p6, t);
         let p9 = p6.lerp(p7, t);
         let p10 = p8.lerp(p9, t);
 
-        if (l.a.x === l.b.x) {
+        if (aline.a.x === aline.b.x) {
           if ((min.y <= p10.y) && (p10.y <= max.y)) {
             results.push(p10);
           }
-        } else if (l.a.y === l.b.y) {
+        } else if (aline.a.y === aline.b.y) {
           if ((min.x <= p10.x) && (p10.x <= max.x)) {
             results.push(p10);
           }
@@ -449,10 +332,9 @@ export default class CubicBezier {
     }
 
     return results;
-  }
+  },
 
-
-  intersectionWithCubicBezier(other) {
+  cubicBezierIntersectionsWithCubicBezier(bz1, bz2) {
     // I don't know.
     //
     // I/P: Another CubicBezier
@@ -462,43 +344,43 @@ export default class CubicBezier {
 
     let results = [];
 
-    let a = this.p1.multiplyBy(-1);
-    let b = this.p2.multiplyBy(3);
-    let c = this.p3.multiplyBy(-3);
-    let d = a.add(b.add(c.add(this.p4)));
+    let a = bz1.p1.multiplyBy(-1);
+    let b = bz1.p2.multiplyBy(3);
+    let c = bz1.p3.multiplyBy(-3);
+    let d = a.add(b.add(c.add(bz1.p4)));
     let c13 = new Posn(d.x, d.y);
 
-    a = this.p1.multiplyBy(3);
-    b = this.p2.multiplyBy(-6);
-    c = this.p3.multiplyBy(3);
+    a = bz1.p1.multiplyBy(3);
+    b = bz1.p2.multiplyBy(-6);
+    c = bz1.p3.multiplyBy(3);
     d = a.add(b.add(c));
     let c12 = new Posn(d.x, d.y);
 
-    a = this.p1.multiplyBy(-3);
-    b = this.p2.multiplyBy(3);
+    a = bz1.p1.multiplyBy(-3);
+    b = bz1.p2.multiplyBy(3);
     c = a.add(b);
     let c11 = new Posn(c.x, c.y);
 
-    let c10 = new Posn(this.p1.x, this.p1.y);
+    let c10 = new Posn(bz1.p1.x, bz1.p1.y);
 
-    a = other.p1.multiplyBy(-1);
-    b = other.p2.multiplyBy(3);
-    c = other.p3.multiplyBy(-3);
-    d = a.add(b.add(c.add(other.p4)));
+    a = bz2.p1.multiplyBy(-1);
+    b = bz2.p2.multiplyBy(3);
+    c = bz2.p3.multiplyBy(-3);
+    d = a.add(b.add(c.add(bz2.p4)));
     let c23 = new Posn(d.x, d.y);
 
-    a = other.p1.multiplyBy(3);
-    b = other.p2.multiplyBy(-6);
-    c = other.p3.multiplyBy(3);
+    a = bz2.p1.multiplyBy(3);
+    b = bz2.p2.multiplyBy(-6);
+    c = bz2.p3.multiplyBy(3);
     d = a.add(b.add(c));
     let c22 = new Posn(d.x, d.y);
 
-    a = other.p1.multiplyBy(-3);
-    b = other.p2.multiplyBy(3);
+    a = bz2.p1.multiplyBy(-3);
+    b = bz2.p2.multiplyBy(3);
     c = a.add(b);
     let c21 = new Posn(c.x, c.y);
 
-    let c20 = new Posn(other.p1.x, other.p1.y);
+    let c20 = new Posn(bz2.p1.x, bz2.p1.y);
 
     let c10x2 = c10.x * c10.x;
     let c10x3 = c10.x * c10.x * c10.x;
@@ -766,7 +648,3 @@ export default class CubicBezier {
     return results;
   }
 }
-CubicBezier.initClass();
-
-
-

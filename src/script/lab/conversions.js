@@ -1,4 +1,6 @@
 import CONSTANTS from 'script/constants';
+import Posn from 'script/geometry/posn';
+import CubicBezier from 'script/geometry/cubic-bezier-line-segment';
 import Point from 'script/geometry/point';
 import {
   PathPoint,

@@ -5,7 +5,7 @@
 
 */
 
-class PNG {
+export default class PNG {
 
   constructor(elements) {
 

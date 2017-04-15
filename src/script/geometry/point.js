@@ -89,8 +89,14 @@ export default class Point extends Posn {
       console.log('UNSUPPORTED');
     }
 
-    if (isNaN(this.x)) { console.warn('NaN x'); }
-    if (isNaN(this.y)) { console.warn('NaN y'); }
+    if (isNaN(this.x)) {
+      debugger;
+      console.warn('NaN x');
+    }
+    if (isNaN(this.y)) {
+      debugger;
+      console.warn('NaN y');
+    }
 
     this._flags = [];
 
@@ -496,21 +502,6 @@ export class Antlers {
 
   hideTemp(p) {
     return __guard__((p === 2 ? this.succp : this.basep), x => x.hideTemp());
-  }
-
-  nudge(x, y) {
-
-    if (this.basep3 != null) {
-      this.basep3.nudge(x, y);
-    }
-    if (this.succp2 != null) {
-      this.succp2.nudge(x, y);
-    }
-    if (this.succ() instanceof CurvePoint) {
-      this.succ().x2 += x;
-      this.succ().y2 -= y;
-    }
-    return this.commit();
   }
 
   scale(x, y, origin) {

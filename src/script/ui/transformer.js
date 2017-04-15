@@ -100,6 +100,7 @@ ui.transformer = {
   },
 
   deriveCorners(shapes) {
+    if (shapes.length > 0) debugger;
     let elem;
     if (shapes.length === 0) {
       this.tl = (this.tr = (this.br = (this.bl = new Posn(0, 0))));

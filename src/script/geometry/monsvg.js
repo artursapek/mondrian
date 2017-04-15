@@ -1,4 +1,6 @@
 import ui from 'script/ui/ui';
+import Bounds from 'script/geometry/bounds';
+import Range from 'script/geometry/range';
 /*
 
     Mondrian SVG library

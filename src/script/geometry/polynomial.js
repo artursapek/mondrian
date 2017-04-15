@@ -4,13 +4,9 @@
 
 */
 
-class Polynomial {
+export default class Polynomial {
   static initClass() {
-  
-  
     this.prototype.tolerance = 1e-6;
-  
-  
     this.prototype.accuracy = 6;
   }
 

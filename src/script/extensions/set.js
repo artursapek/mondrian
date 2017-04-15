@@ -3,12 +3,13 @@
 class Set extends Array {
 
   constructor(array) {
+    super(...arguments);
+
     for (let elem of Array.from(array)) {
       if (!this.has(elem)) {
         this.push(elem);
       }
     }
-    super(...arguments);
   }
 
   push(elem) {

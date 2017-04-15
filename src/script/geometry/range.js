@@ -25,12 +25,12 @@ export default class Range {
     return this;
   }
 
-  fromRangeList(alor) {
+  static fromList(alor) {
     let mins = alor.map(r => r.min);
     let maxs = alor.map(r => r.max);
-    this.min = Math.min.apply(this, mins);
-    this.max = Math.max.apply(this, maxs);
-    return this;
+    let min = Math.min.apply(this, mins);
+    let max = Math.max.apply(this, maxs);
+    return new this(min, max);
   }
 
   nudge(amt) {

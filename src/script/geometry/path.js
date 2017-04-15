@@ -1,5 +1,7 @@
 import Monsvg from 'script/geometry/monsvg'
 import PointsList from 'script/geometry/points-list'
+import Range from 'script/geometry/range'
+import lab from 'script/lab/lab'
 
 /*
 
@@ -125,7 +127,11 @@ export default class Path extends Monsvg {
     if (cached !== null) {
       return cached;
     } else {
-      return this.xRangeCached = new Range().fromRangeList(this.lineSegments().map(x => x.xRange()));
+      return this.xRangeCached = Range.fromList(this.lineSegments().map((x) => {
+        let xr = x.xRange();
+        if (isNaN(xr.min) || isNaN(xr.max)) debugger;
+        return xr;
+      }));
     }
   }
 
@@ -135,7 +141,7 @@ export default class Path extends Monsvg {
     if (cached !== null) {
       return cached;
     } else {
-      return this.yRangeCached = new Range().fromRangeList(this.lineSegments().map(x => x.yRange()));
+      return this.yRangeCached = Range.fromList(this.lineSegments().map(x => x.yRange()));
     }
   }
 

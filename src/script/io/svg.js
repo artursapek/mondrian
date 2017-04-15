@@ -1,10 +1,15 @@
+import CONSTANTS from 'script/constants'
+import Bounds from 'script/geometry/bounds'
+import Posn from 'script/geometry/posn'
+import ui from 'script/ui/ui'
+
 /*
 
   SVG representation class/API
 
 */
 
-class SVG {
+export default class SVG {
   static initClass() {
   
     // Constants

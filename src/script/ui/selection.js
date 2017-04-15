@@ -1,5 +1,8 @@
 import ui from 'script/ui/ui';
 import events from 'script/mixins/events';
+import shapes from 'script/lab/shapes';
+import PNG from 'script/io/png';
+import SVG from 'script/io/svg';
 /*
 
   Manages elements being selected
@@ -92,7 +95,7 @@ ui.selection = {
       ui.selection.points.deselectAll();
 
       let rect = bounds.toRect();
-      this.all = ui.elements.filter(elem => elem.overlaps(rect));
+      this.all = ui.elements.filter(elem => { return shapes.overlap(rect, elem) });
       return this.trigger('change');
     },
 

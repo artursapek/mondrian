@@ -42,6 +42,20 @@ export class PathPoint extends Point {
     this.rel = rel;
   }
 
+  nudge(x, y) {
+    if (this.basep3 != null) {
+      this.basep3.nudge(x, y);
+    }
+    if (this.succp2 != null) {
+      this.succp2.nudge(x, y);
+    }
+    if (this.succ() instanceof CurvePoint) {
+      this.succ().x2 += x;
+      this.succ().y2 -= y;
+    }
+
+  }
+
   static fromString(point, owner, prec) {
     // Given a string like "M 10.2 502.19"
     // return the corresponding Point.
@@ -540,7 +554,11 @@ export class CurveTo extends CurvePoint {
 export class SmoothTo extends CurvePoint {
   constructor(x3, y3, x, y, owner, prec, rel) {
     // TODO FIX???? 0 0???
-    super(0, 0, x3, y3, x, y, owner, prec, rel);
+    let { x2, y2 } = SmoothTo.inheritFromPrec(this.prec);
+    super(x2, y2, x3, y3, x, y, owner, prec, rel);
+    console.log(x2, y2);
+    this.x2 = x2;
+    this.y2 = y2;
     this.x3 = x3;
     this.y3 = y3;
     this.x = x;
@@ -551,7 +569,7 @@ export class SmoothTo extends CurvePoint {
     this.inheritFromPrec(this.prec);
   }
 
-  inheritFromPrec(prec) {
+  static inheritFromPrec(prec) {
     // Since a SmoothTo's p2 is a reflection of its precessor's p3 over
     // its previous point, we need to query that info from its precessor.
     let p2;
@@ -563,8 +581,7 @@ export class SmoothTo extends CurvePoint {
       p2 = new Posn(this.x, this.y); // No p2 to inherit, so just nullify it
     }
 
-    this.x2 = p2.x;
-    return this.y2 = p2.y;
+    return { x2: p2.x, y2: p2.y };
   }
 
 

@@ -1,4 +1,5 @@
 import Monsvg from 'script/geometry/monsvg'
+import Range from 'script/geometry/range'
 
 /*
 

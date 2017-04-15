@@ -1,4 +1,7 @@
 import Monsvg from 'script/geometry/monsvg'
+import Range from 'script/geometry/range'
+import Posn from 'script/geometry/posn'
+import Point from 'script/geometry/point'
 
 export default class Rect extends Monsvg {
   static initClass() {
@@ -96,17 +99,23 @@ export default class Rect extends Monsvg {
   }
 
   overlapsPolygon(polygon) {
+    return console.trace();
+    /*
     if (this.contains(polygon.center() || polygon.contains(this.center()))) {
       return true;
     }
     return this.lineSegmentsIntersect(polygon);
+    */
   }
 
 
-  overlapsCircle(circle) {}
+  overlapsCircle(circle) {
+    return console.trace();
+  }
 
   overlapsRect(rectangle) {
-    return this.overlapsPolygon(rectangle);
+    return console.trace();
+    //return this.overlapsPolygon(rectangle);
   }
 
 

@@ -43,7 +43,7 @@ ui.dragSelection = {
   start(posn) {
     this.origin.x = posn.x;
     this.origin.y = posn.y;
-    return dom.$dragSelection.show();
+    return dom.$dragSelection.css({ display: 'block' });
   },
 
   move(posn) {
@@ -52,6 +52,7 @@ ui.dragSelection = {
     this.height = Math.max(posn.y, this.origin.y) - this.tl.y;
 
     return dom.$dragSelection.css({
+      display: 'block',
       top: this.tl.y,
       left: this.tl.x,
       width: this.width,
