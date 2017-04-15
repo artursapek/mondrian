@@ -71,6 +71,7 @@ export default class Path extends Monsvg {
 
 
   hover() {
+    return;
     if (!ui.selection.elements.all.has(this)) {
       this.showPoints();
     }

@@ -1,5 +1,6 @@
 import ui from 'script/ui/ui';
 import Utility from 'script/utilities/utility';
+import SwatchDuo from 'script/ui/swatch-duo';
 
 ui.utilities.currentSwatches = new Utility({
   setup() {

@@ -1,7 +1,6 @@
+import Monsvg from 'script/geometry/monsvg';
 
-
-
-class SwatchDuo {
+export default class SwatchDuo {
   constructor(fill, stroke) {
     // I/P: two Swatch objects
 
