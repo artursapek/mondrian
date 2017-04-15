@@ -1,10 +1,11 @@
+import SETTINGS from 'script/settings';
 /*
 
   Google Analytics tracking.
 
 */
 
-let trackEvent = function(category, event, lbl) {
+window.trackEvent = function(category, event, lbl) {
   // Abstraction for _gaq _trackEvent
   let label = `${ui.account}`;
   if (lbl != null) { label += `: ${lbl}`; }

@@ -1,3 +1,5 @@
+import dom from 'script/dom/dom';
+import ui from 'script/ui/ui';
 import tools from 'script/tools/tools';
 import Tool from 'script/tools/tool';
 /*

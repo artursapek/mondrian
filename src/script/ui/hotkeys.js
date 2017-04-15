@@ -1,5 +1,6 @@
 import ui from 'script/ui/ui';
 import setup from 'script/setup';
+import Range from 'script/geometry/range';
 /*
 
   Mondrian.io hotkeys management
