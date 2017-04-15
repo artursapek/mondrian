@@ -227,6 +227,7 @@ export default class Monsvg {
 
 
   removeHoverTargets() {
+    return; // TODO
     let existent = qa(`svg#hover-targets [owner='${this.metadata.uuid}']`);
     return Array.from(existent).map((ht) =>
       ht.remove());
@@ -234,6 +235,7 @@ export default class Monsvg {
 
 
   redrawHoverTargets() {
+    return; // TODO
     this.removeHoverTargets();
     this.points.map(p => new HoverTarget(p.prec, p));
     return this;
@@ -678,7 +680,7 @@ function __guard__(value, transform) {
 
 */
 
-
+/*
 export class HoverTarget extends Monsvg {
   static initClass() {
     this.prototype.type = 'path';
@@ -777,3 +779,4 @@ HoverTarget.initClass();
 
 
 
+*/
