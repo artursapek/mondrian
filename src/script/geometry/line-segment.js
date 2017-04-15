@@ -1,6 +1,6 @@
 import Posn from 'script/geometry/posn';
 import Range from 'script/geometry/range';
-import { LineTo } from 'script/geometry/path-points';
+import { LineTo } from 'script/geometry/point';
 /*
   Internal representation of a straight line segment
 

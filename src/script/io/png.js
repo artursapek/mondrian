@@ -1,3 +1,5 @@
+import SVG from 'script/io/svg';
+
 /*
 
   Pseudo-PNG class that just draws to

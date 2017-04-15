@@ -6,7 +6,7 @@ import {
   VertiTo,
   CurveTo,
   SmoothTo,
-} from 'script/geometry/path-points';
+} from 'script/geometry/point';
 /*
 
   PointsSegment

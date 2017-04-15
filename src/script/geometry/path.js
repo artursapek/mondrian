@@ -2,6 +2,15 @@ import Monsvg from 'script/geometry/monsvg'
 import PointsList from 'script/geometry/points-list'
 import Range from 'script/geometry/range'
 import lab from 'script/lab/lab'
+import {
+  MoveTo,
+  LineTo,
+  HorizTo,
+  VertiTo,
+  CurveTo,
+  SmoothTo,
+} from 'script/geometry/point';
+
 
 /*
 
