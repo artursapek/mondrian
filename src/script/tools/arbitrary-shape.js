@@ -1,5 +1,8 @@
 import tools from 'script/tools/tools';
 import Tool from 'script/tools/tool';
+import Path from 'script/geometry/path';
+import Bounds from 'script/geometry/bounds';
+import ui from 'script/ui/ui';
 /*
 
   Arbitrary Shape Tool

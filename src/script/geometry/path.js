@@ -2,6 +2,7 @@ import Monsvg from 'script/geometry/monsvg'
 import PointsList from 'script/geometry/points-list'
 import Range from 'script/geometry/range'
 import lab from 'script/lab/lab'
+import Posn from 'script/geometry/posn';
 import {
   MoveTo,
   LineTo,

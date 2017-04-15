@@ -2,6 +2,7 @@ import Monsvg from 'script/geometry/monsvg'
 import Range from 'script/geometry/range'
 import Posn from 'script/geometry/posn'
 import Point from 'script/geometry/point'
+import Path from 'script/geometry/path';
 
 export default class Rect extends Monsvg {
   static initClass() {
