@@ -3,6 +3,9 @@
 Mondrian is a smart and easy-to-learn vector graphics web app.
 
 **UNMAINTAINED REPO**: I wrote this in college for fun and am keeping it up for posterity.
+
+[Original HN thread](https://news.ycombinator.com/item?id=7116042)
+
 ## Features
 
 #### Basic
